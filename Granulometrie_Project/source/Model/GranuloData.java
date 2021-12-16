@@ -1,13 +1,16 @@
 package Model;
 
 
+import java.util.HashMap;
+import java.util.List;
+
 import javafx.scene.image.Image;
 
 /**
  * 
  */
 public class GranuloData {
-	 /**
+	 /**  
      * @param image
      */
     public GranuloData(Image image) {
