@@ -11,11 +11,13 @@ import javafx.scene.image.Image;
 public class DAO {
 
     /**
-     * Default constructor
+     * @param url 
+     * @param login 
+     * @param password
      */
-    public DAO() {
+    private DAO(String  url, String  login, String password) {
+        // TODO implement here
     }
-
     /**
      * 
      */
@@ -36,14 +38,7 @@ public class DAO {
      */
     private Connection connection;
 
-    /**
-     * @param url 
-     * @param login 
-     * @param password
-     */
-    private DAO(String  url, String  login, String password) {
-        // TODO implement here
-    }
+
 
     /**
      * @param data
