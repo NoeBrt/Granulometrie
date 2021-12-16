@@ -14,9 +14,13 @@ public class DAO {
 	 * @param url
 	 * @param login
 	 * @param password
+	 * @throws ClassNotFoundException 
 	 */
-	private DAO(String url, String login, String password) {
-		// TODO implement here
+	public DAO() throws ClassNotFoundException {
+		this.url = "jdbc:mysql://localhost/Granulometrie";
+		this.login = "root";
+		this.password = "";
+		connection = SingleConnection.getInstance(url, login, password);
 	}
 
 	/**
