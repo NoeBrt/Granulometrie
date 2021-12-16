@@ -1,7 +1,6 @@
 package DAO;
 
 import java.sql.Connection;
-import java.util.*;
 
 import Model.GranuloData;
 import javafx.scene.image.Image;

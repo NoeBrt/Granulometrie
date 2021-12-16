@@ -1,6 +1,5 @@
 package application;
 
-import java.util.*;
 
 import Model.GranuloData;
 import javafx.scene.chart.BubbleChart;
