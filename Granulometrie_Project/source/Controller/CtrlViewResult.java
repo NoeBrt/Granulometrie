@@ -1,7 +1,8 @@
-package application;
+package Controller;
 
 
 import Model.GranuloData;
+import javafx.fxml.FXML;
 import javafx.scene.chart.BubbleChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -11,69 +12,73 @@ import javafx.scene.image.Image;
  * 
  */
 public class CtrlViewResult {
-
-    /**
-     * Default constructor
-     */
-    public CtrlViewResult() {
-    }
-
     /**
      * 
      */
+	@FXML
     private BubbleChart graphNbGrainSize;
 
     /**
      * 
      */
+	@FXML
     private BubbleChart graphNbGrainArea;
 
     /**
      * 
      */
+	@FXML
     private TextField comment;
 
     /**
      * 
      */
-    private Button saveDataBaseButton;
+	@FXML
+	private Button saveDataBaseButton;
 
     /**
      * 
      */
+	@FXML
     private TextField sizeMax;
 
     /**
      * 
      */
+	@FXML
     private TextField sizeMin;
 
     /**
      * 
      */
+	@FXML
     private TextField clusterWidth;
 
     /**
      * 
      */
+	@FXML
     private Button exportButton;
 
 
     /**
      * @param model
      */
+	@FXML
     public void CtrlResultView(GranuloData model) {
         // TODO implement here
     }
     /**
      * 
      */
+	@FXML
     public void setScaleMinMax() {
         // TODO implement here
     }
     /**
      * 
      */
+	@FXML
     public void saveDataBase() {
         // TODO implement here
     }
@@ -81,6 +86,7 @@ public class CtrlViewResult {
      * @param Graph 
      * @return
      */
+	@FXML
     public Image GraphToImage(BubbleChart<?, ?> Graph) {
         // TODO implement here
         return null;
@@ -88,6 +94,7 @@ public class CtrlViewResult {
     /**
      * 
      */
+	@FXML
     public void setCluster() {
         // TODO implement here
     }
@@ -95,6 +102,7 @@ public class CtrlViewResult {
     /**
      * 
      */
+	@FXML
     public void ExportJpg() {
         // TODO implement here
     }
@@ -102,6 +110,7 @@ public class CtrlViewResult {
     /**
      * 
      */
+	@FXML
     public void ExportCsv() {
         // TODO implement here
     }
@@ -109,12 +118,14 @@ public class CtrlViewResult {
     /**
      * 
      */
+	@FXML
     public void UpdateGraph() {
         // TODO implement here
     }
     /**
      * 
      */
+	@FXML
     public void initialize() {
         // TODO implement here
 

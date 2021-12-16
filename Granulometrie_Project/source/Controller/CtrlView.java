@@ -14,42 +14,33 @@ import javafx.fxml.FXML;
  * 
  */
 public class CtrlView{
-
-    /**
-     * Default constructor
-     */
-    public CtrlView() {
-    }
-
     /**
      * 
      */
+	@FXML
     private Button ImportButton;
 
     /**
      * 
      */
+	@FXML
     private Button launchProcessButton;
 
     /**
      * 
      */
+	@FXML
     private Image image;
 
     /**
      * 
      */
+	@FXML
     private ImageView imgView;
-    /**
-     * @param view
-     */
-    public void setView(ImageView view) {
-        // TODO implement here
-    }
-
     /**
      * 
      */
+	@FXML
     public void importImage() {
         // TODO implement here
     }
@@ -57,6 +48,7 @@ public class CtrlView{
     /**
      * @param DragEvent event
      */
+	@FXML
     public void handleDragOver(DragEvent event) {
         // TODO implement here
     }
@@ -64,6 +56,7 @@ public class CtrlView{
     /**
      * @param DragEvent event
      */
+	@FXML
     public void handleDrop(DragEvent event) {
         // TODO implement here
     }
@@ -71,6 +64,7 @@ public class CtrlView{
     /**
      * 
      */
+	@FXML
     public void launchProcess() {
         // TODO implement here
     }
@@ -78,6 +72,7 @@ public class CtrlView{
     /**
      * 
      */
+	@FXML
     public void initialize() {
         // TODO implement here
 
