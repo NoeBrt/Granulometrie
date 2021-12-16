@@ -42,7 +42,7 @@ public class DAO {
      * @param login 
      * @param password
      */
-    private void DAO(String  url, String  login, String password) {
+    private DAO(String  url, String  login, String password) {
         // TODO implement here
     }
 

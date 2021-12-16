@@ -40,17 +40,6 @@ public class CtrlView{
      * 
      */
     private ImageView imgView;
-
-
-
-
-    /**
-     * 
-     */
-    public void CtrlView() {
-        // TODO implement here
-    }
-
     /**
      * @param view
      */
@@ -84,6 +73,14 @@ public class CtrlView{
      */
     public void launchProcess() {
         // TODO implement here
+    }
+    
+    /**
+     * 
+     */
+    public void initialize() {
+        // TODO implement here
+
     }
 
 }

@@ -8,12 +8,12 @@ import javafx.scene.image.Image;
  * 
  */
 public class GranuloData {
-    /**
-     * Default constructor
+	 /**
+     * @param image
      */
-    public GranuloData() {
+    public GranuloData(Image image) {
+        // TODO implement here
     }
-
     /**
      * 
      */
@@ -54,12 +54,7 @@ public class GranuloData {
      */
     private HashMap<Integer, Measure> Cluster;
 
-    /**
-     * @param image
-     */
-    public void GranuloData(Image image) {
-        // TODO implement here
-    }
+   
 
     /**
      * @param min 

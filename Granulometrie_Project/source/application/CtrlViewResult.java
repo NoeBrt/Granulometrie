@@ -113,5 +113,11 @@ public class CtrlViewResult {
     public void UpdateGraph() {
         // TODO implement here
     }
+    /**
+     * 
+     */
+    public void initialize() {
+        // TODO implement here
 
+    }
 }

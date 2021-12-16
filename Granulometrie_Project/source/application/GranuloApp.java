@@ -9,21 +9,14 @@ import javafx.stage.Stage;
  * 
  */
 public class GranuloApp extends Application {
-
-    /**
-     * Default constructor
-     */
-    public GranuloApp() {
-    }
-
     /**
      * @param args 
      * @return
      */
   public static void main(String[] args) {
-	
-}
+      // TODO implement here
 
+  }
     /**
      * @param primaryStage
      */
