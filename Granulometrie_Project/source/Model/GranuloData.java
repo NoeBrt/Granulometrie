@@ -187,11 +187,12 @@ public class GranuloData {
 	public HashMap<Integer, List<Measure>> getClusters() {
 		return Clusters;
 	}
+	
+	/**
+	 * @return the measures after scale 
+	 */
 	public List<Measure> getMeasuresAfterScale() {
 		return MeasuresAfterScale;
-	}
-	public void setMeasuresAfterScale(List<Measure> measuresAfterScale) {
-		MeasuresAfterScale = measuresAfterScale;
 	}
 
 }
