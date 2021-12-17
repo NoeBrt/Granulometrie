@@ -12,7 +12,7 @@ public class CCLabeler {
     private String image_name = null;
 
     /**
-     * Binirise the images, black background and white character.
+     * Binarise the images, black background and white character.
      *
      * @param imOriginale Image to  binarise
      * @return image binaire
@@ -48,9 +48,6 @@ public class CCLabeler {
      * @return measure_list 
      * 
      * it take all data which get find by findParticles and order it in a new MeasureList then initialize this.measures_list and return it
-     * 
-     * 
-     * 
      * */
     private MeasuresList getCCInformations(ResultsTable data) {
         // allocation structure
@@ -124,9 +121,9 @@ public class CCLabeler {
 
     /**
      * @param image_name
-     * At the beginnin it set the image_name to the local attributes image_name. After it instanciate and ImagePlus image which get the return of openImage which if in the IF packages
-     * Then we binarise this image and store the result in and ImagePlus again. After this we create and ResultatsTable object which is the return of findParticles
-     * To finish bycreate an MeasuresListObject which is the return of the method getCCInformations . this.measure_list isn't set in the function beacuse it has been set in getCCInformations
+     * At the beginning it set the image_name to the local attribute image_name. After, it instantiate and ImagePlus image which get the return of openImage which if in the if package
+     * Then we binarise this image and store the result in an ImagePlus Object again. After this we create and ResultatsTable object which is the return of findParticles
+     * To finish it create an MeasuresListObject which is the return of the method getCCInformations . this.measure_list isn't set in the function beacuse it has been set in getCCInformations
      *
      */
     public void process(String image_name) {
