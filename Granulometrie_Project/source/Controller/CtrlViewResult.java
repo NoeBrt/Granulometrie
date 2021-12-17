@@ -22,13 +22,13 @@ public class CtrlViewResult {
      * the first bubble chart displays grains by their size
      */
 	@FXML
-    private BubbleChart graphNbGrainSize;
+    private BubbleChart<?, ?> graphNbGrainSize;
 
     /**
      * the second bubble chart displays grains by area
      */
 	@FXML
-    private BubbleChart graphNbGrainArea;
+    private BubbleChart<?, ?> graphNbGrainArea;
 
     /**
      * user can leave a comment in comment text field
@@ -119,7 +119,6 @@ public class CtrlViewResult {
      * @return void
      * this method has no return type
      */
-	@FXML
     public Image GraphToImage(BubbleChart<?, ?> Graph) {
         // TODO implement here
         return null;
