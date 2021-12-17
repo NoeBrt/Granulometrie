@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import app.Measure;
 import app.MeasuresList;
 import javafx.scene.image.Image;
 /**
@@ -78,7 +79,7 @@ public class GranuloData {
      * 
      */
     public MeasuresList process(Image image) {
-		return Measures;
+		return null;
     }
     /**
      * @param min 
@@ -103,15 +104,15 @@ public class GranuloData {
 	/**
 	 * @return the measures
 	 */
-	public List<Measure> getMeasures() {
+	public MeasuresList getMeasures() {
 		return Measures;
 	}
 
 	/**
 	 * @param measures the measures to set
 	 */
-	public void setMeasures(List<Measure> measures) {
-		Measures = measures;
+	public void setMeasures(LinkedList<Measure> measures) {
+		Measures.setMeasures(measures);;
 	}
 
 	/**
