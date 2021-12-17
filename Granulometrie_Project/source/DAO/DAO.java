@@ -107,7 +107,7 @@ public class DAO {
 	}
 
 	/**
-	 * This method is for fetching our database
+	 * This method is for fetching our database now
 	 * @param data
 	 * @param image
 	 */
