@@ -44,11 +44,6 @@ public class MeasuresList implements Iterable<Measure> {
 		return this.measures.size();
 	}
 	
-	@Override
-	public Iterator iterator() {
-		return this.measures.iterator();
-	}
-
 	/**
 	 * @return the measures
 	 */
@@ -61,6 +56,11 @@ public class MeasuresList implements Iterable<Measure> {
 	 */
 	public void setMeasures(LinkedList<Measure> measures) {
 		this.measures = measures;
+	}
+
+	@Override
+	public Iterator iterator() {
+		return this.measures.iterator();
 	}
 
 	@Override

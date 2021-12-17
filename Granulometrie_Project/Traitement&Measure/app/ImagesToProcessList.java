@@ -14,23 +14,26 @@ import java.util.LinkedList;
 public class ImagesToProcessList implements Iterable {
 
 	private LinkedList<String> image_list;
-	
+	/**
+	 * constructor
+	 * initialize image_list as a LinkedList<String>()
+	 * */
 	public ImagesToProcessList() {
 		super();
 		this.image_list = new LinkedList<String>();
 	}
 
 	/** 
-	 * Ajoute une image dans la liste, d'après son nom
-	 * @param image_name nom du fichier à ajouter
+	 * add an image in the list from his name
+	 * @param image_name name of the file to add
 	 */
 	public void addImageName(String image_name) {
 		this.image_list.add(image_name);
 	}
 
 	/**
-	 * Ajoute toutes les images d'un dossier dans la liste
-	 * @param image_path chemin d'accès au dossier
+	 * add every image from a folder in the list
+	 * @param image_path path of the folder
 	 */
 	public void addImagesFromFolder(String image_path) {
 		File dir = new File(image_path);
@@ -44,7 +47,7 @@ public class ImagesToProcessList implements Iterable {
 
 	@Override
 	/**
-	 * Renvoie un itérateur pour parcourir la liste des noms d'images.
+	 * return an Iterator to browse a list
 	 */
 	public Iterator iterator() {
 		return this.image_list.iterator();

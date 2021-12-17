@@ -1,6 +1,5 @@
 package test;
 
-
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.image.Image;

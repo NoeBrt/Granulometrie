@@ -12,9 +12,9 @@ public class CCLabeler {
     private String image_name = null;
 
     /**
-     * Binarise l'image, fond noir, caractères blancs.
+     * Binirise the images, black background and white character.
      *
-     * @param imOriginale Image à binariser
+     * @param imOriginale Image to� binarise
      * @return image binaire
      */
     private ImagePlus binarise(ImagePlus imOriginale) {
@@ -26,8 +26,9 @@ public class CCLabeler {
 
 
     /**
-     * Détection des composantes connexes dans l'image.
-     *
+     *Find every data in image
+     *@param imBinary
+     *@return data
      */
     private ResultsTable findParticles(ImagePlus imBinary) {
 
@@ -42,7 +43,15 @@ public class CCLabeler {
         return (data);
     }
 
-
+    /**
+     * @param data
+     * @return measure_list 
+     * 
+     * it take all data which get find by findParticles and order it in a new MeasureList then initialize this.measures_list and return it
+     * 
+     * 
+     * 
+     * */
     private MeasuresList getCCInformations(ResultsTable data) {
         // allocation structure
         MeasuresList measures_list = new MeasuresList(this.image_name);
@@ -66,10 +75,8 @@ public class CCLabeler {
 
 
     /**
-     * Liste des mesures.
-     * Cette liste contient les mesures faites sur l'image. Elle est vidée à chaque nouveau calcul,
-     * et ne contient donc que les mesures réalisées par le dernier appel à la fonction process().
-     *
+     * List of measures
+     * This list have the image's measures. It be cleaned at every process, and contain only measures did by the last call of process()
      * @return MeasuresList
      * @see MeasuresList
      * @see CCLabeler
@@ -79,7 +86,7 @@ public class CCLabeler {
     }
 
     /**
-     * Fabrique l'image de sortie.
+     * Generate the outPut image
      */
     private void generate_output(ImagePlus imInput) {
 
@@ -116,37 +123,18 @@ public class CCLabeler {
 
 
     /**
-     * Inventorie toutes les composantes de l'image, en vue de les compter.
+     * @param image_name
+     * At the beginnin it set the image_name to the local attributes image_name. After it instanciate and ImagePlus image which get the return of openImage which if in the IF packages
+     * Then we binarise this image and store the result in and ImagePlus again. After this we create and ResultatsTable object which is the return of findParticles
+     * To finish bycreate an MeasuresListObject which is the return of the method getCCInformations . this.measure_list isn't set in the function beacuse it has been set in getCCInformations
      *
      */
     public void process(String image_name) {
 
         this.image_name = image_name;
-        // Load photo
         ImagePlus imOriginale = IJ.openImage(this.image_name);
-        //System.out.println("[" + imOriginale.getWidth() + " x " + imOriginale.getHeight() + "] " + this.image_name);
-
-        // Preprocessing 3 - binariser
         ImagePlus imBinary = this.binarise(imOriginale);
-		//IJ.save( imBinary, "3-bin.jpg" );
-
-        // composantes connexes
         ResultsTable data = findParticles(imBinary);
-
-        // acquisition des mesures
         MeasuresList measure_list = getCCInformations(data);
-
-        // affiche les mesures
-        System.out.println(measure_list);
-
-        // récupération des données dans la liste des mesures
-/*
-        for (Object o : measure_list) {
-            Measure m =  (Measure)o;
-            System.out.println(m.getCentre_x());
-        }
-*/
-        // enregistre l'image avec centres et bounding boxes
-        //this.generate_output(imOriginale);
     }
 }
