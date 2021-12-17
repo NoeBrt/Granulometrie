@@ -4,7 +4,6 @@ package Model;
 import java.util.HashMap;
 import java.util.List;
 import javafx.scene.image.Image;
-
 /**
  * 
  */
@@ -23,7 +22,7 @@ public class GranuloData {
     /**
      * Measure list, each Measure represent grain specifities  
      */
-    private List<Measure> Measures;
+    private MeasureList Measures;
     
     /**
      * Measure list result after the Scale, used to conserve the value of the initial Measure List
