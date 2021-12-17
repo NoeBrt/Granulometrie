@@ -49,6 +49,20 @@ public class MeasuresList implements Iterable<Measure> {
 		return this.measures.iterator();
 	}
 
+	/**
+	 * @return the measures
+	 */
+	public LinkedList<Measure> getMeasures() {
+		return measures;
+	}
+
+	/**
+	 * @param measures the measures to set
+	 */
+	public void setMeasures(LinkedList<Measure> measures) {
+		this.measures = measures;
+	}
+
 	@Override
 	public String toString() {
 		return "MeasuresList{" +
