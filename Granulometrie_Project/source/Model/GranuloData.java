@@ -23,7 +23,7 @@ public class GranuloData {
         // TODO implement here
     }
     /**
-     * Measure list, each Measure represent grain specifities  
+     * Measure list, each Measure represent grain specifities, import from app.MeasureList 
      */
     private MeasuresList Measures;
     
