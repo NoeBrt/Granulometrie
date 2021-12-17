@@ -20,7 +20,7 @@ public class DAO {
 		this.url = "jdbc:mysql://localhost/Granulometrie";
 		this.login = "root";
 		this.password = "";
-		connection = SingleConnection.getInstance(url, login, password);
+		this.connection = SingleConnection.getInstance(url, login, password);
 	}
 
 	/**
