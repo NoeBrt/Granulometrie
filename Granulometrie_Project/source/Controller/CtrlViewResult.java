@@ -18,6 +18,16 @@ import javafx.scene.image.Image;
  * constructor has no parameters
  */
 public class CtrlViewResult {
+	
+	   /**
+     * the constructor of CtrlResultView
+     * @param model
+     * the constructor holds one parameter the data model
+     */
+    public CtrlViewResult(GranuloData model) {
+        // TODO implement here
+    }
+    
     /**
      * the first bubble chart displays grains by their size
      */
@@ -73,16 +83,6 @@ public class CtrlViewResult {
 	@FXML
     private Button exportButton;
 
-
-    /**
-     * the constructor of CtrlResultView
-     * @param model
-     * the constructor holds one parameter the data model
-     */
-	@FXML
-    public void CtrlResultView(GranuloData model) {
-        // TODO implement here
-    }
 	
     /**
      * setScaleMinMax
