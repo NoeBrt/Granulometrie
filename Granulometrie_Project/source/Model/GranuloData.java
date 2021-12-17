@@ -2,6 +2,7 @@ package Model;
 
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import app.MeasuresList;
@@ -29,7 +30,7 @@ public class GranuloData {
     /**
      * Measure list result after the Scale, used to conserve the value of the initial Measure List
      */
-    private List<Measure> MeasuresAfterScale;
+    private LinkedList<Measure> MeasuresAfterScale;
 
     /**
      *minimum size  of a grain for traitement (for result scaling )
@@ -76,7 +77,7 @@ public class GranuloData {
      * Finally it return CCLabeler.getMeasure
      * 
      */
-    public List<Measure> process(Image image) {
+    public MeasuresList process(Image image) {
 		return Measures;
     }
     /**
