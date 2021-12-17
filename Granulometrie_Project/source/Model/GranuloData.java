@@ -9,7 +9,7 @@ import app.Measure;
 import app.MeasuresList;
 import javafx.scene.image.Image;
 /**
- * 
+ *Images and traitement will be done here 
  */
 public class GranuloData {
 	 /**  
