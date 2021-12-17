@@ -150,7 +150,7 @@ public class DAO {
 	 * @param Image
 	 * @param idParametrege
 	 */
-	public void DeleteParametrage(Image images, int idParametrege) {
+	public void deleteParametrage(Image images, int idParametrege) {
 		// TODO implement here
 	}
 
@@ -161,7 +161,7 @@ public class DAO {
 	 * @param Image
 	 * @param idParametrage
 	 */
-	public void UpdateParametrage(Image Image, int idParametrage) {
+	public void updateParametrage(Image Image, int idParametrage) {
 		// TODO implement here
 	}
 

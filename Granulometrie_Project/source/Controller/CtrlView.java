@@ -12,7 +12,7 @@ public class CtrlView{
      * import button import an image
      */
 	@FXML
-    private Button ImportButton;
+    private Button importButton;
 
 	 /**
      * launch processing button start processing

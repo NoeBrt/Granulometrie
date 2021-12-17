@@ -119,7 +119,7 @@ public class CtrlViewResult {
      * @return void
      * this method has no return type
      */
-    public Image GraphToImage(BubbleChart<?, ?> Graph) {
+    public Image graphToImage(BubbleChart<?, ?> Graph) {
         // TODO implement here
         return null;
     }
@@ -146,21 +146,21 @@ public class CtrlViewResult {
      * this method has no return type
      */
 	@FXML
-    public void ExportJpg() {
+    public void exportJpg() {
         // TODO implement here
     }
 
     /**
      * 
      * ExportJpg
-     * this method save chart data in local directory in csv format
+     * this method save chart data in local directory in csv format with WriteCSV with the metod statWriting
      * @param 
      * this method has no parameters
      * @return void
      * this method has no return type
      */
 	@FXML
-    public void ExportCsv() {
+    public void exportCsv() {
         // TODO implement here
     }
 
@@ -173,7 +173,7 @@ public class CtrlViewResult {
      * this methode has no return type
      */
 	@FXML
-    public void UpdateGraph() {
+    public void updateGraph() {
         // TODO implement here
     }
 	
