@@ -51,48 +51,39 @@ public class DAO {
 	}
 
 	/**
-	 * 
-	 */
-	public void getDB() {
-		// TODO implement here
-	}
-
-	/**
-	 * 
-	 */
-	public void getData() {
-		// TODO implement here
-	}
-
-	/**
-	 * 
+	 * This method is for fetching the table Images from our database
+	 * it will send a specific sql query that will select the data
 	 */
 	public void getTableImages() {
 		// TODO implement here
 	}
 
 	/**
-	 * 
+	 * This method is for fetching the table Grains from our database
+	 * it will send a specific sql query that will select the data
 	 */
 	public void getTableGrains() {
 		// TODO implement here
 	}
 
 	/**
-	 * 
+	 * This method is for fetching the table Grains from our database
+	 * it will send a specific sql query that will select the data
 	 */
 	public void getTableParametrage() {
 		// TODO implement here
 	}
 
 	/**
-	 * 
+	 * This method is for fetching the table famille from our database
+	 * it will send a specific sql query that will select the data
 	 */
 	public void getTableFamille() {
 		// TODO implement here
 	}
 
 	/**
+	 * This method is for fetching our database
 	 * @param image
 	 */
 	public void getData(Image image) {
@@ -100,6 +91,7 @@ public class DAO {
 	}
 
 	/**
+	 * This method is for fetching our database
 	 * @param index
 	 */
 	public void getData(int index) {
@@ -107,6 +99,7 @@ public class DAO {
 	}
 
 	/**
+	 * This method is for fetching our database
 	 * @param index
 	 */
 	public void deleteData(int index) {
@@ -114,6 +107,7 @@ public class DAO {
 	}
 
 	/**
+	 * This method is for fetching our database
 	 * @param data
 	 * @param image
 	 */
@@ -122,6 +116,8 @@ public class DAO {
 	}
 
 	/**
+	 * This method is for deleting data from the Parametrage table
+	 * it will send a specific sql query that will select the data
 	 * @param Image
 	 * @param idParametrege
 	 */
@@ -130,6 +126,8 @@ public class DAO {
 	}
 
 	/**
+	 * This method is for updating data in the Parametrage table
+	 * it will send a specific sql query that will select the data
 	 * @param Image
 	 * @param idParametrage
 	 */
