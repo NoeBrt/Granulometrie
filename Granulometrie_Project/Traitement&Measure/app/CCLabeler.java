@@ -120,10 +120,11 @@ public class CCLabeler {
 
 
     /**
-     * @param image_name
      * At the beginning it set the image_name to the local attribute image_name. After, it instantiate and ImagePlus image which get the return of openImage which if in the if package
      * Then we binarise this image and store the result in an ImagePlus Object again. After this we create and ResultatsTable object which is the return of findParticles
      * To finish it create an MeasuresListObject which is the return of the method getCCInformations . this.measure_list isn't set in the function beacuse it has been set in getCCInformations
+     * @param image_name
+     * 
      *
      */
     public void process(String image_name) {

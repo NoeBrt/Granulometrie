@@ -13,11 +13,12 @@ import javafx.scene.image.Image;
  */
 public class GranuloData {
 	 /**  
-     * @param image
-     * Constructor of GranuloData object,
+	 * Constructor of GranuloData object,
      * it instanciate Measures with process(image) and image with this.Image
      * Date and Time will be instanciate with the current date & time with java.time.LocalDate.now() and java.time.LocalTime.now()
      * set grain Scale with default value (setScale(min,max))
+     * @param image
+     * 
      *     
      */
     public GranuloData(Image image) {
@@ -70,30 +71,33 @@ public class GranuloData {
 
    
     /**
-     * @param image
-     * @return the measures list after the image Traitement (CCLabeler.getMeasure)
-     * 
      * the methods store an image in ImageToProcessList object. It addImageName(image.getUrl()) will put this in ImageToProcessList's LinkedList
      * after that, the methods create an CCLabeler object. Then, for each Image in the list, it past the images url in the CCLabeler. 
      * Finally it return CCLabeler.getMeasure
+     * 
+     * @param image
+     * @return the measures list after the image Traitement (CCLabeler.getMeasure)
+     * 
+     *
      * 
      */
     public MeasuresList process(Image image) {
 		return null;
     }
     /**
+     * set scale of the Measures List max grain size< measures <min grain size,  it remove measure element from the list who are <min and >max, it actualise Clusters too
      * @param min 
      * @param max
-     * set scale of the Measures List max grain size< measures <min grain size,  it remove measure element from the list who are <min and >max, it actualise Clusters too
      */
     public void setScale(float min, float max) {
         // TODO implement here
     }
 
     /**
-     * @param 
      * Create a HashMap<Integer, Measure> Cluster and set Scale of each Cluster (index & List<Measure>) according to Grains's size 
      * (if float=2.0, then list<Mesuse> with index=0 will contain Grains Measure size beetween 0 and <2.0. index=1 Grains Measure size beetween 2.0 & <4.0 ...ect)
+     * @param void
+     * 
      */
     public void setClusters(float etalon) {
         // TODO implement here

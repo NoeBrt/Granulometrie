@@ -89,8 +89,8 @@ public class CtrlView{
     }
     
     /**
+     *Initialize is an implemented method allows the user to define actions to buttons without using fxml file
      * @return void
-     * Initialize is an implemented method allows the user to define actions to buttons without using fxml file
      */
 	@FXML
     public void initialize() {
