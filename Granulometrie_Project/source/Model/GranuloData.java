@@ -70,12 +70,12 @@ public class GranuloData {
 	/**
 	 * minimum size of a grain for traitement (for result scaling )
 	 */
-	private Float grainMin;
+	private Float tailleGrainnMin;
 
 	/**
 	 * maximum size of a grain for traitement (for result scaling )
 	 */
-	private Float grainMax;
+	private int tailleGrainMax;
 
 	/**
 	 * User's image to process
@@ -106,14 +106,20 @@ public class GranuloData {
 	/**
 	 * set scale of the Measures List max grain size< measures <min grain size, it
 	 * remove measure element from the list who are <min and >max, it actualise
-	 * Clusters too
+	 * Clusters too (size is the average of the grain principal axes)
 	 * 
 	 * @param min
 	 * @param max
 	 */
-	public void setScale(float min, float max) {
-	
-		
+	public void setScale(int min, int max) {
+		int size;
+		for (Measure grain : this.MeasuresAfterScale) {
+			size = (grain.getHeight() + grain.getWidth()) / 2;
+			if (size < min || size > max) {
+				this.MeasuresAfterScale.remove(grain);
+			}
+		}
+
 	}
 
 	/**
