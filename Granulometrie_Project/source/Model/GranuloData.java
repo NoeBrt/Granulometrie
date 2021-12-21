@@ -112,10 +112,8 @@ public class GranuloData {
 	 * @param max
 	 */
 	public void setScale(int min, int max) {
-		int size;
 		for (Measure grain : this.MeasuresAfterScale) {
-			size = (grain.getHeight() + grain.getWidth()) / 2;
-			if (size < min || size > max) {
+			if (grain.getSize() < min || grain.getSize() > max) {
 				this.MeasuresAfterScale.remove(grain);
 			}
 		}
@@ -132,7 +130,12 @@ public class GranuloData {
 	 * 
 	 */
 	public void setClusters(float etalon) {
-		// TODO implement here
+		
+		
+		for (Measure grain : this.MeasuresAfterScale) {
+		if (grain.getSize()>etalon){
+			
+		}}
 	}
 
 	// Getter & Setter
@@ -144,6 +147,7 @@ public class GranuloData {
 		return Measures;
 	}
 
+
 	/**
 	 * @param measures the measures to set
 	 */
@@ -151,8 +155,6 @@ public class GranuloData {
 		Measures.setMeasures(measures);
 		;
 	}
-
-	
 
 	/**
 	 * @return the tailleGrainnMin
@@ -181,6 +183,7 @@ public class GranuloData {
 	public void setTailleGrainMax(int tailleGrainMax) {
 		this.tailleGrainMax = tailleGrainMax;
 	}
+
 	/**
 	 * @return the image
 	 */
