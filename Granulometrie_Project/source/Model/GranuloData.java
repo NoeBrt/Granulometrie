@@ -1,110 +1,136 @@
 package Model;
 
-
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import app.CCLabeler;
 import app.Measure;
 import app.MeasuresList;
+import ij.ImagePlus;
 import javafx.scene.image.Image;
+
 /**
- *Images and traitement will be done here 
+ * Images and traitement will be done here
  */
 public class GranuloData {
-	 /**  
-	 * Constructor of GranuloData object,
-     * it instanciate Measures with process(image) and image with this.Image
-     * Date and Time will be instanciate with the current date & time with java.time.LocalDate.now() and java.time.LocalTime.now()
-     * set grain Scale with default value (setScale(min,max))
-     * @param image
-     * 
-     *     
-     */
-    public GranuloData(Image image) {
-        // TODO implement here
-    }
-    /**
-     * Measure list, each Measure represent a grain specifities, import from app.MeasureList 
-     */
-    private MeasuresList Measures;
-    
-    /**
-     * Measure list result after the Scale, used to conserve the value of the initial Measure List
-     */
-    private LinkedList<Measure> MeasuresAfterScale;
+	/**
+	 * Constructor of GranuloData object, it instanciate Measures with
+	 * process(image) and image with this.Image Date and Time will be instanciate
+	 * with the current date & time with java.time.LocalDate.now() and
+	 * java.time.LocalTime.now() set grain Scale with default value
+	 * (setScale(min,max))
+	 * 
+	 * @param image
+	 */
+	public GranuloData(Image image) {
+		this.Measures = process(image);
+		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
+		this.image = image;
+		this.comment = "";
+		this.Date = LocalDate.now().toString();
+		this.Time = LocalTime.now().toString().substring(0, 8);
+		this.Clusters = new HashMap<>();
+		setScale(0, 10);
+	}
 
-    /**
-     *minimum size  of a grain for traitement (for result scaling )
-     */
-    private Float grainMin;
+	/**
+	 * the methods store an image in ImageToProcessList object. It
+	 * addImageName(image.getUrl()) will put this in ImageToProcessList's LinkedList
+	 * after that, the methods create an CCLabeler object. Then, for each Image in
+	 * the list, it past the images url in the CCLabeler. Finally it return
+	 * CCLabeler.getMeasure
+	 * 
+	 * @param image
+	 * @return the measures list after the image Traitement (CCLabeler.getMeasure)
+	 * 
+	 *
+	 * 
+	 */
+	public MeasuresList process(Image image) {
+		CCLabeler counter = new CCLabeler();
+		counter.process(image.getUrl());
+		return counter.getMeasures();
+	}
 
-    /**
-     *maximum size  of a grain for traitement (for result scaling )
-     */
-    private Float grainMax;
+	/**
+	 * Measure list, each Measure represent a grain specifities, import from
+	 * app.MeasureList
+	 */
+	private MeasuresList Measures;
 
-    /**
-     * User's image to process
-     */
-    private Image image;
+	/**
+	 * Measure list result after the Scale, used to conserve the value of the
+	 * initial Measure List
+	 */
+	private LinkedList<Measure> MeasuresAfterScale;
 
-    /**
-     * user comment of image 
-     */
-    private String comment;
+	/**
+	 * minimum size of a grain for traitement (for result scaling )
+	 */
+	private Float grainMin;
 
-    /**
-     * current Date
-     */
-    private String Date;
+	/**
+	 * maximum size of a grain for traitement (for result scaling )
+	 */
+	private Float grainMax;
 
-    /**
-     * current Time
-     */
-    private String Time;
+	/**
+	 * User's image to process
+	 */
+	private Image image;
 
-    /**
-     * Clusters contain a List of a Measure List with index, allows to classify the measures according with some conditions set in setCluster
-     */
-    private HashMap<Integer, List<Measure>> Clusters;
+	/**
+	 * user comment of image
+	 */
+	private String comment;
 
-   
-    /**
-     * the methods store an image in ImageToProcessList object. It addImageName(image.getUrl()) will put this in ImageToProcessList's LinkedList
-     * after that, the methods create an CCLabeler object. Then, for each Image in the list, it past the images url in the CCLabeler. 
-     * Finally it return CCLabeler.getMeasure
-     * 
-     * @param image
-     * @return the measures list after the image Traitement (CCLabeler.getMeasure)
-     * 
-     *
-     * 
-     */
-    public MeasuresList process(Image image) {
-		return null;
-    }
-    /**
-     * set scale of the Measures List max grain size< measures <min grain size,  it remove measure element from the list who are <min and >max, it actualise Clusters too
-     * @param min 
-     * @param max
-     */
-    public void setScale(float min, float max) {
-        // TODO implement here
-    }
+	/**
+	 * current Date
+	 */
+	private String Date;
 
-    /**
-     * Create a HashMap<Integer, Measure> Cluster and set Scale of each Cluster (index & List<Measure>) according to Grains's size 
-     * (if float=2.0, then list<Mesuse> with index=0 will contain Grains Measure size beetween 0 and <2.0. index=1 Grains Measure size beetween 2.0 & <4.0 ...ect)
-     * @param void
-     * 
-     */
-    public void setClusters(float etalon) {
-        // TODO implement here
-    }
-    
-    // Getter & Setter 
-    
+	/**
+	 * current Time
+	 */
+	private String Time;
+
+	/**
+	 * Clusters contain a List of a Measure List with index, allows to classify the
+	 * measures according with some conditions set in setCluster
+	 */
+	private HashMap<Integer, List<Measure>> Clusters;
+
+	/**
+	 * set scale of the Measures List max grain size< measures <min grain size, it
+	 * remove measure element from the list who are <min and >max, it actualise
+	 * Clusters too
+	 * 
+	 * @param min
+	 * @param max
+	 */
+	public void setScale(float min, float max) {
+	
+		
+	}
+
+	/**
+	 * Create a HashMap<Integer, Measure> Cluster and set Scale of each Cluster
+	 * (index & List<Measure>) according to Grains's size (if float=2.0, then
+	 * list<Mesuse> with index=0 will contain Grains Measure size beetween 0 and
+	 * <2.0. index=1 Grains Measure size beetween 2.0 & <4.0 ...ect)
+	 * 
+	 * @param void
+	 * 
+	 */
+	public void setClusters(float etalon) {
+		// TODO implement here
+	}
+
+	// Getter & Setter
+
 	/**
 	 * @return the measures
 	 */
@@ -116,7 +142,8 @@ public class GranuloData {
 	 * @param measures the measures to set
 	 */
 	public void setMeasures(LinkedList<Measure> measures) {
-		Measures.setMeasures(measures);;
+		Measures.setMeasures(measures);
+		;
 	}
 
 	/**
@@ -169,7 +196,7 @@ public class GranuloData {
 	}
 
 	/**
-	 * @param comment the Image 
+	 * @param comment the Image
 	 */
 	public void setComment(String comment) {
 		this.comment = comment;
@@ -188,15 +215,16 @@ public class GranuloData {
 	public String getTime() {
 		return Time;
 	}
+
 	/**
 	 * @return the cluster
 	 */
 	public HashMap<Integer, List<Measure>> getClusters() {
 		return Clusters;
 	}
-	
+
 	/**
-	 * @return the measures after scale 
+	 * @return the measures after scale
 	 */
 	public List<Measure> getMeasuresAfterScale() {
 		return MeasuresAfterScale;
