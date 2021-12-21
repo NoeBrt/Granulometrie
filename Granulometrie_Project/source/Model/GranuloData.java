@@ -2,6 +2,7 @@ package Model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +33,6 @@ public class GranuloData {
 		this.comment = "";
 		this.Date = LocalDate.now().toString();
 		this.Time = LocalTime.now().toString().substring(0, 8);
-		this.Clusters = new HashMap<>();
 		setScale(0, 10);
 	}
 
@@ -98,7 +98,7 @@ public class GranuloData {
 	private String Time;
 
 	/**
-	 * Clusters contain a List of a Measure List with index, allows to classify the
+	 * Clusters contain a List of a Measure List with index (, allows to classify the
 	 * measures according with some conditions set in setCluster
 	 */
 	private HashMap<Integer, List<Measure>> Clusters;
@@ -112,6 +112,7 @@ public class GranuloData {
 	 * @param max
 	 */
 	public void setScale(int min, int max) {
+		this.Clusters = new HashMap<>();
 		for (Measure grain : this.MeasuresAfterScale) {
 			if (grain.getSize() < min || grain.getSize() > max) {
 				this.MeasuresAfterScale.remove(grain);
@@ -129,13 +130,19 @@ public class GranuloData {
 	 * @param void
 	 * 
 	 */
-	public void setClusters(float etalon) {
+	public void setClusters(int etalon) {
+		LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
 		
-		
-		for (Measure grain : this.MeasuresAfterScale) {
+		while (!MeasuresTemp.isEmpty()) {
+		for (Measure grain : MeasuresTemp) {
 		if (grain.getSize()>etalon){
-			
-		}}
+			Clusters.put(etalon, new ArrayList<>());
+			Clusters.get(etalon).add(grain);
+			MeasuresTemp.remove(grain);
+		}
+		}
+		etalon+=etalon;}
+		
 	}
 
 	// Getter & Setter
@@ -147,29 +154,12 @@ public class GranuloData {
 		return Measures;
 	}
 
-
-	/**
-	 * @param measures the measures to set
-	 */
-	public void setMeasures(LinkedList<Measure> measures) {
-		Measures.setMeasures(measures);
-		;
-	}
-
 	/**
 	 * @return the tailleGrainnMin
 	 */
 	public Float getTailleGrainnMin() {
 		return tailleGrainnMin;
 	}
-
-	/**
-	 * @param tailleGrainnMin the tailleGrainnMin to set
-	 */
-	public void setTailleGrainnMin(Float tailleGrainnMin) {
-		this.tailleGrainnMin = tailleGrainnMin;
-	}
-
 	/**
 	 * @return the tailleGrainMax
 	 */
