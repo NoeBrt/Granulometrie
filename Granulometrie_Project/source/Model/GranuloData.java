@@ -152,34 +152,35 @@ public class GranuloData {
 		;
 	}
 
+	
+
 	/**
-	 * @return the grainMin
+	 * @return the tailleGrainnMin
 	 */
-	public Float getGrainMin() {
-		return grainMin;
+	public Float getTailleGrainnMin() {
+		return tailleGrainnMin;
 	}
 
 	/**
-	 * @param grainMin the grainMin to set
+	 * @param tailleGrainnMin the tailleGrainnMin to set
 	 */
-	public void setGrainMin(Float grainMin) {
-		this.grainMin = grainMin;
+	public void setTailleGrainnMin(Float tailleGrainnMin) {
+		this.tailleGrainnMin = tailleGrainnMin;
 	}
 
 	/**
-	 * @return the grainMax
+	 * @return the tailleGrainMax
 	 */
-	public Float getGrainMax() {
-		return grainMax;
+	public int getTailleGrainMax() {
+		return tailleGrainMax;
 	}
 
 	/**
-	 * @param grainMax the grainMax to set
+	 * @param tailleGrainMax the tailleGrainMax to set
 	 */
-	public void setGrainMax(Float grainMax) {
-		this.grainMax = grainMax;
+	public void setTailleGrainMax(int tailleGrainMax) {
+		this.tailleGrainMax = tailleGrainMax;
 	}
-
 	/**
 	 * @return the image
 	 */
