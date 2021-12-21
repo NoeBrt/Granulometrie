@@ -82,6 +82,11 @@ public class Measure {
 		this.centre_y = centre_y;
 	}
 
+	public int getSize() {
+		return ((this.width+this.height)/2);
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Measure{" +
