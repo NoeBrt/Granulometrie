@@ -132,7 +132,7 @@ public class GranuloData {
 	public void setClusters(int etalon) {
 		LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
 
-		while (!MeasuresTemp.isEmpty()) {
+		while (MeasuresTemp.isEmpty()) {
 			for (Measure grain : MeasuresTemp) {
 				if (grain.getSize() > etalon) {
 					Clusters.put(etalon, new ArrayList<>());
