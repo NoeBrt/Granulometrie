@@ -25,8 +25,10 @@ public class CtrlViewResult {
      * the constructor holds one parameter the data model
      */
     public CtrlViewResult(GranuloData model) {
-        // TODO implement here
-    }
+    	this.GranuloModel=model;
+    	}
+    
+    private GranuloData GranuloModel;
     
     /**
      * the first bubble chart displays grains by their size
@@ -95,9 +97,17 @@ public class CtrlViewResult {
 	
 	@FXML
     public void setScaleMinMax() {
-        // TODO implement here
+		GranuloModel.setScale(Integer.parseInt(sizeMin.getText()),Integer.parseInt(sizeMax.getText()));
     }
 	
+	/*
+	 * setComment
+	 * this method set Comment in model
+	 * 
+	 */
+	 public void setComment() {
+			GranuloModel.setComment(comment.getText());;
+	    }
     /**
      * saveDataBase
      * this methode save data in database
@@ -135,6 +145,7 @@ public class CtrlViewResult {
 	@FXML
     public void setCluster() {
         // TODO implement here
+		GranuloModel.setClusters( Integer.parseInt(clusterWidth.getText()));
     }
 
     /**
