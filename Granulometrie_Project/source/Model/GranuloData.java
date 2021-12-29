@@ -10,7 +10,6 @@ import java.util.List;
 import app.CCLabeler;
 import app.Measure;
 import app.MeasuresList;
-import ij.ImagePlus;
 import javafx.scene.image.Image;
 
 /**
@@ -37,7 +36,7 @@ public class GranuloData {
 	}
 
 	/**
-	 * the methods store an image in ImageToProcessList object. It
+	 * the methods store an image in ImageToProcessList object. It	
 	 * addImageName(image.getUrl()) will put this in ImageToProcessList's LinkedList
 	 * after that, the methods create an CCLabeler object. Then, for each Image in
 	 * the list, it past the images url in the CCLabeler. Finally it return
@@ -98,8 +97,8 @@ public class GranuloData {
 	private String Time;
 
 	/**
-	 * Clusters contain a List of a Measure List with index (, allows to classify the
-	 * measures according with some conditions set in setCluster
+	 * Clusters contain a List of a Measure List with index (, allows to classify
+	 * the measures according with some conditions set in setCluster
 	 */
 	private HashMap<Integer, List<Measure>> Clusters;
 
@@ -132,17 +131,18 @@ public class GranuloData {
 	 */
 	public void setClusters(int etalon) {
 		LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
-		
+
 		while (!MeasuresTemp.isEmpty()) {
-		for (Measure grain : MeasuresTemp) {
-		if (grain.getSize()>etalon){
-			Clusters.put(etalon, new ArrayList<>());
-			Clusters.get(etalon).add(grain);
-			MeasuresTemp.remove(grain);
+			for (Measure grain : MeasuresTemp) {
+				if (grain.getSize() > etalon) {
+					Clusters.put(etalon, new ArrayList<>());
+					Clusters.get(etalon).add(grain);
+					MeasuresTemp.remove(grain);
+				}
+			}
+			etalon += etalon;
 		}
-		}
-		etalon+=etalon;}
-		
+
 	}
 
 	// Getter & Setter
@@ -160,6 +160,7 @@ public class GranuloData {
 	public Float getTailleGrainnMin() {
 		return tailleGrainnMin;
 	}
+
 	/**
 	 * @return the tailleGrainMax
 	 */
