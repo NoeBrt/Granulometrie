@@ -131,19 +131,21 @@ public class GranuloData {
 	 */
 	public void setClusters(int etalon) {
 		LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
-
-		while (MeasuresTemp.isEmpty()) {
+		int key=etalon;
+		do {	
 			for (Measure grain : MeasuresTemp) {
-				if (grain.getSize() > etalon) {
-					Clusters.put(etalon, new ArrayList<>());
-					Clusters.get(etalon).add(grain);
-					MeasuresTemp.remove(grain);
+				if (!Clusters.containsKey(key)) {
+					Clusters.put(key, new ArrayList<>());
 				}
-			}
-			etalon += etalon;
+				if (grain.getSize() > (key-etalon)&&grain.getSize()<key) {
+					Clusters.get(key).add(grain);
+					}
+				}
+			MeasuresTemp.removeAll(Clusters.get(key));
+			key += etalon;
+			System.out.println(MeasuresTemp.size());
+		}while (!MeasuresTemp.isEmpty());
 		}
-
-	}
 
 	// Getter & Setter
 
