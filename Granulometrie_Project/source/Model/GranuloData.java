@@ -34,6 +34,16 @@ public class GranuloData {
 		this.Time = LocalTime.now().toString().substring(0, 8);
 		setScale(0, 10);
 	}
+	
+	public GranuloData(String url) {
+		this.Measures = process(url);
+		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
+		this.image = new Image(url);
+		this.comment = "";
+		this.Date = LocalDate.now().toString();
+		this.Time = LocalTime.now().toString().substring(0, 8);
+		setScale(0, 10);
+	}
 
 	/**
 	 * the methods store an image in ImageToProcessList object. It	
@@ -53,6 +63,12 @@ public class GranuloData {
 		counter.process(image.getUrl());
 		return counter.getMeasures();
 	}
+	public MeasuresList process(String url) {
+		CCLabeler counter = new CCLabeler();
+		counter.process(url);
+		return counter.getMeasures();
+	}
+
 
 	/**
 	 * Measure list, each Measure represent a grain specifities, import from
