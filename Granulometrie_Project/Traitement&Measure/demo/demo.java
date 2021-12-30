@@ -106,7 +106,7 @@ public class demo {
 		//HashSet<Measure> 
 		for (Iterator<Measure> iterator = MeasuresTemp1.iterator(); iterator.hasNext(); ) {
 		    Measure value = iterator.next();
-		    if (value.equals()) {
+		   // if (value.equals()) {
 		        iterator.remove();
 		    }
 		/*
