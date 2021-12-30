@@ -123,28 +123,27 @@ public class GranuloData {
 	/**
 	 * Create a HashMap<Integer, Measure> Cluster and set Scale of each Cluster
 	 * (index & List<Measure>) according to Grains's size (if float=2.0, then
-	 * list<Mesuse> with index=0 will contain Grains Measure size beetween 0 and
-	 * <2.0. index=1 Grains Measure size beetween 2.0 & <4.0 ...ect)
+	 * list<Mesuse> with index=2 will contain Grains Measure size beetween 0 and
+	 * <=2.0. index=4 Grains Measure size beetween 2.0 & <4.0 ...ect)
 	 * 
 	 * @param void
 	 * 
 	 */
 	public void setClusters(int etalon) {
 		LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
-		int key=etalon;
-		do {	
+		int keyEtalon=etalon;
+		do {
 			for (Measure grain : MeasuresTemp) {
-				if (!Clusters.containsKey(key)) {
-					Clusters.put(key, new ArrayList<>());
+				if (!this.Clusters.containsKey(keyEtalon)) {
+					this.Clusters.put(keyEtalon, new ArrayList<>());
 				}
-				if (grain.getSize() > (key-etalon)&&grain.getSize()<key) {
-					Clusters.get(key).add(grain);
-					}
+				if (grain.getSize() > (keyEtalon - etalon) && grain.getSize() <= keyEtalon) {
+					this.Clusters.get(keyEtalon).add(grain);
 				}
-			MeasuresTemp.removeAll(Clusters.get(key));
-			key += etalon;
-			System.out.println(MeasuresTemp.size());
-		}while (!MeasuresTemp.isEmpty());
+			}
+			MeasuresTemp.removeAll(Clusters.get(keyEtalon));
+			keyEtalon += etalon;
+		} while (!MeasuresTemp.isEmpty());
 		}
 
 	// Getter & Setter
