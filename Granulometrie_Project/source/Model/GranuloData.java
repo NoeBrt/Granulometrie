@@ -112,7 +112,7 @@ public class GranuloData {
 	 */
 	public void setScale(int min, int max) {
 		this.Clusters = new HashMap<>();
-		for (Measure grain : this.MeasuresAfterScale) {
+		for (Measure grain : this.Measures) {
 			if (grain.getSize() < min || grain.getSize() > max) {
 				this.MeasuresAfterScale.remove(grain);
 			}
@@ -124,7 +124,7 @@ public class GranuloData {
 	 * Create a HashMap<Integer, Measure> Cluster and set Scale of each Cluster
 	 * (index & List<Measure>) according to Grains's size (if float=2.0, then
 	 * list<Mesuse> with index=2 will contain Grains Measure size beetween 0 and
-	 * <=2.0. index=4 Grains Measure size beetween 2.0 & <4.0 ...ect)
+	 * <=2.0. index=4 Grains Measure size beetween 2.0 & <=4.0 ...ect)
 	 * 
 	 * @param void
 	 * 
