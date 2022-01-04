@@ -35,6 +35,11 @@ public class GranuloData {
 		setScale(0, 10);
 	}
 	
+	/**
+	 * 2nd constructor who use Image url instead of javaFX attribut (useful for test)
+	 * 
+	 * @param url
+	 */
 	public GranuloData(String url) {
 		this.Measures = process(url);
 		this.imageUrl=url;
