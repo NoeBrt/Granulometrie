@@ -37,6 +37,7 @@ public class GranuloData {
 	
 	public GranuloData(String url) {
 		this.Measures = process(url);
+		this.imageUrl=url;
 		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
 		this.image = new Image(url);
 		this.comment = "";
@@ -111,6 +112,11 @@ public class GranuloData {
 	 * current Time
 	 */
 	private String Time;
+	
+	/*
+	 *Image url 
+	 */
+	private String imageUrl;
 
 	/**
 	 * Clusters contain a List of a Measure List with index (, allows to classify
