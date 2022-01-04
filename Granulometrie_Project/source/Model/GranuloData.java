@@ -69,6 +69,8 @@ public class GranuloData {
 		counter.process(image.getUrl());
 		return counter.getMeasures();
 	}
+	
+	
 	public MeasuresList process(String url) {
 		CCLabeler counter = new CCLabeler();
 		counter.process(url);
