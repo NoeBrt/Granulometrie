@@ -10,9 +10,11 @@ public class GranuloApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Granulo.fxml"));
+			AnchorPane root = FXMLLoader.load(getClass().getResource("Granulo.fxml"));
+			//AnchorPane root = new AnchorPane();
 			Scene scene = new Scene(root,400,400);
 			primaryStage.setScene(scene);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
