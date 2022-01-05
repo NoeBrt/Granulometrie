@@ -9,6 +9,6 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="src" path="source"/>
 	<classpathentry kind="src" path="Traitement&amp;Measure"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/fx&amp;mysql"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/FX&amp;MysqlConnector"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
