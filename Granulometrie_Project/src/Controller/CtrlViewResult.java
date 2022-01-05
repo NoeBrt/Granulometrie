@@ -5,6 +5,7 @@ import Model.GranuloData;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BubbleChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
@@ -46,7 +47,7 @@ public class CtrlViewResult {
      * user can leave a comment in comment text field
      */
 	@FXML
-    private TextField comment;
+    private TextArea comment;
 
     /**
      * save data base button insert data into database and update the database
@@ -75,15 +76,23 @@ public class CtrlViewResult {
      */
 	@FXML
     private TextField clusterWidth;
-
+   
     /**
      * exportButton
-     *  this button triggers two actions 
-     * 1_ export an image in jpg
-     * 2_ export data in csv
+     *  this button export an image in jpg
+     *
      */
 	@FXML
-    private Button exportButton;
+    private Button exportCSVButton;
+	
+	  /**
+     * exportButton
+     * this button export data in csv
+     *
+     */
+	@FXML
+    private Button exportJPGButton;
+
 
 	
     /**
