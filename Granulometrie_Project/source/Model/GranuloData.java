@@ -42,7 +42,7 @@ public class GranuloData {
 	 */
 	public GranuloData(String url) {
 		this.Measures = process(url);
-		this.imageUrl=url;
+		this.setImageUrl(url);
 		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
 		this.image = new Image(url);
 		this.comment = "";
@@ -259,6 +259,14 @@ public class GranuloData {
 	 */
 	public List<Measure> getMeasuresAfterScale() {
 		return MeasuresAfterScale;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }
