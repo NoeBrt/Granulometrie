@@ -86,6 +86,9 @@ public class Measure {
 		return ((this.width+this.height)/2);
 	}
 	
+	public double getRoundness() {
+		return (this.aire/(((double) this.height/2)*((double) this.height/2)*Math.PI))*100;
+	}
 	
 	@Override
 	public String toString() {
