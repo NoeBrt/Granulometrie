@@ -94,7 +94,16 @@ public class CtrlViewResult {
     private Button exportJPGButton;
 
 
-	
+    /**
+     *	initialize
+     *Initialize is an implemented method of Initializable interface that allows
+     *the user to define actions to buttons without using fxml file 
+     */
+	@FXML
+    public void initialize() {
+        // TODO implement here
+
+    }
     /**
      * setScaleMinMax
      * this method allows the user to define the min, max height of particles
@@ -198,14 +207,5 @@ public class CtrlViewResult {
     }
 	
 	
-    /**
-     *	initialize
-     *Initialize is an implemented method of Initializable interface that allows
-     *the user to define actions to buttons without using fxml file 
-     */
-	@FXML
-    public void initialize() {
-        // TODO implement here
 
-    }
 }
