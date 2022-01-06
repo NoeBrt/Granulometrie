@@ -4,10 +4,9 @@ import java.io.IOException;
 
 import CSV.WriteCsv;
 import Model.GranuloData;
-import app.Measure;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BubbleChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -44,19 +43,32 @@ public class CtrlViewResult {
 	 * the first bubble chart displays grains by their size
 	 */
 	@FXML
-	private BubbleChart<Double, Double> graphNbGrainSize;
+	private LineChart<Double, Double> graphNbGrainSize;
 
 	/**
 	 * the second bubble chart displays grains by area
 	 */
 	@FXML
-	private BubbleChart<Double, Double> graphNbGrainArea;
+	private LineChart<Double, Double> graphNbGrainArea;
 
 	/**
 	 * user can leave a comment in comment text field
 	 */
 	@FXML
 	private TextArea comment;
+	
+	/**
+	 * user can leave a comment in comment text field
+	 */
+	@FXML
+	private TextArea ImageComment;
+	
+	/**
+	 * import button import an image
+	 */
+	@FXML
+	private Button ApplySize ;
+	
 
 	/**
 	 * save data base button insert data into database and update the database
@@ -109,18 +121,15 @@ public class CtrlViewResult {
 	}
 
 	private void InitalizeGraphSizeAndSurface() {
-		XYChart.Series<Double, Double> chartNbGrainSizeSize = new XYChart.Series<>();
-		XYChart.Series<Double, Double> chartNbGrainAreaSurface = new XYChart.Series<>();
-
-		chartNbGrainSizeSize.setName("Particles by size");
-		chartNbGrainAreaSurface.setName("Particles by surface");
-
-		for (Measure m : GranuloModel.getMeasuresAfterScale()) {
-			chartNbGrainSizeSize.getData().add(new XYChart.Data<Double, Double>(m.getCentre_x(), m.getCentre_y()));
-			chartNbGrainAreaSurface.getData().add(new XYChart.Data<Double, Double>(m.getCentre_x(), m.getCentre_y()));
-		}
-		this.graphNbGrainSize.getData().add(chartNbGrainSizeSize);
-		this.graphNbGrainArea.getData().add(chartNbGrainAreaSurface);
+		XYChart.Series<Double, Double> chartNbGrainSize = new XYChart.Series<>();
+		XYChart.Series<Double, Double> chartNbGrainArea = new XYChart.Series<>();
+		chartNbGrainSize.setName("Particles by size");
+		chartNbGrainArea.setName("Particles by surface");
+//	chartNbGrainArea.getData().add(new XYChart.Data<Double, Double>((double)2.1,(double)3.2));
+				
+			
+		this.graphNbGrainSize.getData().add(chartNbGrainSize);
+		this.graphNbGrainArea.getData().add(chartNbGrainArea);
 
 	}
 
@@ -134,7 +143,12 @@ public class CtrlViewResult {
 
 	@FXML
 	public void setScaleMinMax(ActionEvent event) {
-		GranuloModel.setScale(Integer.parseInt(sizeMin.getText()), Integer.parseInt(sizeMax.getText()));
+		if (sizeMin.getText()!=null&&sizeMax.getText()!=null) {
+		GranuloModel.setScale(Integer.parseInt(sizeMin.getText()), Integer.parseInt(sizeMax.getText()));}
+		if (sizeMin.getText()==null&&sizeMax.getText()!=null) {
+		GranuloModel.setScale(0, Integer.parseInt(sizeMax.getText()));}
+		if (sizeMin.getText()!=null&&sizeMax.getText()==null) {
+			GranuloModel.setScale(Integer.parseInt(sizeMin.getText()),0);}			
 	}
 
 	/*
@@ -165,7 +179,7 @@ public class CtrlViewResult {
 	 *              converted
 	 * @return void this method has no return type
 	 */
-	public Image graphToImage(BubbleChart<?, ?> Graph) {
+	public Image graphToImage() {
 		// TODO implement here
 		return null;
 	}
