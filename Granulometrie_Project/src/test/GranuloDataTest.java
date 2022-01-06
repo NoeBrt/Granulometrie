@@ -1,10 +1,14 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.image.Image;
+import Model.GranuloData;
+import app.CCLabeler;
+import junit.framework.TestCase;
 
-class granuloDataTest {
+class granuloDataTest extends TestCase {
 
 	/**
 	 * This method will test The method process
@@ -12,7 +16,12 @@ class granuloDataTest {
 	 * @param image
 	 */
 	@Test
-	public void TestProcess(Image image) {
+	public void TestContructor() {
+		String url  = "/Granulometrie_Project/ImageParticule/113_x63_zoom08_1.jpg";
+		GranuloData granulodata = new GranuloData(url);
+		CCLabeler counter = new CCLabeler();
+		counter.process(url);
+		assertEquals(counter.getMeasures(), granulodata.getMeasures());
 		
 	}
 	/**

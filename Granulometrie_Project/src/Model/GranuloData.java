@@ -39,7 +39,11 @@ public class GranuloData {
 	}*/
 	
 	/**
-	 * 2nd constructor who use Image url instead of javaFX attribut (useful for test)
+	 * Constructor of GranuloData object, it instanciate Measures with
+	 * process(String url) and image with this.Image Date and Time will be instanciate
+	 * with the current date & time with java.time.LocalDate.now() and
+	 * java.time.LocalTime.now() set grain Scale with default value
+	 * (setScale(min,max))
 	 * 
 	 * @param url
 	 */
@@ -67,14 +71,24 @@ public class GranuloData {
 	 * 
 	 *
 	 * 
-	 */
+	 *
 	public MeasuresList process(Image image) {
 		CCLabeler counter = new CCLabeler();
 		counter.process(image.getUrl());
 		return counter.getMeasures();
 	}
-	
-	
+	*/
+	/**
+	 * the methods store an image in ImageToProcessList object. 
+	 * the methods create an CCLabeler object. and process the image with the path (url) Finally it return
+	 * CCLabeler.getMeasure
+	 * 
+	 * @param url
+	 * @return the measures list after the image Traitement (CCLabeler.getMeasure)
+	 * 
+	 *
+	 * 
+	 **/
 	public MeasuresList process(String url) {
 		CCLabeler counter = new CCLabeler();
 		counter.process(url);
@@ -144,12 +158,13 @@ public class GranuloData {
 	 * @param max
 	 */
 	public void setScale(int min, int max) {
+		if (min>=0&&max>=0) {
 		this.Clusters = new HashMap<>();
 		for (Measure grain : this.Measures) {
 			if (grain.getSize() < min || grain.getSize() > max) {
 				this.MeasuresAfterScale.remove(grain);
 			}
-		}
+		}}
 
 	}
 
@@ -163,6 +178,7 @@ public class GranuloData {
 	 * 
 	 */
 	public void setClusters(int etalon) {
+	if (etalon>0) {
 		LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
 		int keyEtalon=etalon;
 		do {
@@ -177,7 +193,7 @@ public class GranuloData {
 			MeasuresTemp.removeAll(Clusters.get(keyEtalon));
 			keyEtalon += etalon;
 		} while (!MeasuresTemp.isEmpty());
-		}
+		}}
 
 	// Getter & Setter
 
