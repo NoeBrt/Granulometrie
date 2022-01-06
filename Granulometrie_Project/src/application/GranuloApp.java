@@ -5,6 +5,7 @@ import java.net.URL;
 
 import Controller.CtrlView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -22,6 +23,8 @@ public class GranuloApp extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image("/IconApp/icon.jpg"));
 			primaryStage.show();
+			primaryStage.setOnCloseRequest(e -> Platform.exit());
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

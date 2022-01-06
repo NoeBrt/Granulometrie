@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import Model.GranuloData;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -152,7 +153,7 @@ public class CtrlView {
 	@FXML
 	void launchProces(ActionEvent event) throws IOException {
 		if (isImported == true) {
-		//	try {
+		try {
 				FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
 				Parent root = GranuloVue1.load();
 				Stage stage = new Stage();
@@ -161,14 +162,15 @@ public class CtrlView {
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.show();
-		/*	} catch (Exception e) {
+
+			} catch (Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error alert");
 				alert.setHeaderText("ERROR");
 				alert.setContentText("CANT'T LOAD IMAGE");
 				alert.showAndWait();
-				System.out.println("Cannot load new window"); */
-		//	}
+				System.out.println("Cannot load new window"); 
+			}
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error alert");
