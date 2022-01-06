@@ -12,17 +12,17 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="importButton" mnemonicParsing="false" text="Import" />
+          <Button fx:id="importButton" onAction="#importImage" mnemonicParsing="false" text="Import" />
         </items>
       </ToolBar>
    </top>
    <center>
-      <ImageView fx:id="imgView" fitHeight="255.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <ImageView fx:id="imgView" onDragOver="#handleDragOver" onDragDropped="#handleDrop" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <StackPane prefHeight="78.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="launchProcessButton" mnemonicParsing="false" prefHeight="47.0" prefWidth="278.0" text="Process Image">
+            <Button fx:id="launchProcessButton" onAction="#launchProces" mnemonicParsing="false" prefHeight="47.0" prefWidth="278.0" text="Process Image">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>

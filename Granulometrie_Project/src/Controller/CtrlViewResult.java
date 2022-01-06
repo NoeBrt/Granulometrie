@@ -2,6 +2,7 @@ package Controller;
 
 
 import Model.GranuloData;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BubbleChart;
 import javafx.scene.control.Button;
@@ -24,10 +25,16 @@ public class CtrlViewResult {
      * the constructor of CtrlResultView
      * @param model
      * the constructor holds one parameter the data model
-     */
+     
     public CtrlViewResult(GranuloData model) {
     	this.GranuloModel=model;
     	}
+    */
+    
+    public CtrlViewResult() {
+   // 	this.GranuloModel=model;
+    this.GranuloModel = new GranuloData(CtrlView.getImagePath());
+    }
     
     private GranuloData GranuloModel;
     
@@ -114,7 +121,7 @@ public class CtrlViewResult {
      */
 	
 	@FXML
-    public void setScaleMinMax() {
+    public void setScaleMinMax(ActionEvent event) {
 		GranuloModel.setScale(Integer.parseInt(sizeMin.getText()),Integer.parseInt(sizeMax.getText()));
     }
 	
@@ -123,7 +130,7 @@ public class CtrlViewResult {
 	 * this method set Comment in model
 	 * 
 	 */
-	 public void setComment() {
+	 public void setComment(ActionEvent event) {
 			GranuloModel.setComment(comment.getText());;
 	    }
     /**
@@ -135,7 +142,7 @@ public class CtrlViewResult {
      * this method has no return type 
      */
 	@FXML
-    public void saveDataBase() {
+    public void saveDataBase(ActionEvent event) {
         // TODO implement here
     }
 	
@@ -161,7 +168,7 @@ public class CtrlViewResult {
      *this method has no return type 
      */
 	@FXML
-    public void setCluster() {
+    public void setCluster(ActionEvent event) {
         // TODO implement here
 		GranuloModel.setClusters( Integer.parseInt(clusterWidth.getText()));
     }
@@ -175,7 +182,7 @@ public class CtrlViewResult {
      * this method has no return type
      */
 	@FXML
-    public void exportJpg() {
+    public void exportJpg(ActionEvent event) {
         // TODO implement here
     }
 
@@ -189,7 +196,7 @@ public class CtrlViewResult {
      * this method has no return type
      */
 	@FXML
-    public void exportCsv() {
+    public void exportCsv(ActionEvent event) {
         // TODO implement here
     }
 
@@ -200,12 +207,12 @@ public class CtrlViewResult {
      * this method has no parameters
      * @return void
      * this methode has no return type
-     */
+     *
 	@FXML
     public void updateGraph() {
         // TODO implement here
     }
-	
+	*/
 	
 
 }

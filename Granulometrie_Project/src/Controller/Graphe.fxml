@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CtrlViewResult">
    <children>
-      <BubbleChart fx:id="graphNbGrainSize" layoutX="14.0" layoutY="37.0" prefHeight="300.0" prefWidth="300.0">
+      <BubbleChart fx:id="graphNbGrainSize"  layoutX="14.0" layoutY="37.0" prefHeight="300.0" prefWidth="300.0">
         <xAxis>
           <NumberAxis side="BOTTOM" />
         </xAxis>
@@ -40,12 +40,12 @@
       <Label layoutX="58.0" layoutY="375.0" text="Taille max" />
       <Label layoutX="59.0" layoutY="407.0" text="Taille min" />
       <Label layoutX="58.0" layoutY="438.0" text="Largeur " />
-      <Button fx:id="exportJPGButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Export Image" />
+      <Button fx:id="exportJPGButton" onAction="#exportJpg" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Export Image" />
       <TextArea fx:id="comment" layoutX="425.0" layoutY="366.0" prefHeight="70.0" prefWidth="250.0" />
       <Button fx:id="saveDataBaseButton" layoutX="497.0" layoutY="443.0" mnemonicParsing="false" text="Save in Database" />
-      <TextField fx:id="sizeMax" layoutX="126.0" layoutY="371.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="sizeMin" layoutX="126.0" layoutY="403.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="clusterWidth" layoutX="126.0" layoutY="434.0" prefHeight="25.0" prefWidth="170.0" />
-      <Button fx:id="exportCSVButton" layoutX="126.0" layoutY="14.0" mnemonicParsing="false" text="Export CSV Data" />
+      <TextField fx:id="sizeMax"  layoutX="126.0" layoutY="371.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="sizeMin"  layoutX="126.0" layoutY="403.0" prefHeight="25.0" prefWidth="170.0" />
+      <TextField fx:id="clusterWidth"  layoutX="126.0" layoutY="434.0" prefHeight="25.0" prefWidth="170.0" />
+      <Button fx:id="exportCSVButton"  layoutX="126.0" layoutY="14.0" mnemonicParsing="false" text="Export CSV Data" />
    </children>
 </AnchorPane>

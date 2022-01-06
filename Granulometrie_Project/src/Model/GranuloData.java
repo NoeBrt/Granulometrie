@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
  * Images and traitement will be done here
  */
 public class GranuloData {
+	
 	/**
 	 * Constructor of GranuloData object, it instanciate Measures with
 	 * process(image) and image with this.Image Date and Time will be instanciate
@@ -25,7 +26,9 @@ public class GranuloData {
 	 * 
 	 * @param image
 	 */
+	/*
 	public GranuloData(Image image) {
+		System.out.println(image.getUrl());
 		this.Measures = process(image);
 		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
 		this.image = image;
@@ -33,7 +36,7 @@ public class GranuloData {
 		this.Date = LocalDate.now().toString();
 		this.Time = LocalTime.now().toString().substring(0, 8);
 		setScale(0, 10);
-	}
+	}*/
 	
 	/**
 	 * 2nd constructor who use Image url instead of javaFX attribut (useful for test)
