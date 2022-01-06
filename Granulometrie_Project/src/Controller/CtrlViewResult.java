@@ -1,9 +1,14 @@
 package Controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+
+import javax.imageio.ImageIO;
 
 import CSV.WriteCsv;
 import Model.GranuloData;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -12,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 
 /**
  * @author Alex
@@ -151,14 +157,15 @@ public class CtrlViewResult {
 			GranuloModel.setScale(Integer.parseInt(sizeMin.getText()),0);}			
 	}
 
+	
 	/*
 	 * setComment this method set Comment in model
 	 * 
-	 */
+	 *
 	public void setComment(ActionEvent event) {
 		GranuloModel.setComment(comment.getText());
-		;
-	}
+		
+	}*/
 
 	/**
 	 * saveDataBase this methode save data in database
@@ -205,7 +212,16 @@ public class CtrlViewResult {
 	 */
 	@FXML
 	public void exportJpg(ActionEvent event) {
-		// TODO implement here
+		 Image imageToBeSaved = GranuloModel.getImage();
+		 FileChooser fileChooser = new FileChooser();
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
+         fileChooser.getExtensionFilters().add(extFilter);
+         File file = fileChooser.showSaveDialog(null);
+         try {
+			ImageIO.write(SwingFXUtils.fromFXImage(imageToBeSaved, null), "jpg", file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -217,16 +233,18 @@ public class CtrlViewResult {
 	 * @return void this method has no return type
 	 */
 	@FXML
-	public void exportCsv(ActionEvent event) {
-		try {
-			String[] header = { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" };
-			WriteCsv write = new WriteCsv(this.GranuloModel, header);
-			write.StartWriting();
-		} catch (IOException e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
+	public void exportCsv(ActionEvent event) throws MalformedURLException, IOException {
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV file (.csv)", ".csv");
+		fileChooser.getExtensionFilters().add(extFilter);
+		File file = fileChooser.showSaveDialog(null);
+		String path = file.getPath();
+		WriteCsv write = new WriteCsv(this.GranuloModel, this.GranuloModel.getHeader(),path);
+		write.StartWriting();
+
 	}
+
+
 
 	/**
 	 * UpdateGraphe this method updates both charts

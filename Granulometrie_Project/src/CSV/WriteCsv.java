@@ -1,4 +1,5 @@
 package CSV;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import Model.GranuloData;
 import app.Measure;
+import javafx.stage.FileChooser;
 
 public class WriteCsv {
 	private static String[] header;
@@ -19,10 +21,10 @@ public class WriteCsv {
 
 
 	@SuppressWarnings("static-access")
-	public WriteCsv(GranuloData data, String[] header){
+	public WriteCsv(GranuloData data, String[] header, String path){
 		this.setData(data);
 		this.setHeader(header);
-		this.setPath("C:\\Documents\\result.csv");
+		this.setPath(path);
 	}
 	/*
 	 * It initialize the Header gived by the constructor params and set in the local Attribute header then it write it in the CSV file 

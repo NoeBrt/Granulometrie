@@ -257,7 +257,13 @@ public class GranuloData {
 	public HashMap<Integer, List<Measure>> getClusters() {
 		return Clusters;
 	}
+	public String[] getHeader() {
+		String[] header = { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" };
+		return header;
+	}
 
+
+	
 	/**
 	 * @return the measures after scale
 	 */
