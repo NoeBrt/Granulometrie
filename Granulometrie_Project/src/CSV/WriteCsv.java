@@ -40,23 +40,23 @@ public class WriteCsv {
 					header = header + getHeader()[i] + "\n";
 				}
 				else {
-					header = header +getHeader()[i] + ", ";
+					header = header +getHeader()[i] + ";";
 				}
 			}
 			fileWriter.append(header);
 			for(Measure u: getData().getMeasuresAfterScale()) {
 				fileWriter.append(String.valueOf(u.getAire()));
-				fileWriter.append(",");
+				fileWriter.append(";");
 				fileWriter.append(String.valueOf(u.getCentre_x()));
-				fileWriter.append(",");
+				fileWriter.append(";");
 				fileWriter.append(String.valueOf(u.getCentre_y()));
-				fileWriter.append(",");
+				fileWriter.append(";");
 				fileWriter.append(String.valueOf(u.getXstart()));
-				fileWriter.append(",");
+				fileWriter.append(";");
 				fileWriter.append(String.valueOf(u.getYstart()));
-				fileWriter.append(",");
+				fileWriter.append(";");
 				fileWriter.append(String.valueOf(u.getWidth()));
-				fileWriter.append(",");
+				fileWriter.append(";");
 				fileWriter.append(String.valueOf(u.getHeight()));
 				fileWriter.append("\n");
 			}

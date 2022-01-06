@@ -11,12 +11,15 @@ import Model.GranuloData;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 
 /**
@@ -123,7 +126,7 @@ public class CtrlViewResult {
 	public void initialize() {
 		// TODO implement here
 		InitalizeGraphSizeAndSurface();
-
+		//graphToImage();
 	}
 
 	private void InitalizeGraphSizeAndSurface() {
@@ -133,7 +136,7 @@ public class CtrlViewResult {
 		chartNbGrainArea.setName("Particles by surface");
 //	chartNbGrainArea.getData().add(new XYChart.Data<Double, Double>((double)2.1,(double)3.2));
 				
-			
+
 		this.graphNbGrainSize.getData().add(chartNbGrainSize);
 		this.graphNbGrainArea.getData().add(chartNbGrainArea);
 
@@ -188,6 +191,16 @@ public class CtrlViewResult {
 	 */
 	public Image graphToImage() {
 		// TODO implement here
+		WritableImage wim = new WritableImage((int) graphNbGrainSize.getWidth(),(int) graphNbGrainSize.getHeight());
+		 graphNbGrainSize.getScene().snapshot(null);
+		File fileA = new File("C://Graphs/chart.png");
+		 try {
+		      ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", fileA);
+		 }
+		 catch (Exception s) {
+			 System.out.println("erreur");
+		 }
+
 		return null;
 	}
 
