@@ -113,12 +113,12 @@ public class GranuloData {
 	/**
 	 * minimum size of a grain for traitement (for result scaling )
 	 */
-	private Float tailleGrainnMin;
+	private int SizeGrainMin;
 
 	/**
 	 * maximum size of a grain for traitement (for result scaling )
 	 */
-	private int tailleGrainMax;
+	private int SizeGrainMax;
 
 	/**
 	 * User's image to process
@@ -172,6 +172,8 @@ public class GranuloData {
 				this.MeasuresAfterScale.remove(grain);
 			}
 		}}
+		this.SizeGrainMin=min;
+		this.SizeGrainMax=max;
 	}
 	
 	public void setScaleMax(int max) {
@@ -183,6 +185,7 @@ public class GranuloData {
 				this.MeasuresAfterScale.remove(grain);
 			}
 		}}
+		this.SizeGrainMax=max;
 	}
 	
 	public void setScaleMin(int min) {
@@ -194,6 +197,8 @@ public class GranuloData {
 				this.MeasuresAfterScale.remove(grain);
 			}
 		}}
+		this.SizeGrainMin=min;
+
 	}
 
 	/**
@@ -262,22 +267,23 @@ public class GranuloData {
 	/**
 	 * @return the tailleGrainnMin
 	 */
-	public Float getTailleGrainnMin() {
-		return tailleGrainnMin;
+	public int getSizeGrainMin() { 		
+
+		return SizeGrainMin;
 	}
 
 	/**
 	 * @return the tailleGrainMax
 	 */
 	public int getTailleGrainMax() {
-		return tailleGrainMax;
+		return SizeGrainMax;
 	}
 
 	/**
 	 * @param tailleGrainMax the tailleGrainMax to set
 	 */
-	public void setTailleGrainMax(int tailleGrainMax) {
-		this.tailleGrainMax = tailleGrainMax;
+	public void setTailleGrainMax(int SizeGrainMax) {
+		this.SizeGrainMax = SizeGrainMax;
 	}
 
 	/**
