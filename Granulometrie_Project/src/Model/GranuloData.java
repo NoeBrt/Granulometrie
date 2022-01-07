@@ -55,6 +55,7 @@ public class GranuloData {
 		this.comment = "";
 		this.Date = LocalDate.now().toString();
 		this.Time = LocalTime.now().toString().substring(0, 8);
+		setScale(0, 20);
 		setClusters(2);
 	}
 
