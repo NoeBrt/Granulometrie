@@ -259,7 +259,7 @@ public class DAO {
 	 * @return 
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
-	 */
+	 *
 	public LinkedList<TableResults> getTableParametrage() throws SQLException, IOException, ClassNotFoundException {
 		LinkedList<TableResults> listResultat = new LinkedList<TableResults>();
 
@@ -298,7 +298,7 @@ public class DAO {
 		stmt.close();
 		return listResultat;
 	}
-
+*/
 	/**
 	 * This method was made to insert data into the Parametrage table.  
 	 * It will send a specific INSERT sql query that will insert the data by using the parameters index and image. 
@@ -329,7 +329,7 @@ public class DAO {
 		this.connection.setAutoCommit(false);
 		ps = this.connection.prepareStatement(insert_param);
 		
-		File courbe1 = CtrlViewResult.graphSizeToImage();
+		File courbe1 = new File (CtrlViewResult.graphSizeToImage().getUrl());
 		File courbe2 = CtrlViewResult.graphSurfaceToImage();
 		FileInputStream fis1 = new FileInputStream(courbe1);
 		FileInputStream fis2 = new FileInputStream(courbe2);

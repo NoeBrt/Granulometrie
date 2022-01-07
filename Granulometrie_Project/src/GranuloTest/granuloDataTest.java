@@ -1,15 +1,22 @@
 package GranuloTest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
 
+import org.hamcrest.core.Is;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.max.MaxCore;
 import org.junit.runner.RunWith;
@@ -17,7 +24,11 @@ import org.junit.runners.Parameterized;
 
 import Model.GranuloData;
 import app.CCLabeler;
+import app.Measure;
+import app.MeasuresList;
 public class granuloDataTest {
+
+	private static GranuloData granulodata;
 
 	/**
 	 * This method will test The method process We will test it by comparing with
@@ -27,14 +38,14 @@ public class granuloDataTest {
 	 */
 	@Test
 	public void TestContructor() {
-		
-			GranuloData granulodata = new GranuloData("C:\\Users\\noebr\\OneDrive - Université de Tours\\Rapport de projet\\WorkspaceGranu\\granulometrie\\Granulometrie_Project\\src\\GranuloTest\\113_x63_zoom08_1.jpg");
-			System.out.println(granulodata.getImagePlus().getHeight()); 
 
-		
-	/*	CCLabeler counter = new CCLabeler();
-		counter.process(url);*/
-		//assertEquals(counter.getMeasures(), granulodata.getMeasures());
+		String url = "src/GranuloTest/113_x63_zoom08_1.jpg";
+		GranuloData granulodata = new GranuloData(url);
+		CCLabeler counter = new CCLabeler();
+		MeasuresList list1 = counter.getMeasures();
+		MeasuresList list2 = granulodata.getMeasures();
+		counter.process(url);
+		assertEquals(counter.getMeasures().get_nb_measures(),granulodata.getMeasures().get_nb_measures());
 
 	}
 
@@ -48,8 +59,46 @@ public class granuloDataTest {
 
 	@Test
 	public void TestsetScale() {
-		// TODO implement here
+
+		String url = "src/GranuloTest/113_x63_zoom08_1.jpg";
+		GranuloData granulodata = new GranuloData(url);
+		int scaleMin = 3, scaleMax = 10;
+		granulodata.setScale(0, 0);
+		assertTrue(granulodata.getMeasuresAfterScale().isEmpty());
+		granulodata.setScale(scaleMin, scaleMax);
+		int count = 0;
+		boolean bothArePresent = false;
+		for (Measure grain : granulodata.getMeasures()) {
+
+			if(count == 2) {
+				bothArePresent = true;
+				break;
+			}
+
+			if ((double)grain.getSize() < scaleMin ||(double) grain.getSize() > scaleMax) {
+				count++;
+			}
+		}
+
+		if(bothArePresent) {
+			for (Measure grain : granulodata.getMeasuresAfterScale()) {
+				if ((double) grain.getSize() < scaleMin ||(double) grain.getSize() > scaleMax) {
+					fail();
+				}
+			}
+		}
+		
+		else {
+			System.out.println("One of the values is not present in the list");
+		}
+
+
+
+
+
 	}
+
+
 
 	/**
 	 * This method will test the method setClusters This method will test if the
@@ -60,7 +109,15 @@ public class granuloDataTest {
 
 	@Test
 	public void TestsetClusters() {
-		// TODO implement here
+		String url = "src/GranuloTest/113_x63_zoom08_1.jpg";
+		GranuloData granulodata = new GranuloData(url);
+		granulodata.setClusters(2.0);
+		assertFalse(granulodata.getClusters().isEmpty());
+		
 	}
+
+
+	
+	
 
 }
