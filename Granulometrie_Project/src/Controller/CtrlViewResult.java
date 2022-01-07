@@ -3,19 +3,12 @@ package Controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
 import CSV.WriteCsv;
-import GranuloTest.granuloDataTest;
 import Model.GranuloData;
 import app.Measure;
 import javafx.embed.swing.SwingFXUtils;
@@ -24,8 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -117,6 +108,11 @@ public class CtrlViewResult {
 	 */
 	@FXML
 	private TextField clusterWidth;
+	/**
+	 * clusterWdith this text field allows the user to define the particles width
+	 */
+	@FXML
+	private TextField surfaceClusterWidth;
 
 	/**
 	 * exportButton this button export an image in jpg
@@ -148,9 +144,7 @@ public class CtrlViewResult {
 
 	@FXML
 	private void InitalizeGraphSize() {
-		graphNbGrainSize.getData().clear();
-		graphNbGrainSize.layout();
-
+		
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClusters().entrySet()) {
 			String x = entry.getKey() - GranuloModel.getEtalon() + "-" + entry.getKey().toString();
@@ -158,30 +152,32 @@ public class CtrlViewResult {
 			series.getData().add(new XYChart.Data<>(x, y.size()));
 
 		}
-		series.setName("Numer of Grain by Size");
+		//series.setName("Numer of Grain by Size");
+		graphNbGrainSize.setLegendVisible(false);
+		graphNbGrainSize.setMinSize(426,324);
+		graphNbGrainSize.setMaxSize(426,324);
 		graphNbGrainSize.getData().clear();
 		graphNbGrainSize.layout();
-
 		graphNbGrainSize.getData().add(series);
 	}
 
 	@FXML
 	private void InitalizeGraphArea() {
-		graphNbGrainArea.getData().clear();
-		graphNbGrainArea.layout();
-		System.out.println(GranuloModel.GetSurfaceClusters(GranuloModel.getEtalon()));
+	
+		System.out.println(GranuloModel.getClustersSurface().keySet());
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
-		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.GetSurfaceClusters(GranuloModel.getEtalon())
-				.entrySet()) {
-			String x = entry.getKey() - GranuloModel.getEtalon() + "-" + entry.getKey().toString();
+		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClustersSurface().entrySet()) {
+			String x = entry.getKey() - GranuloModel.getEtalonSurface() + "-" + entry.getKey().toString();
 			List<Measure> y = entry.getValue();
 			series.getData().add(new XYChart.Data<>(x, y.size()));
 
 		}
-		series.setName("Numer of Grain by Size");
+		//series.setName("Numer of Grain by Surface");
+		graphNbGrainArea.setLegendVisible(false);
+		graphNbGrainArea.setMinSize(426,405);
+		graphNbGrainArea.setMaxSize(426,405);
 		graphNbGrainArea.getData().clear();
 		graphNbGrainArea.layout();
-
 		graphNbGrainArea.getData().add(series);
 	}
 
@@ -281,13 +277,26 @@ public class CtrlViewResult {
 	 */
 	@FXML
 	public void setCluster(ActionEvent event) {
-		// TODO implement here
 		GranuloModel.setClusters(Double.parseDouble(clusterWidth.getText()));
-		System.out.println(Double.parseDouble(clusterWidth.getText()));
 		InitalizeGraphSize();
+		//setScaleMinMax(event);
+	}
+	
+	/**
+	 * setSurfaceCluster this method defines the particles width
+	 * 
+	 * @param this method has no parameters
+	 * @return void this method has no return type
+	 */
+	@FXML
+	public void setSurfaceCluster(ActionEvent event) {
+		GranuloModel.setSurfaceClusters(Double.parseDouble(surfaceClusterWidth.getText()));
 		InitalizeGraphArea();
+		//setScaleMinMax(event);
 
 	}
+	
+	
 
 	/**
 	 * ExportJpg this method save the converted chart image in local directory in
