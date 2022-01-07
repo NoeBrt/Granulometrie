@@ -19,22 +19,22 @@
       <TextField fx:id="sizeMax" layoutX="76.0" layoutY="487.0" prefHeight="26.0" prefWidth="51.0" />
       <TextField fx:id="sizeMin" layoutX="76.0" layoutY="449.0" prefHeight="26.0" prefWidth="51.0" />
       <TextField fx:id="clusterWidth" onAction="#setCluster" layoutX="76.0" layoutY="525.0" prefHeight="26.0" prefWidth="51.0" />
-      <LineChart fx:id="graphNbGrainSize" layoutY="84.0" prefHeight="324.0" prefWidth="425.0">
+      <LineChart fx:id="graphNbGrainSize" layoutX="9.0" layoutY="62.0" prefHeight="324.0" prefWidth="425.0">
         <xAxis>
-          <CategoryAxis label="grain size" side="BOTTOM" />
+          <CategoryAxis label="grain size" side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis label="numer of grain" side="LEFT" />
+          <NumberAxis fx:id="Number" label="number of grain" side="LEFT" />
         </yAxis>
       </LineChart>
-      <ToolBar layoutX="2.0" prefHeight="40.0" prefWidth="826.0">
+      <ToolBar prefHeight="40.0" prefWidth="826.0">
         <items>
-            <Button fx:id="exportJPGButton" onAction="#exportJpg" mnemonicParsing="false"  text="Export JPG" />
-            <Button fx:id="exportCSVButton" onAction="#exportCsv" mnemonicParsing="false" text="Export CSV Data" />
+            <Button fx:id="exportJPGButton" mnemonicParsing="false" onAction="#exportJpg" text="Export JPG" />
+            <Button fx:id="exportCSVButton" mnemonicParsing="false" onAction="#exportCsv" text="Export CSV Data" />
             <Button fx:id="saveDataBaseButton" mnemonicParsing="false" text="Save in Database" />
         </items>
       </ToolBar>
-      <LineChart fx:id="graphNbGrainArea" layoutX="402.0" layoutY="84.0" prefHeight="324.0" prefWidth="426.0">
+      <LineChart fx:id="graphNbGrainArea" layoutX="393.0" layoutY="62.0" prefHeight="324.0" prefWidth="426.0">
          <xAxis>
             <CategoryAxis label="grain surface" side="BOTTOM" />
          </xAxis>

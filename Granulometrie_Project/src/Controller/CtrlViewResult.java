@@ -3,19 +3,28 @@ package Controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
 import CSV.WriteCsv;
 import Model.GranuloData;
+import app.Measure;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -50,17 +59,17 @@ public class CtrlViewResult {
 
 	private GranuloData GranuloModel;
 
-	/**
-	 * the first bubble chart displays grains by their size
-	 */
 	@FXML
-	private LineChart<Integer, Double> graphNbGrainSize;
-
+	private LineChart<String, Integer> graphNbGrainSize;
+	@FXML
+	private CategoryAxis xAxis;
+	@FXML
+	private NumberAxis Number;
 	/**
 	 * the second bubble chart displays grains by area
 	 */
 	@FXML
-	private LineChart<Integer, Double> graphNbGrainArea;
+	private LineChart<Double, Double> graphNbGrainArea;
 
 	/**
 	 * user can leave a comment in comment text field
@@ -123,26 +132,32 @@ public class CtrlViewResult {
 	/**
 	 * initialize Initialize is an implemented method of Initializable interface
 	 * that allows the user to define actions to buttons without using fxml file
-	 */
-	@FXML
+	 *@FXML
 	public void initialize() {
 		// TODO implement here
 		InitalizeGraphSizeAndSurface();
 		//graphToImage();
-	}
+	}*/
+	
+	@FXML
+	public void initialize() {
+		InitalizeGraphSizeAndSurface();
 
+	}
+	
+	
+	
 	private void InitalizeGraphSizeAndSurface() {
-		XYChart.Series<Integer, Double> chartNbGrainSizeXY = new XYChart.Series<>();
-		XYChart.Series<Integer, Double> chartNbGrainAreaXY = new XYChart.Series<>();
-		chartNbGrainSizeXY.setName("particule by size"); 
-		chartNbGrainAreaXY.setName("Particles by surface"); 
-		chartNbGrainSizeXY.getData().add(new XYChart.Data<Integer,Double>( 1, (double)2.2));
-		this.graphNbGrainSize.getData().clear();
-		this.graphNbGrainSize.getData().add(chartNbGrainSizeXY);
-		this.graphNbGrainArea.getData().add(chartNbGrainAreaXY);
-
-	}
-
+		XYChart.Series<String,Integer> series = new XYChart.Series<>();
+		for ( Map.Entry<Integer, List<Measure>> entry : GranuloModel.getClusters().entrySet()) {
+			String x = entry.getKey()-2+"-"+entry.getKey().toString();
+			List<Measure> y = entry.getValue();
+				series.getData().add(new XYChart.Data<>(x,y.size()));
+			
+		}
+		graphNbGrainSize.getData().add(series);
+		}
+	
 	/**
 	 * setScaleMinMax this method allows the user to define the min, max height of
 	 * particles
@@ -190,7 +205,7 @@ public class CtrlViewResult {
 	 *              converted
 	 * @return void this method has no return type
 	 */
-	public Image graphToImage() {
+	public Image graphSizeToImage() {
 		// TODO implement here
 		WritableImage wim = new WritableImage((int) graphNbGrainSize.getWidth(),(int) graphNbGrainSize.getHeight());
 		 graphNbGrainSize.getScene().snapshot(wim);
@@ -205,6 +220,20 @@ public class CtrlViewResult {
 		return null;
 	}
 
+	public Image graphSurfaceToImage() {
+		// TODO implement here
+		WritableImage wim = new WritableImage((int) graphNbGrainSize.getWidth(),(int) graphNbGrainSize.getHeight());
+		 graphNbGrainSize.getScene().snapshot(wim);
+		File fileA = new File("C://Graphs/chart.png");
+		 try {
+		      ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", fileA);
+		 }
+		 catch (Exception s) {
+			 System.out.println("erreur");
+		 }
+
+		return null;
+	}
 	/**
 	 * setCluster this method defines the particles width
 	 * 
