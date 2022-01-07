@@ -51,7 +51,7 @@ public class GranuloData {
 	public GranuloData(String url) {
 		this.Measures = process(url);
 		this.setImageUrl(url);
-		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
+		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasuresList());
 		this.imagePlus = new ImagePlus(url);
 		this.comment = "";
 		this.Date = LocalDate.now().toString();
@@ -165,7 +165,7 @@ public class GranuloData {
 	 */
 	public void setScale(int min, int max) {
 		this.MeasuresAfterScale.clear();
-		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasures());
+		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasuresList());
 		if (min>=0&&max>=0) {
 		for (Measure grain : this.Measures) {
 			if ((double)grain.getSize() < min ||(double) grain.getSize() > max) {
@@ -178,7 +178,7 @@ public class GranuloData {
 	
 	public void setScaleMax(int max) {
 		this.MeasuresAfterScale.clear();
-		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasures());
+		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasuresList());
 		if (max>=0) {
 		for (Measure grain : this.Measures) {
 			if ((double) grain.getSize() > max) {
@@ -190,7 +190,7 @@ public class GranuloData {
 	
 	public void setScaleMin(int min) {
 		this.MeasuresAfterScale.clear();
-		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasures());
+		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasuresList());
 		if (min>=0) {
 		for (Measure grain : this.Measures) {
 			if ((double)grain.getSize() < min) {
@@ -342,12 +342,6 @@ public class GranuloData {
 		setClusters(this.etalon);
 		return Clusters;
 	}
-	public String[] getHeader() {
-		String[] header = { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" };
-		return header;
-	}
-
-	
 	/**
 	 * @return the measures after scale
 	 */

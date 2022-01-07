@@ -47,7 +47,7 @@ public class MeasuresList implements Iterable<Measure> {
 	/**
 	 * @return the measures
 	 */
-	public LinkedList<Measure> getMeasures() {
+	public LinkedList<Measure> getMeasuresList() {
 		return measures;
 	}
 

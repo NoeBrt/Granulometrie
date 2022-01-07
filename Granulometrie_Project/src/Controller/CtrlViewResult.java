@@ -327,7 +327,7 @@ public class CtrlViewResult {
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
 		String path = file.getPath();
-		WriteCsv write = new WriteCsv(this.GranuloModel, this.GranuloModel.getHeader(), path);
+		WriteCsv write = new WriteCsv(this.GranuloModel, new String[] { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" }, path);
 		write.StartWriting();
 
 	}
