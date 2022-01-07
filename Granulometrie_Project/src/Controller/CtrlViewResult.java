@@ -130,14 +130,13 @@ public class CtrlViewResult {
 	}
 
 	private void InitalizeGraphSizeAndSurface() {
-		XYChart.Series<Integer, Double> chartNbGrainSize = new XYChart.Series<>();
-		XYChart.Series<Integer, Double> chartNbGrainArea = new XYChart.Series<>();
-		chartNbGrainSize.setName("Particles by size");
-		chartNbGrainArea.setName("Particles by surface");
-		
+		XYChart.Series<Integer, Double> chartNbGrainSizeXY = new XYChart.Series<>();
+		XYChart.Series<Integer, Double> chartNbGrainAreaXY = new XYChart.Series<>();
+		chartNbGrainSizeXY.setName("Particles by size");
+		chartNbGrainAreaXY.setName("Particles by surface");
 
-		this.graphNbGrainSize.getData().add(chartNbGrainSize);
-		this.graphNbGrainArea.getData().add(chartNbGrainArea);
+		this.graphNbGrainSize.getData().add(chartNbGrainSizeXY);
+		this.graphNbGrainArea.getData().add(chartNbGrainAreaXY);
 
 	}
 
@@ -191,7 +190,7 @@ public class CtrlViewResult {
 	public Image graphToImage() {
 		// TODO implement here
 		WritableImage wim = new WritableImage((int) graphNbGrainSize.getWidth(),(int) graphNbGrainSize.getHeight());
-		 graphNbGrainSize.getScene().snapshot(null);
+		 graphNbGrainSize.getScene().snapshot(wim);
 		File fileA = new File("C://Graphs/chart.png");
 		 try {
 		      ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", fileA);
