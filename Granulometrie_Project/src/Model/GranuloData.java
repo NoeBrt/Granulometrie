@@ -52,7 +52,7 @@ public class GranuloData {
 		this.Measures = process(url);
 		this.setImageUrl(url);
 		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
-		this.image = new ImagePlus(url);
+		this.imagePlus = new ImagePlus(url);
 		this.comment = "";
 		this.Date = LocalDate.now().toString();
 		this.Time = LocalTime.now().toString().substring(0, 8);
@@ -123,7 +123,7 @@ public class GranuloData {
 	/**
 	 * User's image to process
 	 */
-	private ImagePlus image;
+	private ImagePlus imagePlus;
 
 	/**
 	 * user comment of image
@@ -228,7 +228,7 @@ public class GranuloData {
 	
 	public HashMap<Double, List<Measure>> GetSurfaceClusters(Double etalonSurface) {
 		HashMap<Double, List<Measure>> SurfaceClusters  = new HashMap <>();
-		Double SurfaceImage =(double) (this.image.getHeight()*this.image.getWidth());
+		Double SurfaceImage =(double) (this.imagePlus.getHeight()*this.imagePlus.getWidth());
 		if (etalonSurface>0) {
 			LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
 			Double keyEtalon=etalonSurface;
@@ -284,7 +284,7 @@ public class GranuloData {
 	 * @return the image in ImagePlus
 	 */
 	public ImagePlus getImagePlus() {
-		return image;
+		return imagePlus;
 	}
 
 
@@ -298,7 +298,7 @@ public class GranuloData {
 	 * @param image the image to set
 	 */
 	public void setImage(ImagePlus image) {
-		this.image = image;
+		this.imagePlus = image;
 	}
 
 	/**

@@ -64,11 +64,11 @@ public class CtrlViewResult {
 	private GranuloData GranuloModel;
 
 	@FXML
-	private static LineChart<String, Integer> graphNbGrainSize;
+	private LineChart<String, Integer> graphNbGrainSize;
 	// @FXML
 	// private CategoryAxis xAxis;
 	@FXML
-	private static NumberAxis Number;
+	private NumberAxis Number;
 	/**
 	 * the second bubble chart displays grains by area
 	 */
@@ -298,7 +298,7 @@ public class CtrlViewResult {
 	 */
 	@FXML
 	public void exportJpg(ActionEvent event) {
-		Image imageToBeSaved = new Image(GranuloModel.getImage().getUrl());
+		Image imageToBeSaved = GranuloModel.getImage();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialFileName("ImageGranulo");
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
