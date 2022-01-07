@@ -52,13 +52,13 @@ public class CtrlViewResult {
 	 * the first bubble chart displays grains by their size
 	 */
 	@FXML
-	private LineChart<Double, Double> graphNbGrainSize;
+	private LineChart<Integer, Double> graphNbGrainSize;
 
 	/**
 	 * the second bubble chart displays grains by area
 	 */
 	@FXML
-	private LineChart<Double, Double> graphNbGrainArea;
+	private LineChart<Integer, Double> graphNbGrainArea;
 
 	/**
 	 * user can leave a comment in comment text field
@@ -130,12 +130,11 @@ public class CtrlViewResult {
 	}
 
 	private void InitalizeGraphSizeAndSurface() {
-		XYChart.Series<Double, Double> chartNbGrainSize = new XYChart.Series<>();
-		XYChart.Series<Double, Double> chartNbGrainArea = new XYChart.Series<>();
+		XYChart.Series<Integer, Double> chartNbGrainSize = new XYChart.Series<>();
+		XYChart.Series<Integer, Double> chartNbGrainArea = new XYChart.Series<>();
 		chartNbGrainSize.setName("Particles by size");
 		chartNbGrainArea.setName("Particles by surface");
-//	chartNbGrainArea.getData().add(new XYChart.Data<Double, Double>((double)2.1,(double)3.2));
-				
+		
 
 		this.graphNbGrainSize.getData().add(chartNbGrainSize);
 		this.graphNbGrainArea.getData().add(chartNbGrainArea);
@@ -227,7 +226,8 @@ public class CtrlViewResult {
 	public void exportJpg(ActionEvent event) {
 		 Image imageToBeSaved = GranuloModel.getImage();
 		 FileChooser fileChooser = new FileChooser();
-         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
+		 fileChooser.setInitialFileName("ImageGranulo");
+		 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
          fileChooser.getExtensionFilters().add(extFilter);
          File file = fileChooser.showSaveDialog(null);
          try {
@@ -248,6 +248,7 @@ public class CtrlViewResult {
 	@FXML
 	public void exportCsv(ActionEvent event) throws MalformedURLException, IOException {
 		FileChooser fileChooser = new FileChooser();
+		 fileChooser.setInitialFileName("DataGranulo");
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV file (.csv)", ".csv");
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
