@@ -82,8 +82,8 @@ public class Measure {
 		this.centre_y = centre_y;
 	}
 
-	public int getSize() {
-		return ((this.width+this.height)/2);
+	public double getSize() {
+		return (double)((this.width+this.height)/2);
 	}
 	
 	public double getRoundness() {

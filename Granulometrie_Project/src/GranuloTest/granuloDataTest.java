@@ -27,17 +27,9 @@ public class granuloDataTest {
 	 */
 	@Test
 	public void TestContructor() {
-		File file = new File("113_x63_zoom08_1.jpg");	
-		String url;
-		try {
-			url = file.getCanonicalPath();
-			GranuloData granulodata = new GranuloData(url);
-			assertNotNull(granulodata.getMeasures());
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+			GranuloData granulodata = new GranuloData("C:\\Users\\noebr\\OneDrive - Université de Tours\\Rapport de projet\\WorkspaceGranu\\granulometrie\\Granulometrie_Project\\src\\GranuloTest\\113_x63_zoom08_1.jpg");
+			System.out.println(granulodata.getImagePlus().getHeight()); 
 
 		
 	/*	CCLabeler counter = new CCLabeler();

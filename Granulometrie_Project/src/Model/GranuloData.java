@@ -10,6 +10,7 @@ import java.util.List;
 import app.CCLabeler;
 import app.Measure;
 import app.MeasuresList;
+import ij.ImagePlus;
 import javafx.scene.image.Image;
 
 /**
@@ -51,12 +52,13 @@ public class GranuloData {
 		this.Measures = process(url);
 		this.setImageUrl(url);
 		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasures());
-		this.image = new Image(url);
+		this.image = new ImagePlus(url);
 		this.comment = "";
 		this.Date = LocalDate.now().toString();
 		this.Time = LocalTime.now().toString().substring(0, 8);
-		setScale(0, 20);
-		setClusters(2);
+		this.Clusters = new HashMap<>();
+		setScale(0, 15);
+		setClusters(1.0);
 	}
 
 	/**
@@ -121,7 +123,7 @@ public class GranuloData {
 	/**
 	 * User's image to process
 	 */
-	private Image image;
+	private ImagePlus image;
 
 	/**
 	 * user comment of image
@@ -142,12 +144,16 @@ public class GranuloData {
 	 *Image url 
 	 */
 	private String imageUrl;
+	/*
+	 *etalon of cluster 
+	 */
+	private Double etalon;
 
 	/**
 	 * Clusters contain a List of a Measure List with index (, allows to classify
 	 * the measures according with some conditions set in setCluster
 	 */
-	private HashMap<Integer, List<Measure>> Clusters;
+	private HashMap<Double, List<Measure>> Clusters;
 
 	/**
 	 * set scale of the Measures List max grain size< measures <min grain size, it
@@ -158,14 +164,36 @@ public class GranuloData {
 	 * @param max
 	 */
 	public void setScale(int min, int max) {
+		this.MeasuresAfterScale.clear();
+		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasures());
 		if (min>=0&&max>=0) {
-		this.Clusters = new HashMap<>();
 		for (Measure grain : this.Measures) {
-			if (grain.getSize() < min || grain.getSize() > max) {
+			if ((double)grain.getSize() < min ||(double) grain.getSize() > max) {
 				this.MeasuresAfterScale.remove(grain);
 			}
 		}}
-
+	}
+	
+	public void setScaleMax(int max) {
+		this.MeasuresAfterScale.clear();
+		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasures());
+		if (max>=0) {
+		for (Measure grain : this.Measures) {
+			if ((double) grain.getSize() > max) {
+				this.MeasuresAfterScale.remove(grain);
+			}
+		}}
+	}
+	
+	public void setScaleMin(int min) {
+		this.MeasuresAfterScale.clear();
+		this.MeasuresAfterScale=new LinkedList<Measure>(this.Measures.getMeasures());
+		if (min>=0) {
+		for (Measure grain : this.Measures) {
+			if ((double)grain.getSize() < min) {
+				this.MeasuresAfterScale.remove(grain);
+			}
+		}}
 	}
 
 	/**
@@ -177,16 +205,18 @@ public class GranuloData {
 	 * @param void
 	 * 
 	 */
-	public void setClusters(int etalon) {
+	public void setClusters(Double etalon) {
+	this.Clusters.clear();
 	if (etalon>0) {
+		this.etalon=etalon;
 		LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
-		int keyEtalon=etalon;
+		Double keyEtalon=etalon;
 		do {
 			for (Measure grain : MeasuresTemp) {
 				if (!this.Clusters.containsKey(keyEtalon)) {
 					this.Clusters.put(keyEtalon, new ArrayList<>());
 				}
-				if (grain.getSize() > (keyEtalon - etalon) && grain.getSize() <= keyEtalon) {
+				if ((double) grain.getSize() > (keyEtalon - etalon) && (double) grain.getSize() <= keyEtalon) {
 					this.Clusters.get(keyEtalon).add(grain);
 				}
 			}
@@ -194,7 +224,32 @@ public class GranuloData {
 			keyEtalon += etalon;
 		} while (!MeasuresTemp.isEmpty());
 		}}
+	
+	
+	public HashMap<Double, List<Measure>> GetSurfaceClusters(Double etalonSurface) {
+		HashMap<Double, List<Measure>> SurfaceClusters  = new HashMap <>();
+		Double SurfaceImage =(double) (this.image.getHeight()*this.image.getWidth());
+		if (etalonSurface>0) {
+			LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
+			Double keyEtalon=etalonSurface;
+			do {
+				for (Measure grain : MeasuresTemp) {
+					if (!SurfaceClusters.containsKey(keyEtalon)) {
+						SurfaceClusters.put(keyEtalon, new ArrayList<>());
+					}
+					if ((grain.getAire()/SurfaceImage) > (keyEtalon - etalonSurface) && (grain.getAire()/SurfaceImage) <= keyEtalon) {
+						SurfaceClusters.get(keyEtalon).add(grain);
+					}
+				}
+				MeasuresTemp.removeAll(SurfaceClusters.get(keyEtalon));
+				keyEtalon += etalonSurface;
+			} while (!MeasuresTemp.isEmpty());
+			}
+		
+	return SurfaceClusters;
+	}
 
+	
 	// Getter & Setter
 
 	/**
@@ -226,16 +281,23 @@ public class GranuloData {
 	}
 
 	/**
-	 * @return the image
+	 * @return the image in ImagePlus
 	 */
-	public Image getImage() {
+	public ImagePlus getImagePlus() {
 		return image;
 	}
 
+
+	/**
+	 * @return the image in Image javaFx
+	 */
+	public Image getImage() {
+		return new Image(imageUrl);}
+		
 	/**
 	 * @param image the image to set
 	 */
-	public void setImage(Image image) {
+	public void setImage(ImagePlus image) {
 		this.image = image;
 	}
 
@@ -270,14 +332,14 @@ public class GranuloData {
 	/**
 	 * @return the cluster
 	 */
-	public HashMap<Integer, List<Measure>> getClusters() {
+	public HashMap<Double, List<Measure>> getClusters() {
+		setClusters(this.etalon);
 		return Clusters;
 	}
 	public String[] getHeader() {
 		String[] header = { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" };
 		return header;
 	}
-
 
 	
 	/**
@@ -293,6 +355,20 @@ public class GranuloData {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	/**
+	 * @return the etalon
+	 */
+	public Double getEtalon() {
+		return etalon;
+	}
+
+	/**
+	 * @param etalon the etalon to set
+	 */
+	public void setEtalon(double etalon) {
+		this.etalon = etalon;
 	}
 
 }

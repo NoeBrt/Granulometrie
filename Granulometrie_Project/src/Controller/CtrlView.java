@@ -67,16 +67,18 @@ public class CtrlView {
 	 * 
 	 * @param this method has no parameters
 	 * @return void this method has no return type
+	 * @throws IOException 
 	 */
 	@FXML
-	void importImage(ActionEvent event) {
+	void importImage(ActionEvent event) throws IOException {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(new ExtensionFilter("JPG Files", "*.jpg"));
-		fc.getExtensionFilters().add(new ExtensionFilter("PNG Files", "*.png"));
+		//fc.getExtensionFilters().add(new ExtensionFilter("PNG Files", "*.png"));
 		File file = fc.showOpenDialog(null);
 
 		if (file != null) {
 			image = new Image(file.toURI().toString());
+			imagePath=file.getCanonicalPath();
 			imgView.setImage(image);
 			isImported = true;
 		}
@@ -151,9 +153,9 @@ public class CtrlView {
 	 */
 
 	@FXML
-	void launchProces(ActionEvent event) throws IOException {
+	public void launchProces(ActionEvent event) throws IOException {
 		if (isImported == true) {
-	//	try {
+		try {
 				FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
 				Parent root = GranuloVue1.load();
 				Stage stage = new Stage();
@@ -163,14 +165,14 @@ public class CtrlView {
 				stage.setResizable(false);
 				stage.show();
 
-	/*		} catch (Exception e) {
+		} catch (Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error alert");
 				alert.setHeaderText("ERROR");
 				alert.setContentText("CANT'T LOAD IMAGE");
 				alert.showAndWait();
 				System.out.println("Cannot load new window"); 
-			}*/
+			}
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error alert");
