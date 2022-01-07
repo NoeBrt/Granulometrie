@@ -3,6 +3,8 @@ package Controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.imageio.ImageIO;
 
@@ -132,9 +134,10 @@ public class CtrlViewResult {
 	private void InitalizeGraphSizeAndSurface() {
 		XYChart.Series<Integer, Double> chartNbGrainSizeXY = new XYChart.Series<>();
 		XYChart.Series<Integer, Double> chartNbGrainAreaXY = new XYChart.Series<>();
-		chartNbGrainSizeXY.setName("Particles by size");
-		chartNbGrainAreaXY.setName("Particles by surface");
-
+		chartNbGrainSizeXY.setName("particule by size"); 
+		chartNbGrainAreaXY.setName("Particles by surface"); 
+		chartNbGrainSizeXY.getData().add(new XYChart.Data<Integer,Double>( 1, (double)2.2));
+		this.graphNbGrainSize.getData().clear();
 		this.graphNbGrainSize.getData().add(chartNbGrainSizeXY);
 		this.graphNbGrainArea.getData().add(chartNbGrainAreaXY);
 
