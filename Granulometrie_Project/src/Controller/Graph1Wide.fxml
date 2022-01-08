@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="1067.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="1067.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CtrlViewResult">
    <children>
-      <LineChart fx:id="graphNbGrainSize" layoutX="2.0" prefHeight="690.0" prefWidth="1067.0">
+      <LineChart layoutX="2.0" prefHeight="690.0" prefWidth="1067.0">
          <xAxis>
-            <CategoryAxis label="grain size" side="BOTTOM" fx:id="xAxis" />
+            <CategoryAxis label="grain size" side="BOTTOM" />
          </xAxis>
          <yAxis>
             <NumberAxis fx:id="Number" label="number of grain" side="LEFT" />

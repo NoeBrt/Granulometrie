@@ -25,17 +25,19 @@
           <CategoryAxis label="grain size" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="Number" label="number of grain" side="LEFT" />
+          <NumberAxis label="number of grain" side="LEFT" />
         </yAxis>
       </LineChart>
       <ToolBar prefHeight="40.0" prefWidth="826.0">
         <items>
-            <Button fx:id="exportJPGButton" mnemonicParsing="false" onAction="#exportJpg" text="Export JPG" />
+            <Button fx:id="exportJPGButton" mnemonicParsing="false" onAction="#exportJpg" text="Export Original Image" />
+            <Button fx:id="exportChart1JPGButton" mnemonicParsing="false" onAction="#graphSizeToImageExport" text="Export jpg Chart 1 " />
+            <Button fx:id="exportChart2JPGButton" mnemonicParsing="false" onAction="#graphSurfaceToImageExport" text="Export jpg Chart 2" />
             <Button fx:id="exportCSVButton" mnemonicParsing="false" onAction="#exportCsv" text="Export CSV Data" />
             <Button fx:id="saveDataBaseButton" mnemonicParsing="false" text="Save in Database" />
         </items>
       </ToolBar>
-      <LineChart onMouseClicked="#ClickChartArea" fx:id="graphNbGrainArea" layoutX="410.0" layoutY="62.0" prefHeight="324.0" prefWidth="426.0">
+      <LineChart onMouseClicked="#ClickChartArea" fx:id="graphNbGrainSurface" layoutX="410.0" layoutY="62.0" prefHeight="324.0" prefWidth="426.0">
          <xAxis>
             <CategoryAxis label="grain surface" side="BOTTOM" />
          </xAxis>

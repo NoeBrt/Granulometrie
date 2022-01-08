@@ -6,13 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import Model.GranuloData;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -164,6 +168,7 @@ public class CtrlView {
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.show();
+				
 
 		/*} catch (Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);

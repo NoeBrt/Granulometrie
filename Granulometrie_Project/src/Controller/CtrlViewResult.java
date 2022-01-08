@@ -1,25 +1,36 @@
 package Controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.AsyncBoxView.ChildState;
 
 import CSV.WriteCsv;
 import Model.GranuloData;
 import app.Measure;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -48,7 +59,6 @@ public class CtrlViewResult {
 	 */
 
 	public CtrlViewResult() {
-		// this.GranuloModel=model;
 		this.GranuloModel = new GranuloData(CtrlView.getImagePath());
 	}
 
@@ -56,15 +66,14 @@ public class CtrlViewResult {
 
 	@FXML
 	private LineChart<String, Integer> graphNbGrainSize;
-	// @FXML
-	// private CategoryAxis xAxis;
+	
 	@FXML
 	private NumberAxis Number;
 	/**
 	 * the second bubble chart displays grains by area
 	 */
 	@FXML
-	private LineChart<String, Integer> graphNbGrainArea;
+	private LineChart<String, Integer> graphNbGrainSurface;
 
 	/**
 	 * user can leave a comment in comment text field
@@ -127,6 +136,18 @@ public class CtrlViewResult {
 	 */
 	@FXML
 	private Button exportJPGButton;
+	/**
+	 * exportButton this button export data in csv
+	 *
+	 */
+	@FXML
+	private Button exportChart1JPGButton;
+	/**
+	 * exportButton this button export data in csv
+	 *
+	 */
+	@FXML
+	private Button exportChart2JPGButton;
 
 	/**
 	 * initialize Initialize is an implemented method of Initializable interface
@@ -139,7 +160,7 @@ public class CtrlViewResult {
 	@FXML
 	public void initialize() {
 		InitalizeGraphSize();
-		InitalizeGraphArea();
+		InitalizeGraphSurface();
 	}
 
 	@FXML
@@ -157,12 +178,12 @@ public class CtrlViewResult {
 		graphNbGrainSize.setMinSize(426,324);
 		graphNbGrainSize.setMaxSize(426,324);
 		graphNbGrainSize.getData().clear();
-		graphNbGrainSize.layout();
+		//graphNbGrainSize.layout();
 		graphNbGrainSize.getData().add(series);
 	}
 
 	@FXML
-	private void InitalizeGraphArea() {
+	private void InitalizeGraphSurface() {
 	
 		System.out.println(GranuloModel.getClustersSurface().keySet());
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
@@ -173,12 +194,12 @@ public class CtrlViewResult {
 
 		}
 		//series.setName("Numer of Grain by Surface");
-		graphNbGrainArea.setLegendVisible(false);
-		graphNbGrainArea.setMinSize(426,405);
-		graphNbGrainArea.setMaxSize(426,405);
-		graphNbGrainArea.getData().clear();
-		graphNbGrainArea.layout();
-		graphNbGrainArea.getData().add(series);
+		graphNbGrainSurface.setLegendVisible(false);
+		graphNbGrainSurface.setMinSize(426,405);
+		graphNbGrainSurface.setMaxSize(426,405);
+		graphNbGrainSurface.getData().clear();
+	//	graphNbGrainArea.layout();
+		graphNbGrainSurface.getData().add(series);
 	}
 
 	/**
@@ -194,19 +215,20 @@ public class CtrlViewResult {
 		if (sizeMin.getText() != "" && sizeMax.getText() != "") {
 			GranuloModel.setScale(Integer.parseInt(sizeMin.getText()), Integer.parseInt(sizeMax.getText()));
 			InitalizeGraphSize();
-			InitalizeGraphArea();
+			InitalizeGraphSurface();
 
 		}
 		if (sizeMin.getText() == "" && sizeMax.getText() != "") {
 			GranuloModel.setScaleMin(Integer.parseInt(sizeMin.getText()));
 			InitalizeGraphSize();
-			InitalizeGraphArea();
+			InitalizeGraphSurface();
 
 		}
 		if (sizeMin.getText() != "" && sizeMax.getText() == "") {
 			GranuloModel.setScaleMax(Integer.parseInt(sizeMax.getText()));
+			graphNbGrainSize.notify();
 			InitalizeGraphSize();
-			InitalizeGraphArea();
+			InitalizeGraphSurface();
 
 		}
 
@@ -234,39 +256,48 @@ public class CtrlViewResult {
 	}
 
 	/**
-	 * GrapheToImage this method convert the chart to image in order to save it in
+	 * graphSizeToImage this method convert the chart to image in order to save it in
 	 * local directory
 	 * 
 	 * @param Graph this method holds one parameter the chart that is going to be
 	 *              converted
 	 * @return void this method has no return type
 	 */
-	public Image graphSizeToImage() {
-		// TODO implement here
-		WritableImage wim = new WritableImage((int) graphNbGrainSize.getWidth(), (int) graphNbGrainSize.getHeight());
-		graphNbGrainSize.getScene().snapshot(wim);
-		File fileA = new File("C://Graphs/chart.png");
-		try {
-			ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", fileA);
-		} catch (Exception s) {
-			System.out.println("erreur");
-		}
+	public void graphSizeToImageExport() {
+	//	WritableImage image = graphNbGrainSize.snapshot(new SnapshotParameters(), null);
+		Parent root = graphNbGrainSize;
+		WritableImage image = root.snapshot(new SnapshotParameters(), null);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialFileName("GraphNumerBySize");
+		SaveInFile(image, fileChooser);
 
-		return null;
+	}
+	/**
+	 * graphSurfaceToImage this method convert the chart to image in order to save it in
+	 * local directory
+	 * 
+	 * @param Graph this method holds one parameter the chart that is going to be
+	 *              converted
+	 * @return void this method has no return type
+	 */
+	public void graphSurfaceToImageExport() {
+		Parent root = graphNbGrainSurface;
+		WritableImage image = root.snapshot(new SnapshotParameters(), null);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialFileName("GraphNumerBySurface");
+		SaveInFile(image, fileChooser);
 	}
 
-	public Image graphSurfaceToImage() {
-		// TODO implement here
-		WritableImage wim = new WritableImage((int) graphNbGrainSize.getWidth(), (int) graphNbGrainSize.getHeight());
-		graphNbGrainSize.getScene().snapshot(wim);
-		File fileA = new File("C://Graphs/chart.png");
+	private void SaveInFile(WritableImage image, FileChooser fileChooser) {
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
+		fileChooser.getExtensionFilters().add(extFilter);	
+		File file = fileChooser.showSaveDialog(null);
 		try {
-			ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", fileA);
-		} catch (Exception s) {
-			System.out.println("erreur");
+			ImageIO.write( SwingFXUtils.fromFXImage( image, null ), "jpg", file );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		return null;
 	}
 
 	/**
@@ -291,7 +322,7 @@ public class CtrlViewResult {
 	@FXML
 	public void setSurfaceCluster(ActionEvent event) {
 		GranuloModel.setSurfaceClusters(Double.parseDouble(surfaceClusterWidth.getText()));
-		InitalizeGraphArea();
+		InitalizeGraphSurface();
 		//setScaleMinMax(event);
 
 	}
@@ -341,41 +372,38 @@ public class CtrlViewResult {
 
 	}
 	
-	 @FXML
-	 public void ClickChartSize() {
-			FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml"));
-			Parent root;
-			try {
-				root = GranuloVue1.load();
-				Stage stage = new Stage();
-				stage.getIcons().add(new Image("/IconApp/icon.jpg"));
-				stage.setTitle("GrapheSizeWide");
-				stage.setScene(new Scene(root));
-				stage.setResizable(false);
-				stage.show();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	 
+	@FXML 
+  public void ClickChartSize() {
+		/*	
+		//FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml")); 	
+		Parent root = graphNbGrainSize;
+		Stage stage = new Stage();
+			stage.getIcons().add(new Image("/IconApp/icon.jpg"));
+			stage.setTitle("GrapheSizeWide");
+			stage.setScene(new Scene(root));
+			stage.show();
+		
+			*/
 			
 	 }
 	 @FXML
 	 public void ClickChartArea() {
-			FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("Graph2Wide.fxml"));
-			Parent root;
-			try {
-				root = GranuloVue1.load();
-				Stage stage = new Stage();
-				stage.getIcons().add(new Image("/IconApp/icon.jpg"));
-				stage.setTitle("GrapheAreaWide");
-				stage.setScene(new Scene(root));
-				stage.setResizable(false);
-				stage.show();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		/*
+		 FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml"));
+		 	LineChart<String, Integer>	h = new LineChart<String, Integer>(graphNbGrainArea.getXAxis(), graphNbGrainArea.getYAxis());
+		 	
+		 	h.getData().addAll(graphNbGrainArea.snapshot(null, null));
+		 	Parent root;
+			root = h;
+			Stage stage = new Stage();
+			stage.getIcons().add(new Image("/IconApp/icon.jpg"));
+			stage.setTitle("GrapheAreaWide");
+			stage.setScene(new Scene(root));
+			stage.show();
 			
+		*/	
 	 }
+	
 
 }
