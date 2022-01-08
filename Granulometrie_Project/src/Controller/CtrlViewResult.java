@@ -293,10 +293,9 @@ public class CtrlViewResult {
 		fileChooser.getExtensionFilters().add(extFilter);	
 		File file = fileChooser.showSaveDialog(null);
 		try {
-			ImageIO.write( SwingFXUtils.fromFXImage( image, null ), "jpg", file );
+			ImageIO.write( SwingFXUtils.fromFXImage( image,null ), "jpg", file );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
