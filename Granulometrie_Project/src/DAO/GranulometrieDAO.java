@@ -34,10 +34,10 @@ public class GranulometrieDAO {
 	 * @throws ClassNotFoundException
 	 * @see SingleConnection.java
 	 */
-	public GranulometrieDAO() throws ClassNotFoundException {
-		this.url = "jdbc:mysql://localhost/Granulometrie";
-		this.login = "root";
-		this.password = "";
+	public GranulometrieDAO(String url,String login,String password) throws ClassNotFoundException {
+		this.url = url;
+		this.login = login;
+		this.password =password;
 		this.connection = SingleConnection.getInstance(url, login, password);
 	}
 
