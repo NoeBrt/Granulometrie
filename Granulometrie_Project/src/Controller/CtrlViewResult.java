@@ -153,6 +153,14 @@ public class CtrlViewResult {
 	@FXML
 	private Button exportChart2JPGButton;
 
+
+	/**
+	 * @return the granuloModel
+	 */
+	public GranuloData getGranuloModel() {
+		return GranuloModel;
+	}
+
 	/**
 	 * initialize Initialize is an implemented method of Initializable interface
 	 * that allows the user to define actions to buttons without using fxml file
@@ -166,6 +174,7 @@ public class CtrlViewResult {
 		InitalizeGraphSize();
 		InitalizeGraphSurface();
 	}
+
 
 	@FXML
 	private void InitalizeGraphSize() {
@@ -262,6 +271,9 @@ public class CtrlViewResult {
 		// TODO implement here
 		DAO d = new DAO();
 		d.insertTableImage(this);
+		d.insertParametrage(this);
+		d.InsertGrains(this);
+
 	}
 
 	/**

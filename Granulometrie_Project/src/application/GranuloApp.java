@@ -17,6 +17,7 @@ public class GranuloApp extends Application {
 		try {
 			FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("/Controller/GranuloVue1.fxml"));			 
 			BorderPane root = GranuloVue1.load();
+			root.setMinSize(800, 600);
 			Scene scene = new Scene(root,800,600);
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image("/IconApp/icon.jpg"));

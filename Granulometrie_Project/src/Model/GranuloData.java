@@ -280,7 +280,7 @@ public class GranuloData {
 	/**
 	 * @return the tailleGrainMax
 	 */
-	public int getTailleGrainMax() {
+	public int getSizeGrainMax() {
 		return SizeGrainMax;
 	}
 
@@ -380,6 +380,83 @@ public class GranuloData {
 
 	public Double getEtalonSurface() {
 		return etalonSurface;
+	}
+
+	/**
+	 * @param measures the measures to set
+	 */
+	public void setMeasures(MeasuresList measures) {
+		Measures = measures;
+	}
+
+	/**
+	 * @param measuresAfterScale the measuresAfterScale to set
+	 */
+	public void setMeasuresAfterScale(LinkedList<Measure> measuresAfterScale) {
+		MeasuresAfterScale = measuresAfterScale;
+	}
+
+	/**
+	 * @param sizeGrainMin the sizeGrainMin to set
+	 */
+	public void setSizeGrainMin(int sizeGrainMin) {
+		SizeGrainMin = sizeGrainMin;
+	}
+
+	/**
+	 * @param sizeGrainMax the sizeGrainMax to set
+	 */
+	public void setSizeGrainMax(int sizeGrainMax) {
+		SizeGrainMax = sizeGrainMax;
+	}
+
+	/**
+	 * @param imagePlus the imagePlus to set
+	 */
+	public void setImagePlus(ImagePlus imagePlus) {
+		this.imagePlus = imagePlus;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(String date) {
+		Date = date;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(String time) {
+		Time = time;
+	}
+
+	/**
+	 * @param etalon the etalon to set
+	 */
+	public void setEtalon(Double etalon) {
+		this.etalon = etalon;
+	}
+
+	/**
+	 * @param etalonSurface the etalonSurface to set
+	 */
+	public void setEtalonSurface(Double etalonSurface) {
+		this.etalonSurface = etalonSurface;
+	}
+
+	/**
+	 * @param clusters the clusters to set
+	 */
+	public void setClusters(LinkedHashMap<Double, List<Measure>> clusters) {
+		Clusters = clusters;
+	}
+
+	/**
+	 * @param clustersSurface the clustersSurface to set
+	 */
+	public void setClustersSurface(LinkedHashMap<Double, List<Measure>> clustersSurface) {
+		ClustersSurface = clustersSurface;
 	}
 
 }

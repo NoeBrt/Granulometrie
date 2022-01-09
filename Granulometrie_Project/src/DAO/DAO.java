@@ -2,6 +2,7 @@ package DAO;
 
 import java.io.*;
 import java.sql.*;
+import java.sql.Date;
 import java.text.*;
 import java.util.*;
 import javax.imageio.*;
@@ -86,200 +87,114 @@ public class DAO {
 
 	}
 
-	public void insertTableImage(CtrlViewResult ctrlViewResult)throws SQLException, IOException, ClassNotFoundException {
-		if (FindIdImageByImage(ctrlViewResult.getOriginalImage())==-1) {
-		PreparedStatement ps = this.connection.prepareStatement(
-				"INSERT INTO image (image,longueur,largeur,Grossisement,Commentaire) VALUES (?,?,?,?,?)");
-		this.connection.setAutoCommit(true);
-		ps.setBlob(1, FormatImageToBlob(ctrlViewResult.getOriginalImage()));
-		ps.setFloat(2, (float) ctrlViewResult.getOriginalImage().getHeight());
-		ps.setFloat(3, (float) ctrlViewResult.getOriginalImage().getHeight());
-		ps.setInt(4, 1); // TODO Replace the value '1' by the value of `Grossissement`
-		ps.setString(5, ctrlViewResult.getImageComment().getText());
-		ps.executeUpdate();
-		}else {
-				Statement smt= this.connection.createStatement();
-				smt.executeUpdate("UPDATE Image SET commentaire='"+ctrlViewResult.getImageComment().getText()+ "' WHERE idImage="+FindIdImageByImage(ctrlViewResult.getOriginalImage())+";");
-		
-			}
+	public void insertTableImage(CtrlViewResult ctrlViewResult)
+			throws SQLException, IOException, ClassNotFoundException {
+		if (FindIdImageByImage(ctrlViewResult.getOriginalImage()) == -1) {
+			PreparedStatement ps = this.connection.prepareStatement(
+					"INSERT INTO image (image,longueur,largeur,Grossisement,Commentaire) VALUES (?,?,?,?,?)");
+			this.connection.setAutoCommit(true);
+			ps.setBlob(1, FormatImageToBlob(ctrlViewResult.getOriginalImage()));
+			ps.setFloat(2, (float) ctrlViewResult.getOriginalImage().getHeight());
+			ps.setFloat(3, (float) ctrlViewResult.getOriginalImage().getHeight());
+			ps.setInt(4, 1); // TODO Replace the value '1' by the value of `Grossissement`
+			ps.setString(5, ctrlViewResult.getImageComment().getText());
+			ps.executeUpdate();
+			ps.close();
+		} else {
+			Statement smt = this.connection.createStatement();
+			smt.executeUpdate("UPDATE Image SET commentaire='" + ctrlViewResult.getImageComment().getText()
+					+ "' WHERE idImage=" + FindIdImageByImage(ctrlViewResult.getOriginalImage()) + ";");
+
+		}
 
 	}
 
 	public void insertParametrage(CtrlViewResult ctrlViewResult)
 			throws SQLException, IOException, ClassNotFoundException {
+		if (FindIdImageByImage(ctrlViewResult.getOriginalImage())!=-1) {
+		if (FindParameter(ctrlViewResult)==-1) {
 		PreparedStatement ps = this.connection.prepareStatement(
-				"INSERT INTO image (image,longueur,largeur,Grossisement,Commentaire) VALUES (?,?,?,?,?)");
+				"INSERT INTO Parametrage (TailleMin,TailleMax,nbCategoriesTaille,nbCategoriesSurface,Courbe1,Courbe2,DateCalcul,HeureCalcul,idImage) VALUES (?,?,?,?,?,?,?,?,?)");
 		this.connection.setAutoCommit(true);
-		ps.setBlob(1, FormatImageToBlob(ctrlViewResult.getOriginalImage()));
-		ps.setFloat(2, (float) ctrlViewResult.getOriginalImage().getHeight());
-		ps.setFloat(3, (float) ctrlViewResult.getOriginalImage().getHeight());
-		ps.setInt(4, 1); // TODO Replace the value '1' by the value of `Grossissement`
-		ps.setString(5, "test coment");
+		ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin()); 
+		ps.setFloat(2, (float) ctrlViewResult.getGranuloModel().getSizeGrainMax());
+		ps.setInt(3, ctrlViewResult.getGranuloModel().getClusters().size()); 
+		ps.setInt(4, ctrlViewResult.getGranuloModel().getClustersSurface().size()); 
+		ps.setBlob(5,FormatImageToBlob(ctrlViewResult.getGraphSizeImage()));
+		ps.setBlob(6,FormatImageToBlob(ctrlViewResult.getGraphSizeImage()));
+		ps.setDate(7, Date.valueOf(ctrlViewResult.getGranuloModel().getDate()));
+		ps.setTime(8, Time.valueOf(ctrlViewResult.getGranuloModel().getTime()));
+		ps.setInt(9, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
 		ps.executeUpdate();
+		ps.close();
+		}else {
+			Statement smt = this.connection.createStatement();
+			smt.executeUpdate("UPDATE Parametrage SET DateCalcul='" +Date.valueOf(ctrlViewResult.getGranuloModel().getDate())+"',HeureCalcul='"+Time.valueOf(ctrlViewResult.getGranuloModel().getTime())+"' WHERE idParametrage=" + FindParameter(ctrlViewResult) + ";");
+		}
+		}}
 
-	}
+		public int FindParameter(CtrlViewResult ctrlViewResult ) throws SQLException, ClassNotFoundException, IOException {
+			PreparedStatement ps = this.connection.prepareStatement(
+					"SELECT * FROM parametrage WHERE TailleMin=? AND TailleMax=? AND nbCategoriesTaille=? AND nbCategoriesSurface=?  AND idImage=?");
+			ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin()); 
+			ps.setFloat(2, (float) ctrlViewResult.getGranuloModel().getSizeGrainMax());
+			ps.setInt(3, ctrlViewResult.getGranuloModel().getClusters().size()); 
+			ps.setInt(4, ctrlViewResult.getGranuloModel().getClustersSurface().size()); 
+			ps.setInt(5, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
+			ResultSet r=ps.executeQuery();
+			try {
+				r.next();
+				return r.getInt("idParametrage");
+			} catch (java.sql.SQLException e) {
+				return -1;
+			}
+		}
 
-	public Integer FindIdImageByImage(java.awt.Image image) throws SQLException, IOException, ClassNotFoundException {
+		
+	
+
+	public int FindIdImageByImage(java.awt.Image image) throws SQLException, IOException, ClassNotFoundException {
 		PreparedStatement ps = this.connection.prepareStatement("SELECT idImage FROM Image WHERE image=?");
 		this.connection.setAutoCommit(true);
 		ps.setBlob(1, FormatImageToBlob(image));
-		ResultSet r=ps.executeQuery();
-		r.next();
+		ResultSet r = ps.executeQuery();
 		try {
-		return r.getInt("idImage");
-		} 
-		catch(java.sql.SQLException e) {
+			r.next();
+			return r.getInt("idImage");
+		} catch (java.sql.SQLException e) {
 			return -1;
 		}
 	}
-
-	/**
-	 * This method is for inserting the data about the grains in our database. It
-	 * takes a parameter of type GranuloData which is a class. We can now use
-	 * methods from GranuloData to get data about the grains and implement it in our
-	 * INSERT sql query.
-	 * 
-	 * @param data
-	 * @throws SQLException
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 * @see GranuloData.java
-	 *
-	 *      public void insertData(CtrlViewResult Result) throws SQLException,
-	 *      IOException, ClassNotFoundException { Statement stmt = null;
-	 *      PreparedStatement ps = null; int idImage = 0; int idGrain = 0; boolean
-	 *      equal = false; String insert_img =
-	 *      "INSERT INTO image VALUES (?,?,?,?,?,?,?)"; String getIdImg =
-	 *      "SELECT idImage FROM image WHERE image=?";
-	 * 
-	 *      Statement stmt = this.cn.createStatement(); if
-	 *      (findByID(e.getId())==null) {
-	 *      stmt.executeUpdate("INSERT INTO image VALUES"+
-	 *      "('"+e.getId()+"','"+e.getLastname()+"','"+e.getFirstname()+"','"+e.getCity()+"',"+e.getSalary()+")");}
-	 * 
-	 * 
-	 * 
-	 *      // DL Images File import_img = new File(data.getImage().getUrl());
-	 *      FileInputStream fis = new FileInputStream(import_img); File temp_img =
-	 *      new File("src/tmp.jpg"); String getLen =
-	 *      "SELECT image FROM image WHERE LENGTH(image)="+import_img.length(); ps =
-	 *      this.connection.prepareStatement(getLen); ResultSet rs =
-	 *      ps.executeQuery(); while (rs.next() && !equal) { if (temp_img.exists())
-	 *      { temp_img.delete(); } FileOutputStream fos = new
-	 *      FileOutputStream(temp_img); byte[] buffer = new byte[1]; InputStream is
-	 *      = rs.getBinaryStream(1); while (is.read(buffer) > 0) {
-	 *      fos.write(buffer); } fos.close(); temp_img.delete(); BufferedInputStream
-	 *      fis1 = new BufferedInputStream(new FileInputStream(import_img));
-	 *      BufferedInputStream fis2 = new BufferedInputStream(new
-	 *      FileInputStream(temp_img)); int ch = 0; for (long pos = 1 ; (ch =
-	 *      fis1.read()) != -1 ; pos++) { if (ch == fis2.read()) {
-	 *      //System.out.println(pos); common_char.add(pos); } } if
-	 *      (common_char.size() != import_img.length()) { equal = false; } else {
-	 *      equal = true; } fis1.close(); fis2.close(); } if (!equal) {
-	 *      this.connection.setAutoCommit(false); ps =
-	 *      this.connection.prepareStatement(insert_img); ps.setNull(1, 0);
-	 *      ps.setBinaryStream(2, fis, (int) import_img.length()); ps.setFloat(3,
-	 *      (float) data.getImage().getHeight()); ps.setFloat(4, (float)
-	 *      data.getImage().getWidth()); ps.setInt(5, 1); // TODO Replace the value
-	 *      '1' by the value of `Grossissement` ps.setString(6,
-	 *      data.getMeasures().get_image_name()); ps.setNull(7, 0);
-	 *      ps.executeUpdate(); this.connection.commit();
-	 *      this.connection.setAutoCommit(true); fis.close(); }
-	 * 
-	 *      this.connection.setAutoCommit(false); ps =
-	 *      this.connection.prepareStatement(getIdImg); ps.setBinaryStream(1, fis,
-	 *      (int) import_img.length()); rs = ps.executeQuery();
-	 *      this.connection.commit(); this.connection.setAutoCommit(true); while
-	 *      (rs.next()) { idImage = rs.getInt("idImage"); }
-	 * 
-	 *      String getIdGrain = "SELECT idGrain FROM grain WHERE idImage="+idImage;
-	 *      stmt = this.connection.createStatement(); rs =
-	 *      stmt.executeQuery(getIdGrain); while(rs.next()) { idGrain =
-	 *      rs.getInt("idGrain"); } stmt.close(); rs.close(); if (idGrain == 0) {
-	 *      String insert_grain = "INSERT INTO grain VALUES"; stmt =
-	 *      this.connection.createStatement(); for (Measure m
-	 *      :data.getMeasuresAfterScale()) { float centreX = (float)
-	 *      m.getCentre_x(); float centreY = (float) m.getCentre_y(); float longueur
-	 *      = m.getWidth(); float largeur = m.getHeight(); float circularite =
-	 *      (float) m.getRoundness(); float surface = (float) m.getAire(); String
-	 *      data_to_insert1 = centreX+","+centreY+","+longueur+","; String
-	 *      data_to_insert2 = largeur+","+circularite+","+surface+","+idImage;
-	 *      stmt.addBatch(insert_grain+"(NULL,"+data_to_insert1+data_to_insert2+")");
-	 *      } stmt.executeBatch(); this.connection.commit();
-	 *      this.connection.setAutoCommit(true); } this.connection.close(); }
-	 * 
-	 *      /** This method is for fetching the table Images from our database. This
-	 *      table was made for storing the image of a grain. The method will send a
-	 *      specific SELECT sql query that will select the data.
-	 *
-	 *      public LinkedList<TableResults> getTableImages() throws SQLException,
-	 *      IOException, ClassNotFoundException { LinkedList<TableResults>
-	 *      listResultat = null;
-	 * 
-	 *      Class.forName("com.mysql.cj.jdbc.Driver"); this.connection =
-	 *      DriverManager.getConnection(url,login,password);
-	 * 
-	 *      Statement stmt = this.connection.createStatement(); String sql =
-	 *      "SELECT * FROM image"; ResultSet rs = stmt.executeQuery(sql);
-	 * 
-	 * 
-	 * 
-	 *      while (rs.next()) { int idImage = rs.getInt("idImage");
-	 * 
-	 *      Blob Image = rs.getBlob("Image"); InputStream in =
-	 *      Image.getBinaryStream(); BufferedImage bufferedImage = ImageIO.read(in);
-	 *      Image image = SwingFXUtils.toFXImage(bufferedImage, null );
-	 * 
-	 *      float longueur = rs.getFloat("longueur"); float largeur =
-	 *      rs.getFloat("largeur"); int Grossisement = rs.getInt("Grossisement");
-	 *      String Commentaire = rs.getString("Commentaire"); int idFamille =
-	 *      rs.getInt("idFamille");
-	 * 
-	 *      listResultat.add(new
-	 *      TableResults(idImage,Grossisement,idFamille,longueur,largeur,image,Commentaire));
-	 *      } stmt.close(); return listResultat; }
-	 */
-	/**
-	 * This method is for fetching the table Grains from our database. This table
-	 * was made for storing the data of a grain. The method will send a specific
-	 * SELECT sql query that will select the data
-	 * 
-	 * @return
-	 * @throws ClassNotFoundException
-	 *
-	 *                                public LinkedList<TableResults>
-	 *                                getTableGrains() throws SQLException,
-	 *                                ClassNotFoundException {
-	 *                                LinkedList<TableResults> listResultat = null;
-	 * 
-	 *                                Class.forName("com.mysql.cj.jdbc.Driver");
-	 *                                this.connection =
-	 *                                DriverManager.getConnection(url,login,password);
-	 * 
-	 *                                Statement stmt =
-	 *                                this.connection.createStatement(); String sql
-	 *                                = "SELECT * FROM grain"; ResultSet rs =
-	 *                                stmt.executeQuery(sql);
-	 * 
-	 *                                while (rs.next()) { int idGrain =
-	 *                                rs.getInt("idGrain"); float centreX =
-	 *                                rs.getFloat("centreX"); float centreY =
-	 *                                rs.getFloat("centreY"); float longueur =
-	 *                                rs.getFloat("longueur"); float largeur =
-	 *                                rs.getFloat("largeur"); float cicularite =
-	 *                                rs.getFloat("circuarite"); float surface =
-	 *                                rs.getFloat("Surface"); int idImage =
-	 *                                rs.getInt("idImage");
-	 * 
-	 *                                listResultat.add(new
-	 *                                TableResults(idGrain,idImage,longueur,largeur,centreX,centreY,cicularite,surface));
-	 *                                }
-	 * 
-	 * 
-	 *                                stmt.close(); return listResultat;
-	 * 
-	 *                                }
-	 */
+	
+	
+	
+	public void InsertGrains(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException{
+		
+		if(!isImageHadGrain(FindIdImageByImage(ctrlViewResult.getOriginalImage()))) {	
+		this.connection.setAutoCommit(true);
+			System.out.println(FindParameter(ctrlViewResult));
+			int idImage = FindIdImageByImage(ctrlViewResult.getOriginalImage());
+			for (Measure measure :ctrlViewResult.getGranuloModel().getMeasures()) {
+				PreparedStatement ps = this.connection.prepareStatement(
+						"INSERT INTO grain (centreX,centreY,longueur,largeur,circularite,Surface,idImage) VALUES (?,?,?,?,?,?,?)");
+			ps.setFloat(1, (float) measure.getCentre_x()); 
+			ps.setFloat(2, (float) measure.getCentre_y());
+			ps.setFloat(3, measure.getHeight()); 
+			ps.setFloat(4, measure.getWidth()); 
+			ps.setFloat(5, (float) measure.getRoundness());
+			ps.setFloat(6,  (float) measure.getAire());
+			ps.setInt(7, idImage );
+			ps.executeUpdate();
+			}}
+	}
+	
+	public boolean isImageHadGrain(int idImage) throws SQLException, IOException, ClassNotFoundException {
+		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM grain WHERE idImage=?");
+		this.connection.setAutoCommit(true);
+		ps.setInt(1,idImage);
+		ResultSet r = ps.executeQuery();
+		return r.next();
+	}
 
 	/**
 	 * This method is for fetching the table Parametrage from our database. This
@@ -388,6 +303,7 @@ public class DAO {
 	 *              this.connection.commit(); this.connection.setAutoCommit(true);
 	 *              this.connection.close(); }
 	 */
+	
 	/**
 	 * This method is for deleting data from the Parametrage table it will send a
 	 * specific sql query that will delete the settings used to calculate the graphs
@@ -400,33 +316,6 @@ public class DAO {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public void deleteParametrage(GranuloData data) throws FileNotFoundException, ClassNotFoundException, SQLException {
-		PreparedStatement ps = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		File import_img = new File(data.getImage().getUrl());
-		FileInputStream fis = new FileInputStream(import_img);
-
-		String getIdImg = "SELECT idImage FROM image WHERE image=?";
-
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		this.connection = DriverManager.getConnection(url, login, password);
-
-		this.connection.setAutoCommit(false);
-		ps = this.connection.prepareStatement(getIdImg);
-		ps.setBinaryStream(1, fis, (int) import_img.length());
-		rs = ps.executeQuery();
-		rs.next();
-		int idImage = rs.getInt("idImage");
-		rs.close();
-
-		String delParam = "DELETE FROM parametrage WHERE idImage=" + idImage;
-
-		stmt = this.connection.createStatement();
-		stmt.executeQuery(delParam);
-
-		this.connection.close();
-	}
 
 	/**
 	 * This method is for updating data in the Parametrage table. It will send a
