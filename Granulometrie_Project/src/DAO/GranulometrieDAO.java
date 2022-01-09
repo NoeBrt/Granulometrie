@@ -20,7 +20,7 @@ import javafx.scene.image.*;
 /**
  * 
  */
-public class DAO {
+public class GranulometrieDAO {
 
 	/**
 	 * The constructor will connect to the database by using a url
@@ -34,7 +34,7 @@ public class DAO {
 	 * @throws ClassNotFoundException
 	 * @see SingleConnection.java
 	 */
-	public DAO() throws ClassNotFoundException {
+	public GranulometrieDAO() throws ClassNotFoundException {
 		this.url = "jdbc:mysql://localhost/Granulometrie";
 		this.login = "root";
 		this.password = "";
@@ -63,6 +63,13 @@ public class DAO {
 	 * @see SingleConnection.java
 	 */
 	private Connection connection;
+	
+	
+	public void insertData(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException {
+		insertImageTable(ctrlViewResult);
+		insertParameter(ctrlViewResult);
+		InsertGrains(ctrlViewResult);
+	}
 
 	private ByteArrayInputStream FormatImageToBlob(java.awt.Image image) {
 		BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -87,7 +94,7 @@ public class DAO {
 
 	}
 
-	public void insertTableImage(CtrlViewResult ctrlViewResult)
+	public void insertImageTable(CtrlViewResult ctrlViewResult)
 			throws SQLException, IOException, ClassNotFoundException {
 		if (FindIdImageByImage(ctrlViewResult.getOriginalImage()) == -1) {
 			PreparedStatement ps = this.connection.prepareStatement(
@@ -109,7 +116,7 @@ public class DAO {
 
 	}
 
-	public void insertParametrage(CtrlViewResult ctrlViewResult)
+	public void insertParameter(CtrlViewResult ctrlViewResult)
 			throws SQLException, IOException, ClassNotFoundException {
 		if (FindIdImageByImage(ctrlViewResult.getOriginalImage())!=-1) {
 		if (FindParameter(ctrlViewResult)==-1) {

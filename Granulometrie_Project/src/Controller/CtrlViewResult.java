@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.text.AsyncBoxView.ChildState;
 
 import CSV.WriteCsv;
-import DAO.DAO;
+import DAO.GranulometrieDAO;
 import Model.GranuloData;
 import app.Measure;
 import javafx.application.Platform;
@@ -269,10 +269,8 @@ public class CtrlViewResult {
 	@FXML
 	public void saveDataBase(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
 		// TODO implement here
-		DAO d = new DAO();
-		d.insertTableImage(this);
-		d.insertParametrage(this);
-		d.InsertGrains(this);
+		GranulometrieDAO granulometrieDAO = new GranulometrieDAO();
+		granulometrieDAO.insertData(this);
 
 	}
 
