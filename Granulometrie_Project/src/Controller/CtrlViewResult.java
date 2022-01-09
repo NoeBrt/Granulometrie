@@ -4,9 +4,12 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.text.AsyncBoxView.ChildState;
 
 import CSV.WriteCsv;
+import DAO.DAO;
 import Model.GranuloData;
 import app.Measure;
 import javafx.application.Platform;
@@ -66,7 +70,7 @@ public class CtrlViewResult {
 
 	@FXML
 	private LineChart<String, Integer> graphNbGrainSize;
-	
+
 	@FXML
 	private NumberAxis Number;
 	/**
@@ -85,7 +89,7 @@ public class CtrlViewResult {
 	 * user can leave a comment in comment text field
 	 */
 	@FXML
-	private TextArea ImageComment;
+	private TextArea imageComment;
 
 	/**
 	 * import button import an image
@@ -165,7 +169,7 @@ public class CtrlViewResult {
 
 	@FXML
 	private void InitalizeGraphSize() {
-		
+
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClusters().entrySet()) {
 			String x = entry.getKey() - GranuloModel.getEtalon() + "-" + entry.getKey().toString();
@@ -173,18 +177,18 @@ public class CtrlViewResult {
 			series.getData().add(new XYChart.Data<>(x, y.size()));
 
 		}
-		//series.setName("Numer of Grain by Size");
+		// series.setName("Numer of Grain by Size");
 		graphNbGrainSize.setLegendVisible(false);
-		graphNbGrainSize.setMinSize(426,324);
-		graphNbGrainSize.setMaxSize(426,324);
+		graphNbGrainSize.setMinSize(426, 324);
+		graphNbGrainSize.setMaxSize(426, 324);
 		graphNbGrainSize.getData().clear();
-		//graphNbGrainSize.layout();
+		// graphNbGrainSize.layout();
 		graphNbGrainSize.getData().add(series);
 	}
 
 	@FXML
 	private void InitalizeGraphSurface() {
-	
+
 		System.out.println(GranuloModel.getClustersSurface().keySet());
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClustersSurface().entrySet()) {
@@ -193,12 +197,12 @@ public class CtrlViewResult {
 			series.getData().add(new XYChart.Data<>(x, y.size()));
 
 		}
-		//series.setName("Numer of Grain by Surface");
+		// series.setName("Numer of Grain by Surface");
 		graphNbGrainSurface.setLegendVisible(false);
-		graphNbGrainSurface.setMinSize(426,405);
-		graphNbGrainSurface.setMaxSize(426,405);
+		graphNbGrainSurface.setMinSize(426, 405);
+		graphNbGrainSurface.setMaxSize(426, 405);
 		graphNbGrainSurface.getData().clear();
-	//	graphNbGrainArea.layout();
+		// graphNbGrainArea.layout();
 		graphNbGrainSurface.getData().add(series);
 	}
 
@@ -249,52 +253,90 @@ public class CtrlViewResult {
 	 * 
 	 * @param this method has no parameter
 	 * @return void this method has no return type
+	 * @throws ClassNotFoundException 
+	 * @throws IOException 
+	 * @throws SQLException 
 	 */
 	@FXML
-	public void saveDataBase(ActionEvent event) {
+	public void saveDataBase(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
 		// TODO implement here
+		DAO d = new DAO();
+		d.insertTableImage(this);
 	}
 
 	/**
-	 * graphSizeToImage this method convert the chart to image in order to save it in
-	 * local directory
+	 * graphSizeToImage this method convert the chart to image in order to save it
+	 * in local directory
 	 * 
 	 * @param Graph this method holds one parameter the chart that is going to be
 	 *              converted
 	 * @return void this method has no return type
+	 * @throws FileNotFoundException 
 	 */
-	public void graphSizeToImageExport() {
-	//	WritableImage image = graphNbGrainSize.snapshot(new SnapshotParameters(), null);
-		Parent root = graphNbGrainSize;
-		WritableImage image = root.snapshot(new SnapshotParameters(), null);
+	public void graphSizeToImageExport() throws FileNotFoundException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialFileName("GraphNumerBySize");
-		SaveInFile(image, fileChooser);
+		SaveInFile(getGraphSizeImage(), fileChooser);
 
 	}
+
+	public BufferedImage getGraphSizeImage() throws FileNotFoundException {
+		Parent root = graphNbGrainSurface;
+		WritableImage image = root.snapshot(new SnapshotParameters(), null);
+		return SwingFXUtils.fromFXImage(image, null);
+	}
+/*
+	public byte[] getGraphSizeByte() throws FileNotFoundException {
+		return NodeToBaos(graphNbGrainSize);
+	}*/
+
 	/**
-	 * graphSurfaceToImage this method convert the chart to image in order to save it in
-	 * local directory
+	 * graphSurfaceToImage this method convert the chart to image in order to save
+	 * it in local directory
 	 * 
 	 * @param Graph this method holds one parameter the chart that is going to be
 	 *              converted
 	 * @return void this method has no return type
+	 * @throws FileNotFoundException 
 	 */
-	public void graphSurfaceToImageExport() {
-		Parent root = graphNbGrainSurface;
-		WritableImage image = root.snapshot(new SnapshotParameters(), null);
+	public void graphSurfaceToImageExport() throws FileNotFoundException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialFileName("GraphNumerBySurface");
-		SaveInFile(image, fileChooser);
+		SaveInFile(getGraphSurfaceImage(), fileChooser);
 	}
 
-	private void SaveInFile(WritableImage image, FileChooser fileChooser) {
+	public BufferedImage getGraphSurfaceImage() throws FileNotFoundException {
+		Parent root = graphNbGrainSurface;
+		WritableImage image = root.snapshot(new SnapshotParameters(), null);
+		return SwingFXUtils.fromFXImage(image, null);
+	}
+/*
+	public byte[] getGraphSurfaceByte() throws FileNotFoundException {
+		return NodeToBaos(graphNbGrainSurface);
+	}*/
+
+/*
+	private byte[] NodeToBaos(Parent node) {
+		Parent root = node;
+		WritableImage image = root.snapshot(new SnapshotParameters(), null);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		try {
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", baos);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return baos.toByteArray();
+	}
+*/
+	private void SaveInFile(BufferedImage image, FileChooser fileChooser) {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
-		fileChooser.getExtensionFilters().add(extFilter);	
+		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
 		try {
-			ImageIO.write( SwingFXUtils.fromFXImage( image,null ), "jpg", file );
-		} catch (IOException e) {
+			ImageIO.write(image, "png", file);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 		}
 	}
@@ -309,9 +351,9 @@ public class CtrlViewResult {
 	public void setCluster(ActionEvent event) {
 		GranuloModel.setClusters(Double.parseDouble(clusterWidth.getText()));
 		InitalizeGraphSize();
-		//setScaleMinMax(event);
+		// setScaleMinMax(event);
 	}
-	
+
 	/**
 	 * setSurfaceCluster this method defines the particles width
 	 * 
@@ -322,11 +364,9 @@ public class CtrlViewResult {
 	public void setSurfaceCluster(ActionEvent event) {
 		GranuloModel.setSurfaceClusters(Double.parseDouble(surfaceClusterWidth.getText()));
 		InitalizeGraphSurface();
-		//setScaleMinMax(event);
+		// setScaleMinMax(event);
 
 	}
-	
-	
 
 	/**
 	 * ExportJpg this method save the converted chart image in local directory in
@@ -349,6 +389,11 @@ public class CtrlViewResult {
 			e.printStackTrace();
 		}
 	}
+	
+	public BufferedImage getOriginalImage() {
+		return SwingFXUtils.fromFXImage(CtrlView.getImage(),null);
+		
+	}
 
 	/**
 	 * 
@@ -366,43 +411,67 @@ public class CtrlViewResult {
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
 		String path = file.getPath();
-		WriteCsv write = new WriteCsv(this.GranuloModel, new String[] { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" }, path);
+		WriteCsv write = new WriteCsv(this.GranuloModel,
+				new String[] { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" }, path);
 		write.StartWriting();
 
 	}
-	
-	 
-	@FXML 
-  public void ClickChartSize() {
-		/*	
-		//FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml")); 	
-		Parent root = graphNbGrainSize;
-		Stage stage = new Stage();
-			stage.getIcons().add(new Image("/IconApp/icon.jpg"));
-			stage.setTitle("GrapheSizeWide");
-			stage.setScene(new Scene(root));
-			stage.show();
-		
-			*/
-			
-	 }
-	 @FXML
-	 public void ClickChartArea() {
+
+	@FXML
+	public void ClickChartSize() {
 		/*
-		 FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml"));
-		 	LineChart<String, Integer>	h = new LineChart<String, Integer>(graphNbGrainArea.getXAxis(), graphNbGrainArea.getYAxis());
-		 	
-		 	h.getData().addAll(graphNbGrainArea.snapshot(null, null));
-		 	Parent root;
-			root = h;
-			Stage stage = new Stage();
-			stage.getIcons().add(new Image("/IconApp/icon.jpg"));
-			stage.setTitle("GrapheAreaWide");
-			stage.setScene(new Scene(root));
-			stage.show();
-			
-		*/	
-	 }
-	
+		 * //FXMLLoader GranuloVue1 = new
+		 * FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml")); Parent root =
+		 * graphNbGrainSize; Stage stage = new Stage(); stage.getIcons().add(new
+		 * Image("/IconApp/icon.jpg")); stage.setTitle("GrapheSizeWide");
+		 * stage.setScene(new Scene(root)); stage.show();
+		 * 
+		 */
+
+	}
+
+	@FXML
+	public void ClickChartArea() {
+		/*
+		 * FXMLLoader GranuloVue1 = new
+		 * FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml")); LineChart<String,
+		 * Integer> h = new LineChart<String, Integer>(graphNbGrainArea.getXAxis(),
+		 * graphNbGrainArea.getYAxis());
+		 * 
+		 * h.getData().addAll(graphNbGrainArea.snapshot(null, null)); Parent root; root
+		 * = h; Stage stage = new Stage(); stage.getIcons().add(new
+		 * Image("/IconApp/icon.jpg")); stage.setTitle("GrapheAreaWide");
+		 * stage.setScene(new Scene(root)); stage.show();
+		 * 
+		 */
+	}
+
+	/**
+	 * @return the comment
+	 */
+	public TextArea getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(TextArea comment) {
+		this.comment = comment;
+	}
+
+	/**
+	 * @return the imageComment
+	 */
+	public TextArea getImageComment() {
+		return imageComment;
+	}
+
+	/**
+	 * @param imageComment the imageComment to set
+	 */
+	public void setImageComment(TextArea imageComment) {
+		this.imageComment = imageComment;
+	}
 
 }
