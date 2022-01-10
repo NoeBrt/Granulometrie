@@ -9,6 +9,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import Model.GranuloData;
+import application.GranuloApp;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -37,6 +38,12 @@ public class CtrlView {
 	 */
 	@FXML
 	private Button importButton;
+	/**
+	 * import button import an image
+	 */
+	@FXML
+	private Button seeDatabaseButton;
+
 
 	/**
 	 * launch processing button start processing
@@ -145,6 +152,13 @@ public class CtrlView {
 	 */
 	public static String getImagePath() {
 		return imagePath;
+	}
+	
+	public void seeDBSaveResults() throws IOException{
+	Stage stage=GranuloApp.primaryStage;
+	FXMLLoader GranuloDB = new FXMLLoader(CtrlView.class.getResource("GranuloDB.fxml"));
+	Parent root = GranuloDB.load();
+	stage.setScene(new Scene(root));
 	}
 
 	/**

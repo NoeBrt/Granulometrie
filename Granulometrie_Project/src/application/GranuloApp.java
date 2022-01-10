@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 
 public class GranuloApp extends Application {
+	 public static Stage primaryStage;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -25,7 +26,7 @@ public class GranuloApp extends Application {
 			primaryStage.getIcons().add(new Image("/IconApp/icon.jpg"));
 			primaryStage.show();
 			primaryStage.setOnCloseRequest(e -> Platform.exit());
-
+			GranuloApp.primaryStage=primaryStage;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
