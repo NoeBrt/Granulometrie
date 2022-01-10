@@ -164,7 +164,9 @@ public class CtrlView {
 				Parent root = GranuloVue1.load();
 				Stage stage = new Stage();
 				stage.getIcons().add(new Image("/IconApp/icon.jpg"));
-				stage.setTitle("Graphe");
+				stage.setTitle("result");
+				stage.setMinHeight(583.0);
+				stage.setMinWidth(826.0);
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.show();
