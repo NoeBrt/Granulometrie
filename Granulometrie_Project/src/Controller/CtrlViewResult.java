@@ -217,7 +217,7 @@ public class CtrlViewResult {
 	 */
 
 	@FXML
-	public void setScaleMinMax(ActionEvent event) {
+	public void setScaleMinMax() {
 		if (sizeMin.getText() != "" && sizeMax.getText() != "") {
 			GranuloModel.setScale(Integer.parseInt(sizeMin.getText()), Integer.parseInt(sizeMax.getText()));
 			InitalizeGraphSize();
@@ -260,7 +260,7 @@ public class CtrlViewResult {
 	 * @throws SQLException 
 	 */
 	@FXML
-	public void saveDataBase(ActionEvent event) throws ClassNotFoundException {
+	public void saveDataBase() throws ClassNotFoundException {
 		// TODO implement here
 		GranulometrieDAO granulometrieDAO;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -306,16 +306,18 @@ public class CtrlViewResult {
 		SaveInFile(getGraphSizeImage(), fileChooser);
 
 	}
-
+	/**
+	 * getGraphSizeImage() this method return a buffered Image of the Chart GraphGrainSize
+	
+	 * @return BufferedImage
+	 * @throws FileNotFoundException 
+	 */
 	public BufferedImage getGraphSizeImage() throws FileNotFoundException {
 		Parent root = graphNbGrainSurface;
 		WritableImage image = root.snapshot(new SnapshotParameters(), null);
 		return SwingFXUtils.fromFXImage(image, null);
 	}
-/*
-	public byte[] getGraphSizeByte() throws FileNotFoundException {
-		return NodeToBaos(graphNbGrainSize);
-	}*/
+
 
 	/**
 	 * graphSurfaceToImage this method convert the chart to image in order to save
@@ -332,38 +334,31 @@ public class CtrlViewResult {
 		SaveInFile(getGraphSurfaceImage(), fileChooser);
 	}
 
+	/**
+	 * getGraphSurfaceImage() this method return a buffered Image of the Chart GraphGrainSurface
+	
+	 * @return BufferedImage
+	 * @throws FileNotFoundException 
+	 */
 	public BufferedImage getGraphSurfaceImage() throws FileNotFoundException {
 		Parent root = graphNbGrainSurface;
 		WritableImage image = root.snapshot(new SnapshotParameters(), null);
 		return SwingFXUtils.fromFXImage(image, null);
 	}
-/*
-	public byte[] getGraphSurfaceByte() throws FileNotFoundException {
-		return NodeToBaos(graphNbGrainSurface);
-	}*/
 
-/*
-	private byte[] NodeToBaos(Parent node) {
-		Parent root = node;
-		WritableImage image = root.snapshot(new SnapshotParameters(), null);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		try {
-			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", baos);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return baos.toByteArray();
-	}
-*/
-	private void SaveInFile(BufferedImage image, FileChooser fileChooser) {
+
+	private void SaveInFile(BufferedImage image, FileChooser fileChooser)  {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
-		try {
-			ImageIO.write(image, "png", file);
-		} catch (Exception e) {
+		if (file!=null) {
+			try {
+				ImageIO.write(image, "png", file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// TODO Auto-generated catch block
 		}
 	}
@@ -375,7 +370,7 @@ public class CtrlViewResult {
 	 * @return void this method has no return type
 	 */
 	@FXML
-	public void setCluster(ActionEvent event) {
+	public void setCluster() {
 		GranuloModel.setClusters(Double.parseDouble(clusterWidth.getText()));
 		InitalizeGraphSize();
 		// setScaleMinMax(event);
@@ -388,7 +383,7 @@ public class CtrlViewResult {
 	 * @return void this method has no return type
 	 */
 	@FXML
-	public void setSurfaceCluster(ActionEvent event) {
+	public void setSurfaceCluster() {
 		GranuloModel.setSurfaceClusters(Double.parseDouble(surfaceClusterWidth.getText()));
 		InitalizeGraphSurface();
 		// setScaleMinMax(event);
@@ -403,7 +398,7 @@ public class CtrlViewResult {
 	 * @return void this method has no return type
 	 */
 	@FXML
-	public void exportJpg(ActionEvent event) {
+	public void exportJpg() {
 		Image imageToBeSaved = GranuloModel.getImage();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialFileName("ImageGranulo");
@@ -417,6 +412,12 @@ public class CtrlViewResult {
 		}
 	}
 	
+	/**
+	 *  getOriginalImage return buffered image of original Grain image
+	 * 
+	 * @param this method has no parameters
+	 * @return Buffered image of Grain Image
+	 */
 	public BufferedImage getOriginalImage() {
 		return SwingFXUtils.fromFXImage(CtrlView.getImage(),null);
 		
@@ -429,18 +430,21 @@ public class CtrlViewResult {
 	 * 
 	 * @param this method has no parameters
 	 * @return void this method has no return type
+	 * @throws IOException 
 	 */
 	@FXML
-	public void exportCsv(ActionEvent event) throws MalformedURLException, IOException {
+	public void exportCsv() throws IOException  {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialFileName("DataGranulo");
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV file (.csv)", ".csv");
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
+		if (file!=null) {
 		String path = file.getPath();
 		WriteCsv write = new WriteCsv(this.GranuloModel,
 				new String[] { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" }, path);
-		write.StartWriting();
+			write.StartWriting();}
+		
 
 	}
 

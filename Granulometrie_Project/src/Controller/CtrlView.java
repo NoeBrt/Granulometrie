@@ -81,7 +81,7 @@ public class CtrlView {
 	 * @throws IOException 
 	 */
 	@FXML
-	void importImage(ActionEvent event) throws IOException {
+	void importImage() throws IOException {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(new ExtensionFilter("JPG Files", "*.jpg"));
 		//fc.getExtensionFilters().add(new ExtensionFilter("PNG Files", "*.png"));
@@ -129,7 +129,7 @@ public class CtrlView {
 	 */
 	@FXML
 	public void handleDrop(DragEvent event) throws IOException {
-		List<File> files = event.getDragboard().getFiles();
+		List<File> files =event.getDragboard().getFiles();
 		Image ImageTest = new Image(new FileInputStream(files.get(0)));
 		if (!ImageTest.isError()) {
 			CtrlView.image = new Image(new FileInputStream(files.get(0)));
@@ -171,7 +171,7 @@ public class CtrlView {
 	 */
 
 	@FXML
-	public void launchProces(ActionEvent event) throws IOException {
+	public void launchProces() throws IOException {
 		if (isImported == true) {
 			try {
 				FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
