@@ -190,8 +190,6 @@ public class CtrlViewResult {
 
 	@FXML
 	private void InitalizeGraphSurface() {
-
-		System.out.println(GranuloModel.getClustersSurface().keySet());
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClustersSurface().entrySet()) {
 			String x = entry.getKey() - GranuloModel.getEtalonSurface() + "-" + entry.getKey().toString();

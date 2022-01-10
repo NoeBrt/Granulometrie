@@ -13,6 +13,8 @@ import java.awt.image.*;
 import Controller.CtrlView;
 import Controller.CtrlViewResult;
 import Model.GranuloData;
+import Model.ImageDB;
+import Model.ParameterDB;
 import app.Measure;
 import javafx.embed.swing.*;
 import javafx.scene.image.*;
@@ -34,10 +36,10 @@ public class GranulometrieDAO {
 	 * @throws ClassNotFoundException
 	 * @see SingleConnection.java
 	 */
-	public GranulometrieDAO(String url,String login,String password) throws ClassNotFoundException {
+	public GranulometrieDAO(String url, String login, String password) throws ClassNotFoundException {
 		this.url = url;
 		this.login = login;
-		this.password =password;
+		this.password = password;
 		this.connection = SingleConnection.getInstance(url, login, password);
 	}
 
@@ -63,8 +65,7 @@ public class GranulometrieDAO {
 	 * @see SingleConnection.java
 	 */
 	private Connection connection;
-	
-	
+
 	public void insertData(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException {
 		insertImageTable(ctrlViewResult);
 		insertParameter(ctrlViewResult);
@@ -94,6 +95,12 @@ public class GranulometrieDAO {
 
 	}
 
+	private Image FormatBlobtoImage(Blob blob) throws SQLException {
+		InputStream is = blob.getBinaryStream();
+		return new Image(is);
+
+	}
+
 	public void insertImageTable(CtrlViewResult ctrlViewResult)
 			throws SQLException, IOException, ClassNotFoundException {
 		if (FindIdImageByImage(ctrlViewResult.getOriginalImage()) == -1) {
@@ -118,48 +125,50 @@ public class GranulometrieDAO {
 
 	public void insertParameter(CtrlViewResult ctrlViewResult)
 			throws SQLException, IOException, ClassNotFoundException {
-		if (FindIdImageByImage(ctrlViewResult.getOriginalImage())!=-1) {
-		if (FindParameter(ctrlViewResult)==-1) {
-		PreparedStatement ps = this.connection.prepareStatement(
-				"INSERT INTO Parametrage (TailleMin,TailleMax,nbCategoriesTaille,nbCategoriesSurface,Courbe1,Courbe2,DateCalcul,HeureCalcul,commentaire,idImage) VALUES (?,?,?,?,?,?,?,?,?,?)");
-		this.connection.setAutoCommit(true);
-		ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin()); 
-		ps.setFloat(2, (float) ctrlViewResult.getGranuloModel().getSizeGrainMax());
-		ps.setInt(3, ctrlViewResult.getGranuloModel().getClusters().size()); 
-		ps.setInt(4, ctrlViewResult.getGranuloModel().getClustersSurface().size()); 
-		ps.setBlob(5,FormatImageToBlob(ctrlViewResult.getGraphSizeImage()));
-		ps.setBlob(6,FormatImageToBlob(ctrlViewResult.getGraphSizeImage()));
-		ps.setDate(7, Date.valueOf(ctrlViewResult.getGranuloModel().getDate()));
-		ps.setTime(8, Time.valueOf(ctrlViewResult.getGranuloModel().getTime()));
-		ps.setString(9, ctrlViewResult.getComment().getText());
-		ps.setInt(10, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
-		ps.executeUpdate();
-		ps.close();
-		}else {
-			Statement smt = this.connection.createStatement();
-			smt.executeUpdate("UPDATE Parametrage SET DateCalcul='" +Date.valueOf(ctrlViewResult.getGranuloModel().getDate())+"',HeureCalcul='"+Time.valueOf(ctrlViewResult.getGranuloModel().getTime())+"' ,commentaire='"+ctrlViewResult.getComment().getText()+"' WHERE idParametrage=" + FindParameter(ctrlViewResult) + ";");
-		}
-		}}
-
-		public int FindParameter(CtrlViewResult ctrlViewResult ) throws SQLException, ClassNotFoundException, IOException {
-			PreparedStatement ps = this.connection.prepareStatement(
-					"SELECT * FROM parametrage WHERE TailleMin=? AND TailleMax=? AND nbCategoriesTaille=? AND nbCategoriesSurface=?  AND idImage=?");
-			ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin()); 
-			ps.setFloat(2, (float) ctrlViewResult.getGranuloModel().getSizeGrainMax());
-			ps.setInt(3, ctrlViewResult.getGranuloModel().getClusters().size()); 
-			ps.setInt(4, ctrlViewResult.getGranuloModel().getClustersSurface().size()); 
-			ps.setInt(5, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
-			ResultSet r=ps.executeQuery();
-			try {
-				r.next();
-				return r.getInt("idParametrage");
-			} catch (java.sql.SQLException e) {
-				return -1;
+		if (FindIdImageByImage(ctrlViewResult.getOriginalImage()) != -1) {
+			if (FindParameter(ctrlViewResult) == -1) {
+				PreparedStatement ps = this.connection.prepareStatement(
+						"INSERT INTO Parametrage (TailleMin,TailleMax,nbCategoriesTaille,nbCategoriesSurface,Courbe1,Courbe2,DateCalcul,HeureCalcul,commentaire,idImage) VALUES (?,?,?,?,?,?,?,?,?,?)");
+				this.connection.setAutoCommit(true);
+				ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin());
+				ps.setFloat(2, (float) ctrlViewResult.getGranuloModel().getSizeGrainMax());
+				ps.setInt(3, ctrlViewResult.getGranuloModel().getClusters().size());
+				ps.setInt(4, ctrlViewResult.getGranuloModel().getClustersSurface().size());
+				ps.setBlob(5, FormatImageToBlob(ctrlViewResult.getGraphSizeImage()));
+				ps.setBlob(6, FormatImageToBlob(ctrlViewResult.getGraphSizeImage()));
+				ps.setDate(7, Date.valueOf(ctrlViewResult.getGranuloModel().getDate()));
+				ps.setTime(8, Time.valueOf(ctrlViewResult.getGranuloModel().getTime()));
+				ps.setString(9, ctrlViewResult.getComment().getText());
+				ps.setInt(10, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
+				ps.executeUpdate();
+				ps.close();
+			} else {
+				Statement smt = this.connection.createStatement();
+				smt.executeUpdate(
+						"UPDATE Parametrage SET DateCalcul='" + Date.valueOf(ctrlViewResult.getGranuloModel().getDate())
+								+ "',HeureCalcul='" + Time.valueOf(ctrlViewResult.getGranuloModel().getTime())
+								+ "' ,commentaire='" + ctrlViewResult.getComment().getText() + "' WHERE idParametrage="
+								+ FindParameter(ctrlViewResult) + ";");
 			}
 		}
+	}
 
-		
-	
+	public int FindParameter(CtrlViewResult ctrlViewResult) throws SQLException, ClassNotFoundException, IOException {
+		PreparedStatement ps = this.connection.prepareStatement(
+				"SELECT * FROM parametrage WHERE TailleMin=? AND TailleMax=? AND nbCategoriesTaille=? AND nbCategoriesSurface=?  AND idImage=?");
+		ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin());
+		ps.setFloat(2, (float) ctrlViewResult.getGranuloModel().getSizeGrainMax());
+		ps.setInt(3, ctrlViewResult.getGranuloModel().getClusters().size());
+		ps.setInt(4, ctrlViewResult.getGranuloModel().getClustersSurface().size());
+		ps.setInt(5, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
+		ResultSet r = ps.executeQuery();
+		try {
+			r.next();
+			return r.getInt("idParametrage");
+		} catch (java.sql.SQLException e) {
+			return -1;
+		}
+	}
 
 	public int FindIdImageByImage(java.awt.Image image) throws SQLException, IOException, ClassNotFoundException {
 		PreparedStatement ps = this.connection.prepareStatement("SELECT idImage FROM Image WHERE image=?");
@@ -173,35 +182,58 @@ public class GranulometrieDAO {
 			return -1;
 		}
 	}
-	
-	
-	
-	public void InsertGrains(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException{
-		
-		if(!isImageHadGrain(FindIdImageByImage(ctrlViewResult.getOriginalImage()))) {	
-		this.connection.setAutoCommit(true);
+
+	public void InsertGrains(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException {
+
+		if (!isImageHadGrain(FindIdImageByImage(ctrlViewResult.getOriginalImage()))) {
+			this.connection.setAutoCommit(true);
 			System.out.println(FindParameter(ctrlViewResult));
 			int idImage = FindIdImageByImage(ctrlViewResult.getOriginalImage());
-			for (Measure measure :ctrlViewResult.getGranuloModel().getMeasures()) {
+			for (Measure measure : ctrlViewResult.getGranuloModel().getMeasures()) {
 				PreparedStatement ps = this.connection.prepareStatement(
 						"INSERT INTO grain (centreX,centreY,longueur,largeur,circularite,Surface,idImage) VALUES (?,?,?,?,?,?,?)");
-			ps.setFloat(1, (float) measure.getCentre_x()); 
-			ps.setFloat(2, (float) measure.getCentre_y());
-			ps.setFloat(3, measure.getHeight()); 
-			ps.setFloat(4, measure.getWidth()); 
-			ps.setFloat(5, (float) measure.getRoundness());
-			ps.setFloat(6,  (float) measure.getAire());
-			ps.setInt(7, idImage );
-			ps.executeUpdate();
-			}}
+				ps.setFloat(1, (float) measure.getCentre_x());
+				ps.setFloat(2, (float) measure.getCentre_y());
+				ps.setFloat(3, measure.getHeight());
+				ps.setFloat(4, measure.getWidth());
+				ps.setFloat(5, (float) measure.getRoundness());
+				ps.setFloat(6, (float) measure.getAire());
+				ps.setInt(7, idImage);
+				ps.executeUpdate();
+			}
+		}
 	}
-	
+
 	public boolean isImageHadGrain(int idImage) throws SQLException, IOException, ClassNotFoundException {
 		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM grain WHERE idImage=?");
 		this.connection.setAutoCommit(true);
-		ps.setInt(1,idImage);
+		ps.setInt(1, idImage);
 		ResultSet r = ps.executeQuery();
 		return r.next();
+	}
+
+	public LinkedList<ImageDB> getImageTable() throws SQLException {
+		Statement smt = this.connection.createStatement();
+		ResultSet r = smt.executeQuery("Select * from Image");
+		LinkedList<ImageDB> imageDBList = new LinkedList<ImageDB>();
+		while (r.next()) {
+			imageDBList.add(new ImageDB(r.getInt(1), FormatBlobtoImage(r.getBlob(2)), r.getFloat(3), r.getFloat(4), r.getInt(5),
+					r.getString(6)));
+		}
+
+		return imageDBList;
+	}
+	
+	public LinkedList<ParameterDB> getParameterTable() throws SQLException {
+		Statement smt = this.connection.createStatement();
+		ResultSet r = smt.executeQuery("Select * from parametrage");
+		LinkedList<ParameterDB> ParameterTableList = new LinkedList<ParameterDB>();
+		while (r.next()) {
+			ParameterTableList.add(new ParameterDB(r.getInt(1),r.getFloat(2),r.getFloat(3), r.getInt(4),r.getInt(5),
+					FormatBlobtoImage(r.getBlob(6)),FormatBlobtoImage(r.getBlob(7)),r.getDate(8).toString(),r.getTime(9).toString(),r.getString(10),r.getInt(11)));
+		}
+
+		return ParameterTableList;
 	}
 
 	/**
@@ -311,7 +343,7 @@ public class GranulometrieDAO {
 	 *              this.connection.commit(); this.connection.setAutoCommit(true);
 	 *              this.connection.close(); }
 	 */
-	
+
 	/**
 	 * This method is for deleting data from the Parametrage table it will send a
 	 * specific sql query that will delete the settings used to calculate the graphs
