@@ -167,6 +167,7 @@ public class CtrlView {
 				stage.setTitle("result");
 				stage.setMinHeight(583.0);
 				stage.setMinWidth(826.0);
+				stage.sizeToScene();
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.show();
