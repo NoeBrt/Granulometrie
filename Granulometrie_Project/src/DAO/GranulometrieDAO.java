@@ -121,7 +121,7 @@ public class GranulometrieDAO {
 		if (FindIdImageByImage(ctrlViewResult.getOriginalImage())!=-1) {
 		if (FindParameter(ctrlViewResult)==-1) {
 		PreparedStatement ps = this.connection.prepareStatement(
-				"INSERT INTO Parametrage (TailleMin,TailleMax,nbCategoriesTaille,nbCategoriesSurface,Courbe1,Courbe2,DateCalcul,HeureCalcul,idImage) VALUES (?,?,?,?,?,?,?,?,?)");
+				"INSERT INTO Parametrage (TailleMin,TailleMax,nbCategoriesTaille,nbCategoriesSurface,Courbe1,Courbe2,DateCalcul,HeureCalcul,commentaire,idImage) VALUES (?,?,?,?,?,?,?,?,?,?)");
 		this.connection.setAutoCommit(true);
 		ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin()); 
 		ps.setFloat(2, (float) ctrlViewResult.getGranuloModel().getSizeGrainMax());
@@ -131,12 +131,13 @@ public class GranulometrieDAO {
 		ps.setBlob(6,FormatImageToBlob(ctrlViewResult.getGraphSizeImage()));
 		ps.setDate(7, Date.valueOf(ctrlViewResult.getGranuloModel().getDate()));
 		ps.setTime(8, Time.valueOf(ctrlViewResult.getGranuloModel().getTime()));
-		ps.setInt(9, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
+		ps.setString(9, ctrlViewResult.getComment().getText());
+		ps.setInt(10, FindIdImageByImage(ctrlViewResult.getOriginalImage()));
 		ps.executeUpdate();
 		ps.close();
 		}else {
 			Statement smt = this.connection.createStatement();
-			smt.executeUpdate("UPDATE Parametrage SET DateCalcul='" +Date.valueOf(ctrlViewResult.getGranuloModel().getDate())+"',HeureCalcul='"+Time.valueOf(ctrlViewResult.getGranuloModel().getTime())+"' WHERE idParametrage=" + FindParameter(ctrlViewResult) + ";");
+			smt.executeUpdate("UPDATE Parametrage SET DateCalcul='" +Date.valueOf(ctrlViewResult.getGranuloModel().getDate())+"',HeureCalcul='"+Time.valueOf(ctrlViewResult.getGranuloModel().getTime())+"' ,commentaire='"+ctrlViewResult.getComment().getText()+"' WHERE idParametrage=" + FindParameter(ctrlViewResult) + ";");
 		}
 		}}
 
