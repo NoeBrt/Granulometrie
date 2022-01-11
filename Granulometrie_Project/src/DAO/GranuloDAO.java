@@ -20,7 +20,7 @@ import javafx.scene.image.*;
  * @author Noe,Hreasvik,Joey
  *
  */
-public class GranulometrieDAO {
+public class GranuloDAO {
 
 	/**
 	 * The constructor will connect to the database by using a url
@@ -34,10 +34,10 @@ public class GranulometrieDAO {
 	 * @throws ClassNotFoundException
 	 * @see SingleConnection.java
 	 */
-	public GranulometrieDAO(String url, String login, String password) throws ClassNotFoundException {
+	public GranuloDAO(String url, String login, String password) throws ClassNotFoundException, SQLException {
 		this.setUrl(url);
 		this.setLogin(login);
-		this.setPassword(password);
+		this.password = password;
 		this.connection = SingleConnection.getInstance(url, login, password);
 	}
 
@@ -322,17 +322,11 @@ public class GranulometrieDAO {
 		this.login = login;
 	}
 
-	/**
-	 * @return password of user
-	 */
-	public String getPassword() {
+	protected String getPassword() {
 		return password;
 	}
 
-	/**
-	 * @param password
-	 */
-	void setPassword(String password) {
+	protected void setPassword(String password) {
 		this.password = password;
 	}
 

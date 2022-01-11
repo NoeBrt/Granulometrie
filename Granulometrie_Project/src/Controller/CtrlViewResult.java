@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 
 import CSV.WriteCsv;
-import DAO.GranulometrieDAO;
+import DAO.GranuloDAO;
 import Model.GranuloData;
 import app.Measure;
 
@@ -68,11 +68,10 @@ public class CtrlViewResult implements Initializable {
 	}
 
 	/**
-	 * Image will be traited here 
+	 * Image will be traited here
 	 */
 	private GranuloData GranuloModel;
 
-	
 	/**
 	 * LineChart graph of the number of grains by their size
 	 */
@@ -175,11 +174,9 @@ public class CtrlViewResult implements Initializable {
 		InitalizeGraphSurface();
 	}
 
-	
-	
 	/**
-	 * create a LineChart chart with the data of GranuloModel , graph of the number of grains by their size 
-	 * with the method getCluster() and getClusterSurface
+	 * create a LineChart chart with the data of GranuloModel , graph of the number
+	 * of grains by their size with the method getCluster() and getClusterSurface
 	 */
 	@FXML
 	private void InitalizeGraphSize() {
@@ -201,7 +198,8 @@ public class CtrlViewResult implements Initializable {
 	}
 
 	/**
-	 * create a LineChart chart with the data of GranuloModel with the method getClusterSurface() graph of the number of grains by their surface
+	 * create a LineChart chart with the data of GranuloModel with the method
+	 * getClusterSurface() graph of the number of grains by their surface
 	 */
 	@FXML
 	private void InitalizeGraphSurface() {
@@ -263,51 +261,71 @@ public class CtrlViewResult implements Initializable {
 	 * @throws SQLException
 	 */
 	@FXML
-	public void saveDataBase() throws ClassNotFoundException {
-	//	showInterfaceConnection();
-		GranulometrieDAO granulometrieDAO;
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Save confirmation");
-		alert.setHeaderText("Save image & result to the data base ?");
-		Optional<ButtonType> option = alert.showAndWait();
-		if (option.get() == ButtonType.OK) {
-			try {
-				granulometrieDAO = new GranulometrieDAO("jdbc:mysql://localhost/Granulometrie", "root", "");
-				granulometrieDAO.insertData(this);
-				Alert alert1 = new Alert(AlertType.INFORMATION);
-				alert1.setTitle("backup from data Base performed");
-				alert1.setHeaderText("backup performed");
-				alert1.showAndWait();
-			} catch (SQLException e) {
-				Alert alert1 = new Alert(AlertType.ERROR);
-				alert1.setTitle("SQL DataBaseError");
-				alert1.setHeaderText("Unable to connect to the database");
-				alert1.setContentText("error code : " + e.getErrorCode());
-				alert1.showAndWait();
-			} catch (IOException e) {
-				Alert alert1 = new Alert(AlertType.ERROR);
-				alert1.setTitle("Save Error");
-				alert1.setHeaderText("Problems with image conversion !");
-				alert1.setContentText("error code : " + e.getMessage());
-				alert1.showAndWait();
+	public void saveDataBase() throws ClassNotFoundException, IOException {
+		if (CtrlInterfaceConnect.getDao() == null) {
+			showInterfaceConnection();
+		}
+		GranuloDAO granulometrieDAO;
+		if (CtrlInterfaceConnect.getDao() != null) {
+			Alert alert = backupConfirmationQuestion();
+			Optional<ButtonType> option = alert.showAndWait();
+			if (option.get() == ButtonType.OK) {
+				try {
+					granulometrieDAO = CtrlInterfaceConnect.getDao();
+					granulometrieDAO.insertData(this);
+					Alert alert1 = alertBackupPerformed();
+					alert1.showAndWait();
+				} catch (SQLException e) {
+					Alert alert1 = alertUnableToConnect(e);
+					alert1.showAndWait();
+				} catch (IOException e) {
+					Alert alert1 = alertSaveError(e);
+					alert1.showAndWait();
+
+				}
 			}
 		}
 	}
 
+	private Alert backupConfirmationQuestion() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Save confirmation");
+		alert.setHeaderText("Save image & result to the data base ?");
+		return alert;
+	}
 
+	private Alert alertSaveError(IOException e) {
+		Alert alert1 = new Alert(AlertType.ERROR);
+		alert1.setTitle("Save Error");
+		alert1.setHeaderText("Problems with image conversion !");
+		alert1.setContentText("error code : " + e.getMessage());
+		return alert1;
+	}
 
-	private void showInterfaceConnection() {
+	private Alert alertUnableToConnect(SQLException e) {
+		Alert alert1 = new Alert(AlertType.ERROR);
+		alert1.setTitle("SQL DataBaseError");
+		alert1.setHeaderText("Unable to connect to the database");
+		alert1.setContentText("error code : " + e.getErrorCode());
+		return alert1;
+	}
+
+	private Alert alertBackupPerformed() {
+		Alert alert1 = new Alert(AlertType.INFORMATION);
+		alert1.setTitle("backup from data Base performed");
+		alert1.setHeaderText("backup performed");
+		return alert1;
+	}
+
+	private void showInterfaceConnection() throws IOException {
 		Stage stage = new Stage();
-		FXMLLoader interfaceConnect = new FXMLLoader(CtrlView.class.getResource("InterfaceConnect.fxml"));
+		FXMLLoader interfaceConnect = new FXMLLoader(CtrlView.class.getResource("interfaceConnectView.fxml"));
 		Parent root;
-		try {
-			root = interfaceConnect.load();
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		root = interfaceConnect.load();
+		stage.setScene(new Scene(root));
+		stage.setTitle("Connect to Data Base");
+		stage.getIcons().add(new Image("/IconApp/DBicon.jpg"));
+		stage.showAndWait();
 	}
 
 	/**
@@ -467,9 +485,8 @@ public class CtrlViewResult implements Initializable {
 
 	}
 
-	
 	/**
-	 * return the first Chart in a new Frame 
+	 * return the first Chart in a new Frame
 	 */
 	@FXML
 	public void ClickChartSize() {
@@ -483,8 +500,9 @@ public class CtrlViewResult implements Initializable {
 		 */
 
 	}
+
 	/**
-	 * return the second Chart in a new Frame 
+	 * return the second Chart in a new Frame
 	 */
 	@FXML
 	public void ClickChartArea() {
@@ -529,12 +547,12 @@ public class CtrlViewResult implements Initializable {
 	public void setImageComment(TextArea imageComment) {
 		this.imageComment = imageComment;
 	}
+
 	/**
 	 * @return the granuloModel
 	 */
 	public GranuloData getGranuloModel() {
 		return GranuloModel;
 	}
-
 
 }
