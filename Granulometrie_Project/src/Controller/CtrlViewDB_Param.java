@@ -68,8 +68,8 @@ public class CtrlViewDB_Param implements Initializable {
 	@FXML
 	public void backToCtrlViewDBImage() throws IOException {
 		Stage stage = GranuloApp.primaryStage;
-		FXMLLoader CtrlView = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
-		Parent root = CtrlView.load();
+		FXMLLoader CtrlViewDB_param = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
+		Parent root = CtrlViewDB_param.load();
 		stage.setScene(new Scene(root));
 	}
 

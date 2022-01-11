@@ -21,8 +21,10 @@ import app.Measure;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -36,6 +38,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * @author Alex,Noe,Quentin
@@ -261,7 +264,7 @@ public class CtrlViewResult implements Initializable {
 	 */
 	@FXML
 	public void saveDataBase() throws ClassNotFoundException {
-		// TODO implement here
+	//	showInterfaceConnection();
 		GranulometrieDAO granulometrieDAO;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Save confirmation");
@@ -288,6 +291,22 @@ public class CtrlViewResult implements Initializable {
 				alert1.setContentText("error code : " + e.getMessage());
 				alert1.showAndWait();
 			}
+		}
+	}
+
+
+
+	private void showInterfaceConnection() {
+		Stage stage = new Stage();
+		FXMLLoader interfaceConnect = new FXMLLoader(CtrlView.class.getResource("InterfaceConnect.fxml"));
+		Parent root;
+		try {
+			root = interfaceConnect.load();
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 
