@@ -13,7 +13,7 @@ import app.MeasuresList;
 import ij.ImagePlus;
 import javafx.scene.image.Image;
 
-/**
+/** @author Noe
  * Images and traitement will be done here
  */
 public class GranuloData {

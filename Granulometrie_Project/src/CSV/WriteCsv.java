@@ -1,15 +1,15 @@
 package CSV;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import Model.GranuloData;
 import app.Measure;
-import javafx.stage.FileChooser;
 
+
+/**
+ * @author Quentin
+ *
+ */
 public class WriteCsv {
 	private static String[] header;
 	private static String path;
@@ -72,27 +72,46 @@ public class WriteCsv {
 		}
 	}
 
-	public static GranuloData getData() {
-		return data;
-	}
-
-	public void setData(GranuloData data) {
-		WriteCsv.data = data;
-	}
-
+	/**
+	 * @return the header
+	 */
 	public static String[] getHeader() {
 		return header;
 	}
 
-	public void setHeader(String[] header) {
+	/**
+	 * @param header the header to set
+	 */
+	public static void setHeader(String[] header) {
 		WriteCsv.header = header;
 	}
 
+	/**
+	 * @return the path
+	 */
 	public static String getPath() {
 		return path;
 	}
 
+	/**
+	 * @param path the path to set
+	 */
 	public static void setPath(String path) {
 		WriteCsv.path = path;
 	}
+
+	/**
+	 * @return the data
+	 */
+	public static GranuloData getData() {
+		return data;
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public static void setData(GranuloData data) {
+		WriteCsv.data = data;
+	}
+
 }

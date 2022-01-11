@@ -3,39 +3,21 @@ package DAO;
 import java.io.*;
 import java.sql.*;
 import java.sql.Date;
-import java.text.*;
-import java.util.*;
 import javax.imageio.*;
-
-import org.junit.Ignore;
 
 import java.awt.Graphics2D;
 import java.awt.image.*;
 
-import Controller.CtrlView;
 import Controller.CtrlViewResult;
-import Model.GranuloData;
 import Model.ImageDB;
 import Model.ParameterDB;
 import app.Measure;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.*;
 import javafx.scene.image.*;
 
 /**
- * 
- */
-/**
- * @author noebr
- *
- */
-/**
- * @author noebr
- *
- */
-/**
- * @author noebr
+ * @author Noe,Hreasvik,Joey
  *
  */
 public class GranulometrieDAO {
@@ -53,9 +35,9 @@ public class GranulometrieDAO {
 	 * @see SingleConnection.java
 	 */
 	public GranulometrieDAO(String url, String login, String password) throws ClassNotFoundException {
-		this.url = url;
-		this.login = login;
-		this.password = password;
+		this.setUrl(url);
+		this.setLogin(login);
+		this.setPassword(password);
 		this.connection = SingleConnection.getInstance(url, login, password);
 	}
 
@@ -81,10 +63,10 @@ public class GranulometrieDAO {
 	 * @see SingleConnection.java
 	 */
 	private Connection connection;
-	
 
-
-	/** save all the result in database
+	/**
+	 * save all the result in database
+	 * 
 	 * @param ctrlViewResult
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -96,7 +78,9 @@ public class GranulometrieDAO {
 		InsertGrains(ctrlViewResult);
 	}
 
-	/** use for insert image in Blob type
+	/**
+	 * use for insert image in Blob type
+	 * 
 	 * @param image
 	 * @return Image in byte
 	 */
@@ -122,7 +106,10 @@ public class GranulometrieDAO {
 		return bais;
 
 	}
-	/** format Blob type in Image;
+
+	/**
+	 * format Blob type in Image;
+	 * 
 	 * @param image
 	 * @return Image in byte
 	 */
@@ -131,7 +118,10 @@ public class GranulometrieDAO {
 		return new Image(is);
 
 	}
-	/**Insert Image and Image info from CtrlViewResult in Image mysql Table;
+
+	/**
+	 * Insert Image and Image info from CtrlViewResult in Image mysql Table;
+	 * 
 	 * @param ctrlViewResult
 	 */
 	public void insertImageTable(CtrlViewResult ctrlViewResult)
@@ -155,7 +145,11 @@ public class GranulometrieDAO {
 		}
 
 	}
-	/**Insert Parameter of an image traitement from CtrlViewResult in Image mysql Table;
+
+	/**
+	 * Insert Parameter of an image traitement from CtrlViewResult in Image mysql
+	 * Table;
+	 * 
 	 * @param ctrlViewResult
 	 */
 	public void insertParameter(CtrlViewResult ctrlViewResult)
@@ -217,7 +211,11 @@ public class GranulometrieDAO {
 			return -1;
 		}
 	}
-	/**Insert Parameter of an image traitement from CtrlViewResult in Image mysql Table;
+
+	/**
+	 * Insert Parameter of an image traitement from CtrlViewResult in Image mysql
+	 * Table;
+	 * 
 	 * @param ctrlViewResult
 	 */
 	public void InsertGrains(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException {
@@ -268,7 +266,8 @@ public class GranulometrieDAO {
 
 	/**
 	 * @param idImage
-	 * @return a ObservableList<ParameterDB> of all the Parameter row in the DB associed to this image id
+	 * @return a ObservableList<ParameterDB> of all the Parameter row in the DB
+	 *         associed to this image id
 	 * @throws SQLException
 	 */
 	public ObservableList<ParameterDB> getParameterTable(int idImage) throws SQLException {
@@ -296,6 +295,45 @@ public class GranulometrieDAO {
 	 */
 	public void setConnection(Connection connection) {
 		this.connection = connection;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/**
+	 * @return login of user
+	 */
+	public String getLogin() {
+		return login;
+	}
+
+	/**
+	 * @param login
+	 */
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	/**
+	 * @return password of user
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password
+	 */
+	void setPassword(String password) {
+		this.password = password;
 	}
 
 	/**
@@ -428,7 +466,7 @@ public class GranulometrieDAO {
 	 * @param Image
 	 * @param idParametrage
 	 *
-	 *                      // 
+	 *                      //
 	 *                      HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 	 *                      public void updateParametrage(Image Image, int
 	 *                      idParametrage) {

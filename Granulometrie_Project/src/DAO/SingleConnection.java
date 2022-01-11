@@ -7,7 +7,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class SingleConnection {
 	/**
-     * 
+     * @author Noe
      */
 	private static Connection con;
 	/**

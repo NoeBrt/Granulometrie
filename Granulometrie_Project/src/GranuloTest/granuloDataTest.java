@@ -2,26 +2,9 @@ package GranuloTest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.LinkedList;
-
-import org.hamcrest.core.Is;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.max.MaxCore;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import Model.GranuloData;
 import app.CCLabeler;
 import app.Measure;
@@ -29,7 +12,7 @@ import app.MeasuresList;
 
 public class granuloDataTest {
 
-	private static GranuloData granulodata;
+	private GranuloData granulodata;
 
 	/**
 	 * This method will test The method process We will test it by comparing with
@@ -109,6 +92,14 @@ public class granuloDataTest {
 		granulodata.setClusters(2.0);
 		assertFalse(granulodata.getClusters().isEmpty());
 
+	}
+
+	public GranuloData getGranulodata() {
+		return granulodata;
+	}
+
+	public void setGranulodata(GranuloData granulodata) {
+		this.granulodata = granulodata;
 	}
 
 }

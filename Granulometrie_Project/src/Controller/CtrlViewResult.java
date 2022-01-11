@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,7 +20,6 @@ import Model.GranuloData;
 import app.Measure;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -40,12 +38,16 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 
 /**
- * @author Alex
- * 
+ * @author Alex,Noe,Quentin
+ 
  *         this class displays two charts with the image particles and allows
- *         the user to export an image in jpg and data in csv also user can
+ *         the user to export the original image in jpg and data in csv also user can
  *         insert data into database the constructor
  * @param constructor has no parameters
+ */
+/**
+ * @author noebr
+ *
  */
 public class CtrlViewResult implements Initializable {
 
@@ -62,15 +64,22 @@ public class CtrlViewResult implements Initializable {
 		this.GranuloModel = new GranuloData(CtrlView.getImagePath());
 	}
 
+	/**
+	 * Image will be traited here 
+	 */
 	private GranuloData GranuloModel;
 
+	
+	/**
+	 * LineChart graph of the number of grains by their size
+	 */
 	@FXML
 	private LineChart<String, Integer> graphNbGrainSize;
 
 	@FXML
 	private NumberAxis Number;
 	/**
-	 * the second bubble chart displays grains by area
+	 * LineChart graph of the number of grains by their surface
 	 */
 	@FXML
 	private LineChart<String, Integer> graphNbGrainSurface;
@@ -150,13 +159,6 @@ public class CtrlViewResult implements Initializable {
 	private Button exportChart2JPGButton;
 
 	/**
-	 * @return the granuloModel
-	 */
-	public GranuloData getGranuloModel() {
-		return GranuloModel;
-	}
-
-	/**
 	 * initialize Initialize is an implemented method of Initializable interface
 	 * that allows the user to define actions to buttons without using fxml file
 	 * 
@@ -170,6 +172,12 @@ public class CtrlViewResult implements Initializable {
 		InitalizeGraphSurface();
 	}
 
+	
+	
+	/**
+	 * create a LineChart chart with the data of GranuloModel , graph of the number of grains by their size 
+	 * with the method getCluster() and getClusterSurface
+	 */
 	@FXML
 	private void InitalizeGraphSize() {
 
@@ -189,6 +197,9 @@ public class CtrlViewResult implements Initializable {
 		graphNbGrainSize.getData().add(series);
 	}
 
+	/**
+	 * create a LineChart chart with the data of GranuloModel with the method getClusterSurface() graph of the number of grains by their surface
+	 */
 	@FXML
 	private void InitalizeGraphSurface() {
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
@@ -238,16 +249,6 @@ public class CtrlViewResult implements Initializable {
 		}
 
 	}
-
-	/*
-	 * setComment this method set Comment in model
-	 * 
-	 *
-	 * public void setComment(ActionEvent event) {
-	 * GranuloModel.setComment(comment.getText());
-	 * 
-	 * }
-	 */
 
 	/**
 	 * saveDataBase this methode save data in database
@@ -447,6 +448,10 @@ public class CtrlViewResult implements Initializable {
 
 	}
 
+	
+	/**
+	 * return the first Chart in a new Frame 
+	 */
 	@FXML
 	public void ClickChartSize() {
 		/*
@@ -459,7 +464,9 @@ public class CtrlViewResult implements Initializable {
 		 */
 
 	}
-
+	/**
+	 * return the second Chart in a new Frame 
+	 */
 	@FXML
 	public void ClickChartArea() {
 		/*
@@ -503,5 +510,12 @@ public class CtrlViewResult implements Initializable {
 	public void setImageComment(TextArea imageComment) {
 		this.imageComment = imageComment;
 	}
+	/**
+	 * @return the granuloModel
+	 */
+	public GranuloData getGranuloModel() {
+		return GranuloModel;
+	}
+
 
 }

@@ -3,7 +3,7 @@ package Model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-/**
+/**@author Noe
  * Object who containt a row from sql Table Parametrage from DB granulometrie
  */
 public class ParameterDB {
