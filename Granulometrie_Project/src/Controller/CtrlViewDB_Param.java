@@ -26,7 +26,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class CtrlViewDB_Param implements Initializable {
-	public Button importButton;
+	@FXML
+	public Button returnToImageView;
 	private GranulometrieDAO granuloDAO;
 	public ObservableList<ParameterDB> dataParameter = FXCollections.observableArrayList();
 	private static ImageDB ImageDbCLiked;
@@ -79,7 +80,8 @@ public class CtrlViewDB_Param implements Initializable {
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}}
+			}
+		}
 		try {
 			viewParameterTable();
 		} catch (ClassNotFoundException e) {

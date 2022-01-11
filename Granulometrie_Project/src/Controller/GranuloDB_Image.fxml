@@ -13,7 +13,7 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="importButton" mnemonicParsing="false" onAction="#backToCtrlView" text="Import" />
+          <Button fx:id="importButton" mnemonicParsing="false" onAction="#backToCtrlView" text="return to import" />
         </items>
       </ToolBar>
    </top>
