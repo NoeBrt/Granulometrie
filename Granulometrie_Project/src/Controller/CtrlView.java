@@ -34,7 +34,6 @@ public class CtrlView {
 	@FXML
 	private Button seeDatabaseButton;
 
-
 	/**
 	 * launch processing button start processing
 	 */
@@ -46,13 +45,12 @@ public class CtrlView {
 	 */
 	@FXML
 	private static Image image;
-	
+
 	/**
 	 * the image that will be loaded
 	 */
 	@FXML
 	private static String imagePath;
-	
 
 	/**
 	 * the view which display the image
@@ -68,18 +66,18 @@ public class CtrlView {
 	 * 
 	 * @param this method has no parameters
 	 * @return void this method has no return type
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@FXML
 	void importImage() throws IOException {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(new ExtensionFilter("JPG Files", "*.jpg"));
-		//fc.getExtensionFilters().add(new ExtensionFilter("PNG Files", "*.png"));
+		// fc.getExtensionFilters().add(new ExtensionFilter("PNG Files", "*.png"));
 		File file = fc.showOpenDialog(null);
 
 		if (file != null) {
 			image = new Image(file.toURI().toString());
-			imagePath=file.getCanonicalPath();
+			imagePath = file.getCanonicalPath();
 			imgView.setImage(image);
 			isImported = true;
 		}
@@ -115,15 +113,15 @@ public class CtrlView {
 	 * 
 	 * @param DragEvent event this method has one parameter loading an image in view
 	 * @return void this method has no return type
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@FXML
 	public void handleDrop(DragEvent event) throws IOException {
-		List<File> files =event.getDragboard().getFiles();
+		List<File> files = event.getDragboard().getFiles();
 		Image ImageTest = new Image(new FileInputStream(files.get(0)));
 		if (!ImageTest.isError()) {
 			CtrlView.image = new Image(new FileInputStream(files.get(0)));
-			imagePath=files.get(0).getCanonicalPath();
+			imagePath = files.get(0).getCanonicalPath();
 			imgView.setImage(image);
 			isImported = true;
 		} else {
@@ -143,12 +141,32 @@ public class CtrlView {
 	public static String getImagePath() {
 		return imagePath;
 	}
-	
-	public void seeDBSaveResults() throws IOException{
-	Stage stage=GranuloApp.primaryStage;
-	FXMLLoader GranuloDB = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
-	Parent root = GranuloDB.load();
-	stage.setScene(new Scene(root));
+
+	public void seeDBSaveResults() throws IOException {
+		if (CtrlInterfaceConnect.getDao() == null) {
+			try {
+				showInterfaceConnection();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} else {
+			Stage stage = GranuloApp.primaryStage;
+			FXMLLoader GranuloDB = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
+			Parent root = GranuloDB.load();
+			stage.setScene(new Scene(root));
+		}
+	}
+
+	private void showInterfaceConnection() throws IOException {
+		Stage stage = new Stage();
+		FXMLLoader interfaceConnect = new FXMLLoader(CtrlView.class.getResource("interfaceConnectView.fxml"));
+		Parent root;
+		root = interfaceConnect.load();
+		stage.setScene(new Scene(root));
+		stage.setTitle("Connect to Data Base");
+		stage.getIcons().add(new Image("/IconApp/DBicon.jpg"));
+		stage.showAndWait();
 	}
 
 	/**
@@ -175,15 +193,14 @@ public class CtrlView {
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.show();
-				
 
-		} catch (Exception e) {
+			} catch (Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error alert");
 				alert.setHeaderText("ERROR");
 				alert.setContentText("CANT'T LOAD IMAGE");
 				alert.showAndWait();
-				System.out.println("Cannot load new window"); 
+				System.out.println("Cannot load new window");
 			}
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -191,7 +208,8 @@ public class CtrlView {
 			alert.setHeaderText("0 Image imported");
 			alert.setContentText("You must import an Image to launch the process");
 			alert.showAndWait();
-		}}
+		}
+	}
 //	}
 
 	/**

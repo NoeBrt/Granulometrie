@@ -5,7 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import DAO.GranulometrieDAO;
+import DAO.GranuloDAO;
 import Model.ImageDB;
 import Model.ParameterDB;
 import application.GranuloApp;
@@ -24,14 +24,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
 /**
- * @author Noe
- * controller of GranuloDB_param.fxml, display a table view of Parameter row from a database
+ * @author Noe controller of GranuloDB_param.fxml, display a table view of
+ *         Parameter row from a database
  */
 public class CtrlViewDB_Param implements Initializable {
 	@FXML
 	public Button returnToImageView;
-	private GranulometrieDAO granuloDAO;
+	private GranuloDAO granuloDAO;
 	public ObservableList<ParameterDB> dataParameter = FXCollections.observableArrayList();
 	private static ImageDB ImageDbCLiked;
 
@@ -60,40 +61,30 @@ public class CtrlViewDB_Param implements Initializable {
 	@FXML
 	TableColumn<ParameterDB, Integer> idImage;
 
-	
 	/**
 	 * go back to the GranuloDB_Image.fxml view & controller
+	 * 
 	 * @throws IOException
 	 */
 	@FXML
 	public void backToCtrlViewDBImage() throws IOException {
 		Stage stage = GranuloApp.primaryStage;
-		FXMLLoader CtrlView = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
-		Parent root = CtrlView.load();
+		FXMLLoader CtrlViewDB_param = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
+		Parent root = CtrlViewDB_param.load();
 		stage.setScene(new Scene(root));
 	}
 
-	
 	/**
-	 *connect to the DataBase & set TableView with viewParameterTable(), if the program is unable to connect to the Database, the method display a error frame
+	 * connect to the DataBase & set TableView with viewParameterTable(), if the
+	 * program is unable to connect to the Database, the method display a error
+	 * frame
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		Alert alert1 = new Alert(AlertType.ERROR);
 		alert1.setTitle("SQL DataBaseError");
 		alert1.setHeaderText("Unable to connect to the database");
-		try {
-			this.granuloDAO = new GranulometrieDAO("jdbc:mysql://localhost/Granulometrie", "root", "");
-		} catch (ClassNotFoundException e) {
-			alert1.setContentText("error code : " + e.getMessage());
-			alert1.showAndWait();
-			try {
-				backToCtrlViewDBImage();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		this.granuloDAO = CtrlInterfaceConnect.getDao();
 		try {
 			viewParameterTable();
 		} catch (ClassNotFoundException e) {
@@ -102,8 +93,9 @@ public class CtrlViewDB_Param implements Initializable {
 		}
 	}
 
-	
-	/**get all the Parameter row from the DataBase and set the TableVew
+	/**
+	 * get all the Parameter row from the DataBase and set the TableVew
+	 * 
 	 * @throws ClassNotFoundException
 	 */
 	public void viewParameterTable() throws ClassNotFoundException {
@@ -127,8 +119,9 @@ public class CtrlViewDB_Param implements Initializable {
 		tableViewParameter.setItems(dataParameter);
 	}
 
-	
-	/**display a Alert Frame
+	/**
+	 * display a Alert Frame
+	 * 
 	 * @param SqlException e
 	 */
 	private void sqlAlert(SQLException e) {

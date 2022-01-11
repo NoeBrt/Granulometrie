@@ -5,7 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import DAO.GranulometrieDAO;
+import DAO.GranuloDAO;
 import Model.ImageDB;
 import application.GranuloApp;
 import javafx.collections.FXCollections;
@@ -25,15 +25,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-/**@author Noe
- * controller of GranuloDB_param.fxml, display a table view of Image row from a database
+/**
+ * @author Noe controller of GranuloDB_param.fxml, display a table view of Image
+ *         row from a database
  */
 public class CtrlViewDB_Image implements Initializable {
 	public Button importButton;
 	/**
 	 * 
 	 */
-	private GranulometrieDAO granuloDAO;
+	private GranuloDAO granuloDAO;
 	public ObservableList<ImageDB> dataImage = FXCollections.observableArrayList();
 	@FXML
 	private TableView<ImageDB> tableViewImage;
@@ -49,47 +50,51 @@ public class CtrlViewDB_Image implements Initializable {
 	TableColumn<ImageDB, Integer> magnification;
 	@FXML
 	TableColumn<ImageDB, String> comment;
-	
+
 	/**
 	 * go back to the GranuloVue1.fxml view & controller
+	 * 
 	 * @throws IOException
 	 */
 	@FXML
 	public void backToCtrlView() throws IOException {
 		Stage stage = GranuloApp.primaryStage;
-		FXMLLoader CtrlView = new FXMLLoader(CtrlView.class.getResource("GranuloVue1.fxml"));
-		Parent root = CtrlView.load();
+		FXMLLoader CtrlViewf = new FXMLLoader(CtrlView.class.getResource("GranuloVue1.fxml"));
+		Parent root = CtrlViewf.load();
 		stage.setScene(new Scene(root));
 	}
+
 	/**
-	 *connect to the DataBase & set TableView with viewImageTable(), if the program is unable to connect to the Database, the method display a error frame
+	 * connect to the DataBase & set TableView with viewImageTable(), if the program
+	 * is unable to connect to the Database, the method display a error frame
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		getDoubleClikedRowImageItem();
-		Alert alert1 = new Alert(AlertType.ERROR);
-		alert1.setTitle("SQL DataBaseError");
-		alert1.setHeaderText("Unable to connect to the database");
-		try {
-			this.granuloDAO = new GranulometrieDAO("jdbc:mysql://localhost/Granulometrie", "root", "");
-		} catch (ClassNotFoundException e) {
-			alert1.setContentText("error code : " + e.getMessage());
-			alert1.showAndWait();
+		if (CtrlInterfaceConnect.getDao() != null) {
+			getDoubleClikedRowImageItem();
+			Alert alert1 = new Alert(AlertType.ERROR);
+			alert1.setTitle("SQL DataBaseError");
+			alert1.setHeaderText("Unable to connect to the database");
+			this.granuloDAO = CtrlInterfaceConnect.getDao();
+			try {
+				viewImageTable();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
 			try {
 				backToCtrlView();
-			} catch (IOException e1) {
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
 			}
 		}
-		try {
-			viewImageTable();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-	/**get all the Image row from the DataBase and set the TableVew
+
+	/**
+	 * get all the Image row from the DataBase and set the TableVew
+	 * 
 	 * @throws ClassNotFoundException
 	 */
 	public void viewImageTable() throws ClassNotFoundException {
@@ -108,7 +113,9 @@ public class CtrlViewDB_Image implements Initializable {
 		tableViewImage.setItems(dataImage);
 	}
 
-	/**display a Alert Frame
+	/**
+	 * display a Alert Frame
+	 * 
 	 * @param SqlException e
 	 */
 	private void sqlAlert(SQLException e) {
@@ -119,9 +126,9 @@ public class CtrlViewDB_Image implements Initializable {
 		alert1.showAndWait();
 	}
 
-	
 	/**
-	 * if a row who contain data is double clicked, display the TableView of parameter Table with CtrlViewDB_Param as controller
+	 * if a row who contain data is double clicked, display the TableView of
+	 * parameter Table with CtrlViewDB_Param as controller
 	 */
 	public void getDoubleClikedRowImageItem() {
 		tableViewImage.setRowFactory(tv -> {
@@ -137,7 +144,6 @@ public class CtrlViewDB_Image implements Initializable {
 						root = CtrlView.load();
 						stage.setScene(new Scene(root));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
