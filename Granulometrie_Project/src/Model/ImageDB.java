@@ -3,6 +3,9 @@ package Model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Object who containt a row from sql Table Image from DB granulometrie
+ */
 public class ImageDB {
 	private int idImage;
 	private ImageView image;
@@ -11,6 +14,16 @@ public class ImageDB {
 	private int grossisement;
 	private String commentaire;
 
+	
+	
+	/** 
+	 * @param idImage
+	 * @param image
+	 * @param longueur
+	 * @param largeur
+	 * @param grossisement
+	 * @param commentaire
+	 */
 	public ImageDB(int idImage, Image image, float longueur, float largeur, int grossisement, String commentaire) {
 		super();
 		this.idImage = idImage;

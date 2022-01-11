@@ -18,22 +18,7 @@ import javafx.scene.image.Image;
  */
 public class GranuloData {
 
-	/**
-	 * Constructor of GranuloData object, it instanciate Measures with
-	 * process(image) and image with this.Image Date and Time will be instanciate
-	 * with the current date & time with java.time.LocalDate.now() and
-	 * java.time.LocalTime.now() set grain Scale with default value
-	 * (setScale(min,max))
-	 * 
-	 * @param image
-	 */
-	/*
-	 * public GranuloData(Image image) { System.out.println(image.getUrl());
-	 * this.Measures = process(image); this.MeasuresAfterScale = new
-	 * LinkedList<>(Measures.getMeasures()); this.image = image; this.comment = "";
-	 * this.Date = LocalDate.now().toString(); this.Time =
-	 * LocalTime.now().toString().substring(0, 8); setScale(0, 10); }
-	 */
+
 
 	/**
 	 * Constructor of GranuloData object, it instanciate Measures with
@@ -59,23 +44,6 @@ public class GranuloData {
 		setSurfaceClusters(10.0);
 	}
 
-	/**
-	 * the methods store an image in ImageToProcessList object. It
-	 * addImageName(image.getUrl()) will put this in ImageToProcessList's LinkedList
-	 * after that, the methods create an CCLabeler object. Then, for each Image in
-	 * the list, it past the images url in the CCLabeler. Finally it return
-	 * CCLabeler.getMeasure
-	 * 
-	 * @param image
-	 * @return the measures list after the image Traitement (CCLabeler.getMeasure)
-	 * 
-	 *
-	 * 
-	 *
-	 *         public MeasuresList process(Image image) { CCLabeler counter = new
-	 *         CCLabeler(); counter.process(image.getUrl()); return
-	 *         counter.getMeasures(); }
-	 */
 	/**
 	 * the methods store an image in ImageToProcessList object. the methods create
 	 * an CCLabeler object. and process the image with the path (url) Finally it
@@ -181,7 +149,12 @@ public class GranuloData {
 		this.SizeGrainMin = min;
 		this.SizeGrainMax = max;
 	}
-
+	/**
+	 * set scale of the Measures inferior to max
+	 * 
+	 * @param min
+	 * @param max
+	 */
 	public void setScaleMax(int max) {
 		this.MeasuresAfterScale.clear();
 		this.MeasuresAfterScale = new LinkedList<Measure>(this.Measures.getMeasuresList());
@@ -194,7 +167,12 @@ public class GranuloData {
 		}
 		this.SizeGrainMax = max;
 	}
-
+	/**
+	 * set scale of the Measures  superior to min
+	 * 
+	 * @param min
+	 * @param max
+	 */
 	public void setScaleMin(int min) {
 		this.MeasuresAfterScale.clear();
 		this.MeasuresAfterScale = new LinkedList<Measure>(this.Measures.getMeasuresList());
@@ -210,7 +188,7 @@ public class GranuloData {
 	}
 
 	/**
-	 * Create a LinkedHashMap<Integer, Measure> Cluster and set Scale of each
+	 * Create a LinkedHashMap<Double, Measure> Cluster and set Scale of each
 	 * Cluster (index & List<Measure>) according to Grains's size (if float=2.0,
 	 * then list<Mesuse> with index=2 will contain Grains Measure size beetween 0
 	 * and <=2.0. index=4 Grains Measure size beetween 2.0 & <=4.0 ...ect)
@@ -239,6 +217,15 @@ public class GranuloData {
 		}
 	}
 
+	/**
+	 * Create a LinkedHashMap<Double, Measure> Cluster and set Scale of each
+	 * Cluster (index & List<Measure>) according to Grains's surface (if float=2.0,
+	 * then list<Mesuse> with index=2 will contain Grains Measure size beetween 0
+	 * and <=2.0. index=4 Grains Measure size beetween 2.0 & <=4.0 ...ect)
+	 * 
+	 * @param void
+	 * 
+	 */
 	public void setSurfaceClusters(Double etalon) {
 		this.ClustersSurface.clear();
 		if (etalon > 0) {

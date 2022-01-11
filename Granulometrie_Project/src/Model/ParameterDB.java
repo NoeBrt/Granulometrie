@@ -3,6 +3,9 @@ package Model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Object who containt a row from sql Table Parametrage from DB granulometrie
+ */
 public class ParameterDB {
 	private int idParameter;
 	private float sizeMin;
@@ -16,6 +19,19 @@ public class ParameterDB {
 	private String comment;
 	private int idImage;
 
+	/**
+	 * @param idParameter
+	 * @param sizeMin
+	 * @param sizeMax
+	 * @param nbCategorySize
+	 * @param nbCategorySurface
+	 * @param chart1
+	 * @param chart2
+	 * @param dateCalcul
+	 * @param heureCalcul
+	 * @param comment
+	 * @param idImage
+	 */
 	public ParameterDB(int idParameter, float sizeMin, float sizeMax, int nbCategorySize, int nbCategorySurface,
 			Image chart1, Image chart2, String dateCalcul, String heureCalcul, String comment, int idImage) {
 		super();

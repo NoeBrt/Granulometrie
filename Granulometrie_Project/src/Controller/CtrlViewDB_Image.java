@@ -31,6 +31,9 @@ import javafx.stage.Stage;
 
 public class CtrlViewDB_Image implements Initializable {
 	public Button importButton;
+	/**
+	 * 
+	 */
 	private GranulometrieDAO granuloDAO;
 	public ObservableList<ImageDB> dataImage = FXCollections.observableArrayList();
 	@FXML
@@ -47,7 +50,7 @@ public class CtrlViewDB_Image implements Initializable {
 	TableColumn<ImageDB, Integer> magnification;
 	@FXML
 	TableColumn<ImageDB, String> comment;
-
+	
 	@FXML
 	public void backToCtrlView() throws IOException {
 		Stage stage = GranuloApp.primaryStage;

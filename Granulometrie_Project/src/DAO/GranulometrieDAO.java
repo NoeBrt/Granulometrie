@@ -7,6 +7,8 @@ import java.text.*;
 import java.util.*;
 import javax.imageio.*;
 
+import org.junit.Ignore;
+
 import java.awt.Graphics2D;
 import java.awt.image.*;
 
@@ -23,6 +25,18 @@ import javafx.scene.image.*;
 
 /**
  * 
+ */
+/**
+ * @author noebr
+ *
+ */
+/**
+ * @author noebr
+ *
+ */
+/**
+ * @author noebr
+ *
  */
 public class GranulometrieDAO {
 
@@ -67,13 +81,25 @@ public class GranulometrieDAO {
 	 * @see SingleConnection.java
 	 */
 	private Connection connection;
+	
 
+
+	/** save all the result in database
+	 * @param ctrlViewResult
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public void insertData(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException {
 		insertImageTable(ctrlViewResult);
 		insertParameter(ctrlViewResult);
 		InsertGrains(ctrlViewResult);
 	}
 
+	/** use for insert image in Blob type
+	 * @param image
+	 * @return Image in byte
+	 */
 	private ByteArrayInputStream FormatImageToBlob(java.awt.Image image) {
 		BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = bi.createGraphics();
@@ -96,13 +122,18 @@ public class GranulometrieDAO {
 		return bais;
 
 	}
-
+	/** format Blob type in Image;
+	 * @param image
+	 * @return Image in byte
+	 */
 	private Image FormatBlobtoImage(Blob blob) throws SQLException {
 		InputStream is = blob.getBinaryStream();
 		return new Image(is);
 
 	}
-
+	/**Insert Image and Image info from CtrlViewResult in Image mysql Table;
+	 * @param ctrlViewResult
+	 */
 	public void insertImageTable(CtrlViewResult ctrlViewResult)
 			throws SQLException, IOException, ClassNotFoundException {
 		if (FindIdImageByImage(ctrlViewResult.getOriginalImage()) == -1) {
@@ -124,7 +155,9 @@ public class GranulometrieDAO {
 		}
 
 	}
-
+	/**Insert Parameter of an image traitement from CtrlViewResult in Image mysql Table;
+	 * @param ctrlViewResult
+	 */
 	public void insertParameter(CtrlViewResult ctrlViewResult)
 			throws SQLException, IOException, ClassNotFoundException {
 		if (FindIdImageByImage(ctrlViewResult.getOriginalImage()) != -1) {
@@ -155,7 +188,7 @@ public class GranulometrieDAO {
 		}
 	}
 
-	public int FindParameter(CtrlViewResult ctrlViewResult) throws SQLException, ClassNotFoundException, IOException {
+	private int FindParameter(CtrlViewResult ctrlViewResult) throws SQLException, ClassNotFoundException, IOException {
 		PreparedStatement ps = this.connection.prepareStatement(
 				"SELECT * FROM parametrage WHERE TailleMin=? AND TailleMax=? AND nbCategoriesTaille=? AND nbCategoriesSurface=?  AND idImage=?");
 		ps.setFloat(1, (float) ctrlViewResult.getGranuloModel().getSizeGrainMin());
@@ -172,7 +205,7 @@ public class GranulometrieDAO {
 		}
 	}
 
-	public int FindIdImageByImage(java.awt.Image image) throws SQLException, IOException, ClassNotFoundException {
+	private int FindIdImageByImage(java.awt.Image image) throws SQLException, IOException, ClassNotFoundException {
 		PreparedStatement ps = this.connection.prepareStatement("SELECT idImage FROM Image WHERE image=?");
 		this.connection.setAutoCommit(true);
 		ps.setBlob(1, FormatImageToBlob(image));
@@ -184,7 +217,9 @@ public class GranulometrieDAO {
 			return -1;
 		}
 	}
-
+	/**Insert Parameter of an image traitement from CtrlViewResult in Image mysql Table;
+	 * @param ctrlViewResult
+	 */
 	public void InsertGrains(CtrlViewResult ctrlViewResult) throws ClassNotFoundException, SQLException, IOException {
 
 		if (!isImageHadGrain(FindIdImageByImage(ctrlViewResult.getOriginalImage()))) {
@@ -206,7 +241,7 @@ public class GranulometrieDAO {
 		}
 	}
 
-	public boolean isImageHadGrain(int idImage) throws SQLException, IOException, ClassNotFoundException {
+	private boolean isImageHadGrain(int idImage) throws SQLException, IOException, ClassNotFoundException {
 		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM grain WHERE idImage=?");
 		this.connection.setAutoCommit(true);
 		ps.setInt(1, idImage);
@@ -214,6 +249,11 @@ public class GranulometrieDAO {
 		return r.next();
 	}
 
+	/**
+	 * @param idImage
+	 * @return a ObservableList<ParameterDB> of all the Image row in the DB
+	 * @throws SQLException
+	 */
 	public ObservableList<ImageDB> getImageTable() throws SQLException {
 		Statement smt = this.connection.createStatement();
 		ResultSet r = smt.executeQuery("Select * from Image");
@@ -226,6 +266,11 @@ public class GranulometrieDAO {
 		return imageDBList;
 	}
 
+	/**
+	 * @param idImage
+	 * @return a ObservableList<ParameterDB> of all the Parameter row in the DB associed to this image id
+	 * @throws SQLException
+	 */
 	public ObservableList<ParameterDB> getParameterTable(int idImage) throws SQLException {
 		Statement smt = this.connection.createStatement();
 		ResultSet r = smt.executeQuery("Select * from parametrage WHERE idImage=" + idImage + "");
@@ -383,7 +428,7 @@ public class GranulometrieDAO {
 	 * @param Image
 	 * @param idParametrage
 	 *
-	 *                      // TODO
+	 *                      // 
 	 *                      HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 	 *                      public void updateParametrage(Image Image, int
 	 *                      idParametrage) {
