@@ -156,7 +156,7 @@ public class CtrlView {
 	
 	public void seeDBSaveResults() throws IOException{
 	Stage stage=GranuloApp.primaryStage;
-	FXMLLoader GranuloDB = new FXMLLoader(CtrlView.class.getResource("GranuloDB.fxml"));
+	FXMLLoader GranuloDB = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
 	Parent root = GranuloDB.load();
 	stage.setScene(new Scene(root));
 	}

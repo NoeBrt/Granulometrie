@@ -6,10 +6,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
@@ -21,6 +23,7 @@ import app.Measure;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
@@ -44,7 +47,7 @@ import javafx.stage.FileChooser;
  *         insert data into database the constructor
  * @param constructor has no parameters
  */
-public class CtrlViewResult {
+public class CtrlViewResult implements Initializable {
 
 	/**
 	 * the constructor of CtrlResultView
@@ -55,7 +58,7 @@ public class CtrlViewResult {
 	 *              this.GranuloModel=model; }
 	 */
 
-	public CtrlViewResult() {
+	public CtrlViewResult()  {
 		this.GranuloModel = new GranuloData(CtrlView.getImagePath());
 	}
 
@@ -153,7 +156,6 @@ public class CtrlViewResult {
 	public GranuloData getGranuloModel() {
 		return GranuloModel;
 	}
-
 	/**
 	 * initialize Initialize is an implemented method of Initializable interface
 	 * that allows the user to define actions to buttons without using fxml file
@@ -161,14 +163,13 @@ public class CtrlViewResult {
 	 * @FXML public void initialize() { // TODO implement here
 	 *       InitalizeGraphSizeAndSurface(); //graphToImage(); }
 	 */
-
-	@FXML
-	public void initialize() {
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
 		InitalizeGraphSize();
 		InitalizeGraphSurface();
 	}
-
-
+	
 	@FXML
 	private void InitalizeGraphSize() {
 
@@ -502,5 +503,7 @@ public class CtrlViewResult {
 	public void setImageComment(TextArea imageComment) {
 		this.imageComment = imageComment;
 	}
+
+	
 
 }

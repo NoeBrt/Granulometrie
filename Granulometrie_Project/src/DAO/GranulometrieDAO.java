@@ -16,6 +16,8 @@ import Model.GranuloData;
 import Model.ImageDB;
 import Model.ParameterDB;
 import app.Measure;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.*;
 import javafx.scene.image.*;
 
@@ -212,10 +214,10 @@ public class GranulometrieDAO {
 		return r.next();
 	}
 
-	public LinkedList<ImageDB> getImageTable() throws SQLException {
+	public ObservableList<ImageDB> getImageTable() throws SQLException {
 		Statement smt = this.connection.createStatement();
 		ResultSet r = smt.executeQuery("Select * from Image");
-		LinkedList<ImageDB> imageDBList = new LinkedList<ImageDB>();
+		ObservableList<ImageDB> imageDBList = FXCollections.observableArrayList();
 		while (r.next()) {
 			imageDBList.add(new ImageDB(r.getInt(1), FormatBlobtoImage(r.getBlob(2)), r.getFloat(3), r.getFloat(4), r.getInt(5),
 					r.getString(6)));
@@ -224,16 +226,30 @@ public class GranulometrieDAO {
 		return imageDBList;
 	}
 	
-	public LinkedList<ParameterDB> getParameterTable() throws SQLException {
+	public ObservableList<ParameterDB> getParameterTable(int idImage) throws SQLException {
 		Statement smt = this.connection.createStatement();
-		ResultSet r = smt.executeQuery("Select * from parametrage");
-		LinkedList<ParameterDB> ParameterTableList = new LinkedList<ParameterDB>();
+		ResultSet r = smt.executeQuery("Select * from parametrage WHERE idImage="+idImage+"");
+		ObservableList<ParameterDB> ParameterTableList = FXCollections.observableArrayList();
 		while (r.next()) {
 			ParameterTableList.add(new ParameterDB(r.getInt(1),r.getFloat(2),r.getFloat(3), r.getInt(4),r.getInt(5),
 					FormatBlobtoImage(r.getBlob(6)),FormatBlobtoImage(r.getBlob(7)),r.getDate(8).toString(),r.getTime(9).toString(),r.getString(10),r.getInt(11)));
 		}
 
 		return ParameterTableList;
+	}
+
+	/**
+	 * @return the connection
+	 */
+	public Connection getConnection() {
+		return connection;
+	}
+
+	/**
+	 * @param connection the connection to set
+	 */
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 
 	/**
