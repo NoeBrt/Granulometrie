@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="Granulometrie_Project/source"/>
-	<classpathentry kind="src" path="Granulometrie_Project/Traitement&amp;Measure"/>
-	<classpathentry kind="src" path="Model"/>
-	<classpathentry kind="output" path="Granulometrie_Project/bin"/>
-</classpath>
