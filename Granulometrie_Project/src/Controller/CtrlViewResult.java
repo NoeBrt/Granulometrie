@@ -265,13 +265,12 @@ public class CtrlViewResult implements Initializable {
 		if (CtrlInterfaceConnect.getDao() == null) {
 			showInterfaceConnection();
 		}
-		GranuloDAO granulometrieDAO;
 		if (CtrlInterfaceConnect.getDao() != null) {
 			Alert alert = backupConfirmationQuestion();
 			Optional<ButtonType> option = alert.showAndWait();
 			if (option.get() == ButtonType.OK) {
 				try {
-					granulometrieDAO = CtrlInterfaceConnect.getDao();
+					GranuloDAO granulometrieDAO= CtrlInterfaceConnect.getDao();
 					granulometrieDAO.insertData(this);
 					Alert alert1 = alertBackupPerformed();
 					alert1.showAndWait();
