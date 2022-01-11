@@ -58,7 +58,7 @@ public class CtrlViewResult implements Initializable {
 	 *              this.GranuloModel=model; }
 	 */
 
-	public CtrlViewResult()  {
+	public CtrlViewResult() {
 		this.GranuloModel = new GranuloData(CtrlView.getImagePath());
 	}
 
@@ -149,13 +149,13 @@ public class CtrlViewResult implements Initializable {
 	@FXML
 	private Button exportChart2JPGButton;
 
-
 	/**
 	 * @return the granuloModel
 	 */
 	public GranuloData getGranuloModel() {
 		return GranuloModel;
 	}
+
 	/**
 	 * initialize Initialize is an implemented method of Initializable interface
 	 * that allows the user to define actions to buttons without using fxml file
@@ -169,7 +169,7 @@ public class CtrlViewResult implements Initializable {
 		InitalizeGraphSize();
 		InitalizeGraphSurface();
 	}
-	
+
 	@FXML
 	private void InitalizeGraphSize() {
 
@@ -254,9 +254,9 @@ public class CtrlViewResult implements Initializable {
 	 * 
 	 * @param this method has no parameter
 	 * @return void this method has no return type
-	 * @throws ClassNotFoundException 
-	 * @throws IOException 
-	 * @throws SQLException 
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @throws SQLException
 	 */
 	@FXML
 	public void saveDataBase() throws ClassNotFoundException {
@@ -267,26 +267,26 @@ public class CtrlViewResult implements Initializable {
 		alert.setHeaderText("Save image & result to the data base ?");
 		Optional<ButtonType> option = alert.showAndWait();
 		if (option.get() == ButtonType.OK) {
-		try {
-			granulometrieDAO = new GranulometrieDAO("jdbc:mysql://localhost/Granulometrie","root","");
-			granulometrieDAO.insertData(this);
-			Alert alert1 = new Alert(AlertType.INFORMATION);
-			alert1.setTitle("backup from data Base performed");
-			alert1.setHeaderText("backup performed");
-			alert1.showAndWait();	
-		} catch (SQLException e) {
-			Alert alert1 = new Alert(AlertType.ERROR);
-			alert1.setTitle("SQL DataBaseError");
-			alert1.setHeaderText("Unable to connect to the database");
-			alert1.setContentText("error code : "+e.getErrorCode());
-			alert1.showAndWait();				
-		} catch (IOException e) {
-			Alert alert1 = new Alert(AlertType.ERROR);
-			alert1.setTitle("Save Error");
-			alert1.setHeaderText("Problems with image conversion !");
-			alert1.setContentText("error code : "+e.getMessage());
-			alert1.showAndWait();			
-		}
+			try {
+				granulometrieDAO = new GranulometrieDAO("jdbc:mysql://localhost/Granulometrie", "root", "");
+				granulometrieDAO.insertData(this);
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("backup from data Base performed");
+				alert1.setHeaderText("backup performed");
+				alert1.showAndWait();
+			} catch (SQLException e) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("SQL DataBaseError");
+				alert1.setHeaderText("Unable to connect to the database");
+				alert1.setContentText("error code : " + e.getErrorCode());
+				alert1.showAndWait();
+			} catch (IOException e) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Save Error");
+				alert1.setHeaderText("Problems with image conversion !");
+				alert1.setContentText("error code : " + e.getMessage());
+				alert1.showAndWait();
+			}
 		}
 	}
 
@@ -297,7 +297,7 @@ public class CtrlViewResult implements Initializable {
 	 * @param Graph this method holds one parameter the chart that is going to be
 	 *              converted
 	 * @return void this method has no return type
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	public void graphSizeToImageExport() throws FileNotFoundException {
 		FileChooser fileChooser = new FileChooser();
@@ -305,18 +305,19 @@ public class CtrlViewResult implements Initializable {
 		SaveInFile(getGraphSizeImage(), fileChooser);
 
 	}
+
 	/**
-	 * getGraphSizeImage() this method return a buffered Image of the Chart GraphGrainSize
-	
+	 * getGraphSizeImage() this method return a buffered Image of the Chart
+	 * GraphGrainSize
+	 * 
 	 * @return BufferedImage
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	public BufferedImage getGraphSizeImage() throws FileNotFoundException {
 		Parent root = graphNbGrainSurface;
 		WritableImage image = root.snapshot(new SnapshotParameters(), null);
 		return SwingFXUtils.fromFXImage(image, null);
 	}
-
 
 	/**
 	 * graphSurfaceToImage this method convert the chart to image in order to save
@@ -325,7 +326,7 @@ public class CtrlViewResult implements Initializable {
 	 * @param Graph this method holds one parameter the chart that is going to be
 	 *              converted
 	 * @return void this method has no return type
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	public void graphSurfaceToImageExport() throws FileNotFoundException {
 		FileChooser fileChooser = new FileChooser();
@@ -334,10 +335,11 @@ public class CtrlViewResult implements Initializable {
 	}
 
 	/**
-	 * getGraphSurfaceImage() this method return a buffered Image of the Chart GraphGrainSurface
-	
+	 * getGraphSurfaceImage() this method return a buffered Image of the Chart
+	 * GraphGrainSurface
+	 * 
 	 * @return BufferedImage
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	public BufferedImage getGraphSurfaceImage() throws FileNotFoundException {
 		Parent root = graphNbGrainSurface;
@@ -345,13 +347,11 @@ public class CtrlViewResult implements Initializable {
 		return SwingFXUtils.fromFXImage(image, null);
 	}
 
-
-
-	private void SaveInFile(BufferedImage image, FileChooser fileChooser)  {
+	private void SaveInFile(BufferedImage image, FileChooser fileChooser) {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG file (*.jpg)", "*.jpg");
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
-		if (file!=null) {
+		if (file != null) {
 			try {
 				ImageIO.write(image, "png", file);
 			} catch (IOException e) {
@@ -410,16 +410,16 @@ public class CtrlViewResult implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 *  getOriginalImage return buffered image of original Grain image
+	 * getOriginalImage return buffered image of original Grain image
 	 * 
 	 * @param this method has no parameters
 	 * @return Buffered image of Grain Image
 	 */
 	public BufferedImage getOriginalImage() {
-		return SwingFXUtils.fromFXImage(CtrlView.getImage(),null);
-		
+		return SwingFXUtils.fromFXImage(CtrlView.getImage(), null);
+
 	}
 
 	/**
@@ -429,21 +429,21 @@ public class CtrlViewResult implements Initializable {
 	 * 
 	 * @param this method has no parameters
 	 * @return void this method has no return type
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@FXML
-	public void exportCsv() throws IOException  {
+	public void exportCsv() throws IOException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialFileName("DataGranulo");
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV file (.csv)", ".csv");
 		fileChooser.getExtensionFilters().add(extFilter);
 		File file = fileChooser.showSaveDialog(null);
-		if (file!=null) {
-		String path = file.getPath();
-		WriteCsv write = new WriteCsv(this.GranuloModel,
-				new String[] { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" }, path);
-			write.StartWriting();}
-		
+		if (file != null) {
+			String path = file.getPath();
+			WriteCsv write = new WriteCsv(this.GranuloModel,
+					new String[] { "air", "centreX", "centreY", "XStart", "YStart", "Width", "Height" }, path);
+			write.StartWriting();
+		}
 
 	}
 
@@ -503,7 +503,5 @@ public class CtrlViewResult implements Initializable {
 	public void setImageComment(TextArea imageComment) {
 		this.imageComment = imageComment;
 	}
-
-	
 
 }

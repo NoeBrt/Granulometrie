@@ -219,20 +219,21 @@ public class GranulometrieDAO {
 		ResultSet r = smt.executeQuery("Select * from Image");
 		ObservableList<ImageDB> imageDBList = FXCollections.observableArrayList();
 		while (r.next()) {
-			imageDBList.add(new ImageDB(r.getInt(1), FormatBlobtoImage(r.getBlob(2)), r.getFloat(3), r.getFloat(4), r.getInt(5),
-					r.getString(6)));
+			imageDBList.add(new ImageDB(r.getInt(1), FormatBlobtoImage(r.getBlob(2)), r.getFloat(3), r.getFloat(4),
+					r.getInt(5), r.getString(6)));
 		}
 
 		return imageDBList;
 	}
-	
+
 	public ObservableList<ParameterDB> getParameterTable(int idImage) throws SQLException {
 		Statement smt = this.connection.createStatement();
-		ResultSet r = smt.executeQuery("Select * from parametrage WHERE idImage="+idImage+"");
+		ResultSet r = smt.executeQuery("Select * from parametrage WHERE idImage=" + idImage + "");
 		ObservableList<ParameterDB> ParameterTableList = FXCollections.observableArrayList();
 		while (r.next()) {
-			ParameterTableList.add(new ParameterDB(r.getInt(1),r.getFloat(2),r.getFloat(3), r.getInt(4),r.getInt(5),
-					FormatBlobtoImage(r.getBlob(6)),FormatBlobtoImage(r.getBlob(7)),r.getDate(8).toString(),r.getTime(9).toString(),r.getString(10),r.getInt(11)));
+			ParameterTableList.add(new ParameterDB(r.getInt(1), r.getFloat(2), r.getFloat(3), r.getInt(4), r.getInt(5),
+					FormatBlobtoImage(r.getBlob(6)), FormatBlobtoImage(r.getBlob(7)), r.getDate(8).toString(),
+					r.getTime(9).toString(), r.getString(10), r.getInt(11)));
 		}
 
 		return ParameterTableList;

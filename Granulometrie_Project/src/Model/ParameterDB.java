@@ -26,10 +26,12 @@ public class ParameterDB {
 		this.nbCategorySurface = nbCategorySurface;
 		this.chart1 = new ImageView(chart1);
 		this.chart1.setFitHeight(40);
-		this.chart1.setFitWidth(40);;
+		this.chart1.setFitWidth(40);
+		;
 		this.chart2 = new ImageView(chart2);
 		this.chart2.setFitHeight(40);
-		this.chart2.setFitWidth(40);;
+		this.chart2.setFitWidth(40);
+		;
 		this.dateCalcul = dateCalcul;
 		this.heureCalcul = heureCalcul;
 		this.comment = comment;
@@ -106,8 +108,6 @@ public class ParameterDB {
 		this.nbCategorySurface = nbCategorySurface;
 	}
 
-
-
 	/**
 	 * @return the comment
 	 */
@@ -178,7 +178,6 @@ public class ParameterDB {
 		this.dateCalcul = dateCalcul;
 	}
 
-
 	/**
 	 * @return the heureCalcul
 	 */
@@ -207,7 +206,5 @@ public class ParameterDB {
 				+ chart1 + ", chart2=" + chart2 + ", dateCalcul=" + dateCalcul + ", heurecalcul=" + heureCalcul
 				+ ", comment=" + comment + ", idImage=" + idImage + "]";
 	}
-
-	
 
 }

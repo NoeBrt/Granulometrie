@@ -26,6 +26,7 @@ import Model.GranuloData;
 import app.CCLabeler;
 import app.Measure;
 import app.MeasuresList;
+
 public class granuloDataTest {
 
 	private static GranuloData granulodata;
@@ -45,7 +46,7 @@ public class granuloDataTest {
 		MeasuresList list1 = counter.getMeasures();
 		MeasuresList list2 = granulodata.getMeasures();
 		counter.process(url);
-		assertEquals(counter.getMeasures().get_nb_measures(),granulodata.getMeasures().get_nb_measures());
+		assertEquals(counter.getMeasures().get_nb_measures(), granulodata.getMeasures().get_nb_measures());
 
 	}
 
@@ -70,35 +71,29 @@ public class granuloDataTest {
 		boolean bothArePresent = false;
 		for (Measure grain : granulodata.getMeasures()) {
 
-			if(count == 2) {
+			if (count == 2) {
 				bothArePresent = true;
 				break;
 			}
 
-			if ((double)grain.getSize() < scaleMin ||(double) grain.getSize() > scaleMax) {
+			if ((double) grain.getSize() < scaleMin || (double) grain.getSize() > scaleMax) {
 				count++;
 			}
 		}
 
-		if(bothArePresent) {
+		if (bothArePresent) {
 			for (Measure grain : granulodata.getMeasuresAfterScale()) {
-				if ((double) grain.getSize() < scaleMin ||(double) grain.getSize() > scaleMax) {
+				if ((double) grain.getSize() < scaleMin || (double) grain.getSize() > scaleMax) {
 					fail();
 				}
 			}
 		}
-		
+
 		else {
 			System.out.println("One of the values is not present in the list");
 		}
 
-
-
-
-
 	}
-
-
 
 	/**
 	 * This method will test the method setClusters This method will test if the
@@ -113,11 +108,7 @@ public class granuloDataTest {
 		GranuloData granulodata = new GranuloData(url);
 		granulodata.setClusters(2.0);
 		assertFalse(granulodata.getClusters().isEmpty());
-		
+
 	}
-
-
-	
-	
 
 }

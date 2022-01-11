@@ -123,7 +123,7 @@ public class CtrlViewDB_Image implements Initializable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
 			});
 			return row;
