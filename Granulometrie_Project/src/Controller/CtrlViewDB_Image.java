@@ -71,14 +71,6 @@ public class CtrlViewDB_Image implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		if (CtrlInterfaceConnect.getDao() == null) {
-			try {
-				showInterfaceConnection();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
 		if (CtrlInterfaceConnect.getDao() != null) {
 			getDoubleClikedRowImageItem();
 			Alert alert1 = new Alert(AlertType.ERROR);
@@ -88,6 +80,13 @@ public class CtrlViewDB_Image implements Initializable {
 			try {
 				viewImageTable();
 			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				backToCtrlView();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -155,14 +154,4 @@ public class CtrlViewDB_Image implements Initializable {
 		});
 	}
 
-	private void showInterfaceConnection() throws IOException {
-		Stage stage = new Stage();
-		FXMLLoader interfaceConnect = new FXMLLoader(CtrlView.class.getResource("interfaceConnectView.fxml"));
-		Parent root;
-		root = interfaceConnect.load();
-		stage.setScene(new Scene(root));
-		stage.setTitle("Connect to Data Base");
-		stage.getIcons().add(new Image("/IconApp/DBicon.jpg"));
-		stage.showAndWait();
-	}
 }

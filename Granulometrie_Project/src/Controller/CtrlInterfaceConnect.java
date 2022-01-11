@@ -1,16 +1,10 @@
 package Controller;
 
-import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 import DAO.GranuloDAO;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -31,8 +25,10 @@ public class CtrlInterfaceConnect {
 	@FXML
 	private static GranuloDAO dao;
 
-	
-	/**attribute dao the connect value of the 2 textfield if these informations are valid, else it show a alert frame
+	/**
+	 * attribute dao the connect value of the 2 textfield if these informations are
+	 * valid, else it show a alert frame
+	 * 
 	 * @throws ClassNotFoundException
 	 */
 	@FXML
