@@ -2,6 +2,9 @@
 package application;
 
 
+import java.sql.SQLException;
+
+import Controller.CtrlInterfaceConnect;
 import Controller.CtrlView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,6 +28,14 @@ public class GranuloApp extends Application {
 			primaryStage.setTitle("Granulometrie V1");
 			primaryStage.getIcons().add(new Image("/IconApp/icon.jpg"));
 			primaryStage.show();
+			primaryStage.setOnCloseRequest(e -> {
+				try {
+					CtrlInterfaceConnect.getDao().getConnection().close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
 			primaryStage.setOnCloseRequest(e -> Platform.exit());
 			GranuloApp.primaryStage=primaryStage;
 		} catch(Exception e) {
