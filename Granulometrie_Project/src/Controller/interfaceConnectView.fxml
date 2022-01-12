@@ -17,7 +17,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="46.0" prefWidth="154.0">
          <children>
-            <TextField fx:id="userName" layoutX="-6.0" layoutY="22.0" prefHeight="0.0" prefWidth="150.0" />
+            <TextField fx:id="userName" onAction="#getConnection" layoutX="-6.0" layoutY="22.0" prefHeight="0.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="186.0" prefWidth="58.0">

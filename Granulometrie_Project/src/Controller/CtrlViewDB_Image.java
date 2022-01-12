@@ -142,6 +142,7 @@ public class CtrlViewDB_Image implements Initializable {
 					Parent root;
 					try {
 						root = CtrlView.load();
+						stage.setResizable(false);
 						stage.setScene(new Scene(root));
 					} catch (IOException e) {
 						e.printStackTrace();

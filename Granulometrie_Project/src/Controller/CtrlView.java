@@ -149,29 +149,21 @@ public class CtrlView {
 	public void seeDBSaveResults() throws IOException {
 		if (CtrlInterfaceConnect.getDao() == null) {
 			try {
-				showInterfaceConnection();
+				CtrlInterfaceConnect.showInterfaceConnection();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			System.out.println(CtrlInterfaceConnect.getDao().getUrl());
 			if (CtrlInterfaceConnect.getDao() != null) {
 			Stage stage = GranuloApp.primaryStage;
 			FXMLLoader GranuloDB = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
 			Parent root = GranuloDB.load();
+			stage.setResizable(false);
 			stage.setScene(new Scene(root));}
 		}
 	}
 
-	private void showInterfaceConnection() throws IOException {
-		Stage stage = new Stage();
-		FXMLLoader interfaceConnect = new FXMLLoader(CtrlView.class.getResource("interfaceConnectView.fxml"));
-		Parent root;
-		root = interfaceConnect.load();
-		stage.setScene(new Scene(root));
-		stage.setTitle("Connect to Data Base");
-		stage.getIcons().add(new Image("/IconApp/DBicon.jpg"));
-		stage.showAndWait();
-	}
 
 	/**
 	 * launchProcess method runs a new interface GrapheController to display
@@ -193,7 +185,7 @@ public class CtrlView {
 				stage.setTitle("result");
 				stage.setMinHeight(583.0);
 				stage.setMinWidth(826.0);
-				stage.sizeToScene();
+				//stage.sizeToScene();
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.show();
