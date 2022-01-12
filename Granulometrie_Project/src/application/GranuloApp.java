@@ -8,6 +8,7 @@ import Controller.CtrlInterfaceConnect;
 import Controller.CtrlView;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -21,7 +22,7 @@ public class GranuloApp extends Application {
 		try {
 			FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("/Controller/GranuloVue1.fxml"));			 
 			BorderPane root = GranuloVue1.load();
-			root.setMinSize(800, 600);
+			root.prefWidthProperty().bind(Bindings.divide(primaryStage.widthProperty(), 3.0));
 			Scene scene = new Scene(root,800,600);
 			primaryStage.setScene(scene);
 			primaryStage.sizeToScene();
