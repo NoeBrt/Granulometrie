@@ -267,7 +267,7 @@ public class CtrlViewResult implements Initializable {
 			Optional<ButtonType> option = alert.showAndWait();
 			if (option.get() == ButtonType.OK) {
 				try {
-					GranuloDAO granulometrieDAO= CtrlInterfaceConnect.getDao();
+					GranuloDAO granulometrieDAO = CtrlInterfaceConnect.getDao();
 					granulometrieDAO.insertData(this);
 					Alert alert1 = alertBackupPerformed();
 					alert1.showAndWait();

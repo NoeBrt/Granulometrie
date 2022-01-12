@@ -62,6 +62,7 @@ public class CtrlViewDB_Image implements Initializable {
 		FXMLLoader CtrlViewf = new FXMLLoader(CtrlView.class.getResource("GranuloVue1.fxml"));
 		Parent root = CtrlViewf.load();
 		stage.setScene(new Scene(root));
+
 	}
 
 	/**

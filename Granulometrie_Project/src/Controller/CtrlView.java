@@ -142,9 +142,9 @@ public class CtrlView {
 		return imagePath;
 	}
 
-	
 	/**
-	 * @throws change the scene for CtrlViewDB_Image whose display data from Database
+	 * @throws change the scene for CtrlViewDB_Image whose display data from
+	 *                Database
 	 */
 	public void seeDBSaveResults() throws IOException {
 		if (CtrlInterfaceConnect.getDao() == null) {
@@ -154,16 +154,16 @@ public class CtrlView {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			System.out.println(CtrlInterfaceConnect.getDao().getUrl());
-			if (CtrlInterfaceConnect.getDao() != null) {
+		}
+		if (CtrlInterfaceConnect.getDao() != null) {
 			Stage stage = GranuloApp.primaryStage;
 			FXMLLoader GranuloDB = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Image.fxml"));
 			Parent root = GranuloDB.load();
 			stage.setResizable(false);
-			stage.setScene(new Scene(root));}
+			stage.setScene(new Scene(root));
 		}
-	}
 
+	}
 
 	/**
 	 * launchProcess method runs a new interface GrapheController to display
@@ -185,7 +185,7 @@ public class CtrlView {
 				stage.setTitle("result");
 				stage.setMinHeight(583.0);
 				stage.setMinWidth(826.0);
-				//stage.sizeToScene();
+				// stage.sizeToScene();
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.show();
