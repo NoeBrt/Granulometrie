@@ -6,8 +6,8 @@ This application can process and analyze Image thats contains grain
 ## Installation
 run the source code with Eclipse, .Jar will come 
 
-run as configuration with 
-java 1.8
+run as configuration with java 1.8 and : 
+
 --module-path  "javafx-sdk-17.0.1\lib" --add-modules javafx.controls,javafx.fxml
 
 ## Authors and acknowledgment
