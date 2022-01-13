@@ -23,8 +23,6 @@ public class GranuloApp extends Application {
 			FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("/Controller/GranuloVue1.fxml"));			 
 			BorderPane root = GranuloVue1.load();
 			root.prefWidthProperty().bind(Bindings.divide(primaryStage.widthProperty(), 3.0));
-			root.prefHeightProperty().bind(Bindings.divide(primaryStage.heightProperty(), 3.0));
-			root.pickOnBoundsProperty();
 			Scene scene = new Scene(root,800,600);
 			primaryStage.setScene(scene);
 			primaryStage.sizeToScene();
