@@ -77,6 +77,7 @@ public class CtrlInterfaceConnect{
 		FXMLLoader interfaceConnect = new FXMLLoader(CtrlView.class.getResource("interfaceConnectView.fxml"));
 		Parent root;
 		root = interfaceConnect.load();
+		root.autosize();
 		stage.setScene(new Scene(root));
 		stage.getIcons().add(new Image("/IconApp/DBicon.jpg"));
 		stage.setTitle("Connect to Data Base");
