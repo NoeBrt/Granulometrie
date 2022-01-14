@@ -18,14 +18,17 @@ import CSV.WriteCsv;
 import DAO.GranuloDAO;
 import Model.GranuloData;
 import app.Measure;
+import javafx.application.Platform;
 import javafx.beans.binding.ObjectExpression;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.Axis;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -43,7 +46,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * @author Alex,Noe,Quentin
@@ -82,6 +88,8 @@ public class CtrlViewResult implements Initializable {
 	 */
 	@FXML
 	private LineChart<String, Number> graphNbGrainSize;
+	
+	private Series<String, Number> dataGraphSize;
 
 	@FXML
 	private NumberAxis Number;
@@ -90,6 +98,8 @@ public class CtrlViewResult implements Initializable {
 	 */
 	@FXML
 	private LineChart<String, Number> graphNbGrainSurface;
+
+	private Series<String, Number> dataGraphSurface;
 
 	/**
 	 * user can leave a comment in comment text field
@@ -182,60 +192,75 @@ public class CtrlViewResult implements Initializable {
 	/**
 	 * create a LineChart chart with the data of GranuloModel , graph of the number
 	 * of grains by their size with the method getCluster() and getClusterSurface
+	 * instanciate the data of the Barchat when the chart is clicked
 	 */
 	@FXML
 	private void InitalizeGraphSize() {
 		Series<String, Number> series = new XYChart.Series<>();
+		Series<String, Number> seriesForBarChart = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClusters().entrySet()) {
 			String x = entry.getKey() - GranuloModel.getEtalon() + "-" + entry.getKey().toString();
 			List<Measure> y = entry.getValue();
 			Data<String, Number> data = new Data<>(x, (Number) y.size());
-			data.setNode(createDataNode(data.YValueProperty()));
+			Data<String, Number> dataBarChart = new Data<>(x, y.size());
+			data.setNode(createDataNode(data.YValueProperty(),new Circle(6.0)));
+			dataBarChart.setNode(createDataNode(dataBarChart.YValueProperty(), null));
 			series.getData().add(data);
+			seriesForBarChart.getData().add(dataBarChart);
 		}
 		// series.setName("Numer of Grain by Size");
 		graphNbGrainSize.setLegendVisible(false);
-		graphNbGrainSize.setMinSize(426, 368);
+		graphNbGrainSize.setMinSize(426, 388);
 		// graphNbGrainSize.setMaxSize(426, 324);
 		graphNbGrainSize.getData().clear();
 		graphNbGrainSize.getData().add(series);
+		this.dataGraphSize=seriesForBarChart;
+
 	}
 
-	private static Node createDataNode(ObjectExpression<Number> value) {
+
+	/**
+	 * create a LineChart chart with the data of GranuloModel with the method
+	 * getClusterSurface() graph of the number of grains by their surface
+	 *instanciate the data of the Barchat when the chart is clicked
+	 */
+	@FXML
+	private void InitalizeGraphSurface() {
+		Series<String, Number> series = new XYChart.Series<>();
+		Series<String, Number> seriesForBarChart = new XYChart.Series<>();
+		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClustersSurface().entrySet()) {
+			String x = entry.getKey() - GranuloModel.getEtalonSurface() + "-" + entry.getKey().toString();
+			List<Measure> y = entry.getValue();
+			Data<String, Number> data = new Data<>(x, y.size());
+			Data<String, Number> dataBarChart = new Data<>(x, y.size());
+			data.setNode(createDataNode(data.YValueProperty(),new Circle(6.0)));
+			dataBarChart.setNode(createDataNode(dataBarChart.YValueProperty(), null));
+			series.getData().add(data);
+			seriesForBarChart.getData().add(dataBarChart);
+		}
+		// series.setName("Numer of Grain by Surface");
+		graphNbGrainSurface.setLegendVisible(false);
+		graphNbGrainSurface.setMinSize(426, 425);
+		// graphNbGrainSurface.setMaxSize(426, 405);
+		graphNbGrainSurface.getData().clear();
+		graphNbGrainSurface.getData().add(series);
+		this.dataGraphSurface=seriesForBarChart;
+
+	}
+
+
+	private static Node createDataNode(ObjectExpression<Number> value,Shape shape) {
 		Label label = new Label();
 		label.textProperty().bind(value.asString());
-
 		Pane pane = new Pane(label);
-		pane.setShape(new Circle(6.0));
+		if (shape!=null) {
+		pane.setShape(shape);}
 		pane.setScaleShape(false);
 
 		label.translateYProperty().bind(label.heightProperty().divide(-1.5));
 
 		return pane;
 	}
-
-	/**
-	 * create a LineChart chart with the data of GranuloModel with the method
-	 * getClusterSurface() graph of the number of grains by their surface
-	 */
-	@FXML
-	private void InitalizeGraphSurface() {
-		Series<String, Number> series = new XYChart.Series<>();
-		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClustersSurface().entrySet()) {
-			String x = entry.getKey() - GranuloModel.getEtalonSurface() + "-" + entry.getKey().toString();
-			List<Measure> y = entry.getValue();
-			Data<String, Number> data = new Data<>(x, y.size());
-			data.setNode(createDataNode(data.YValueProperty()));
-			series.getData().add(data);
-		}
-		// series.setName("Numer of Grain by Surface");
-		graphNbGrainSurface.setLegendVisible(false);
-		graphNbGrainSurface.setMinSize(426, 405);
-		// graphNbGrainSurface.setMaxSize(426, 405);
-		graphNbGrainSurface.getData().clear();
-		graphNbGrainSurface.getData().add(series);
-	}
-
 	/**
 	 * setScaleMinMax this method allows the user to define the min, max height of
 	 * particles
@@ -490,38 +515,41 @@ public class CtrlViewResult implements Initializable {
 	}
 
 	/**
-	 * return the first Chart in a new Frame
+	 * return the first Chart in barchart in a new Frame, for visibility
 	 */
 	@FXML
 	public void ClickChartSize() {
-		/*
-		 * //FXMLLoader GranuloVue1 = new
-		 * FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml")); Parent root =
-		 * graphNbGrainSize; Stage stage = new Stage(); stage.getIcons().add(new
-		 * Image("/IconApp/icon.jpg")); stage.setTitle("GrapheSizeWide");
-		 * stage.setScene(new Scene(root)); stage.show();
-		 * 
-		 */
+		final CategoryAxis XAxis = new CategoryAxis();
+		final NumberAxis YAxis = new NumberAxis();
+		BarChart<String, Number> graphNbGrainSizeWide =  new BarChart<>(XAxis, YAxis);
+		graphNbGrainSizeWide.getData().add(this.dataGraphSize);
+		graphNbGrainSizeWide.setLegendVisible(false);
+		Stage stage = new Stage();
+		stage.getIcons().add(new Image("/IconApp/icon.jpg"));
+		stage.setTitle("GrapheSizeWide");
+		stage.setScene(new Scene(graphNbGrainSizeWide));
+		stage.show();
+	//	stage.setOnCloseRequest(e -> InitalizeGraphSize());
 
 	}
 
 	/**
-	 * return the second Chart in a new Frame
+	 * return the second Chart in barchart in a new Frame, for visibility
 	 */
 	@FXML
-	public void ClickChartArea() {
-		/*
-		 * FXMLLoader GranuloVue1 = new
-		 * FXMLLoader(CtrlView.class.getResource("Graph1Wide.fxml")); LineChart<String,
-		 * Integer> h = new LineChart<String, Integer>(graphNbGrainArea.getXAxis(),
-		 * graphNbGrainArea.getYAxis());
-		 * 
-		 * h.getData().addAll(graphNbGrainArea.snapshot(null, null)); Parent root; root
-		 * = h; Stage stage = new Stage(); stage.getIcons().add(new
-		 * Image("/IconApp/icon.jpg")); stage.setTitle("GrapheAreaWide");
-		 * stage.setScene(new Scene(root)); stage.show();
-		 * 
-		 */
+	public void ClickChartSurface() {
+		final CategoryAxis XAxis = new CategoryAxis();
+		final NumberAxis YAxis = new NumberAxis();
+		BarChart<String, Number> graphNbGrainSurfaceWide =  new BarChart<>(XAxis, YAxis);
+		graphNbGrainSurfaceWide.getData().add(this.dataGraphSurface);
+		graphNbGrainSurfaceWide.setLegendVisible(false);
+		Stage stage = new Stage();
+		stage.getIcons().add(new Image("/IconApp/icon.jpg"));
+		stage.setTitle("GrapheSurfaceWide");
+		stage.setScene(new Scene(graphNbGrainSurfaceWide));
+		stage.show();
+	//	stage.setOnCloseRequest(e -> InitalizeGraphSurface());
+
 	}
 
 	/**

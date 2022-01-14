@@ -177,7 +177,7 @@ public class CtrlView {
 	@FXML
 	public void launchProces() throws IOException {
 		if (isImported == true) {
-		//	try {
+			try {
 				FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
 				Parent root = GranuloVue1.load();
 				Stage stage = new Stage();
@@ -185,11 +185,14 @@ public class CtrlView {
 				stage.setTitle("result");
 				stage.setMinHeight(583.0);
 				stage.setMinWidth(826.0);
-				// stage.sizeToScene();
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
+				root.prefWidth(stage.widthProperty().doubleValue());
+				root.prefHeight(stage.heightProperty().doubleValue());
 				stage.show();
-/*
+				
+
+
 			} catch (Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error alert");
@@ -197,7 +200,7 @@ public class CtrlView {
 				alert.setContentText("CANT'T LOAD IMAGE");
 				alert.showAndWait();
 				System.out.println("Cannot load new window");
-			}*/
+			}
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error alert");

@@ -11,13 +11,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CtrlViewResult">
+<AnchorPane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CtrlViewResult">
    <children>
       <Label layoutX="5.0" layoutY="455.0" text="Size max :" />
       <Label layoutX="6.0" layoutY="417.0" text="Size min :" />
       <Label layoutX="5.0" layoutY="501.0" text="Size Weight :" />
       <TextArea fx:id="imageComment" layoutX="287.0" layoutY="487.0" prefHeight="51.0" prefWidth="229.0" />
-      <LineChart onMouseClicked="#ClickChartSize" fx:id="graphNbGrainSize" layoutX="0.0" layoutY="62.0" prefHeight="324.0" prefWidth="426.0">
+      <LineChart onMouseClicked="#ClickChartSize" fx:id="graphNbGrainSize" layoutX="0.0" layoutY="40.0" prefHeight="324.0" prefWidth="426.0">
         <xAxis>
           <CategoryAxis label="grain size" side="BOTTOM" />
         </xAxis>
@@ -34,7 +34,7 @@
             <Button fx:id="saveDataBaseButton" onAction="#saveDataBase" mnemonicParsing="false" text="Save in Database" />
         </items>
       </ToolBar>
-      <LineChart onMouseClicked="#ClickChartArea" fx:id="graphNbGrainSurface" layoutX="410.0" layoutY="62.0" prefHeight="324.0" prefWidth="426.0">
+      <LineChart onMouseClicked="#ClickChartSurface" fx:id="graphNbGrainSurface" layoutX="410.0" layoutY="40.0" prefHeight="324.0" prefWidth="426.0">
          <xAxis>
             <CategoryAxis label="grain surface" side="BOTTOM" />
          </xAxis>
