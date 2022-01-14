@@ -18,23 +18,31 @@ import CSV.WriteCsv;
 import DAO.GranuloDAO;
 import Model.GranuloData;
 import app.Measure;
-
+import javafx.beans.binding.ObjectExpression;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 
 /**
@@ -73,7 +81,7 @@ public class CtrlViewResult implements Initializable {
 	 * LineChart graph of the number of grains by their size
 	 */
 	@FXML
-	private LineChart<String, Integer> graphNbGrainSize;
+	private LineChart<String, Number> graphNbGrainSize;
 
 	@FXML
 	private NumberAxis Number;
@@ -81,7 +89,7 @@ public class CtrlViewResult implements Initializable {
 	 * LineChart graph of the number of grains by their surface
 	 */
 	@FXML
-	private LineChart<String, Integer> graphNbGrainSurface;
+	private LineChart<String, Number> graphNbGrainSurface;
 
 	/**
 	 * user can leave a comment in comment text field
@@ -177,21 +185,33 @@ public class CtrlViewResult implements Initializable {
 	 */
 	@FXML
 	private void InitalizeGraphSize() {
-
-		XYChart.Series<String, Integer> series = new XYChart.Series<>();
+		Series<String, Number> series = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClusters().entrySet()) {
 			String x = entry.getKey() - GranuloModel.getEtalon() + "-" + entry.getKey().toString();
 			List<Measure> y = entry.getValue();
-			series.getData().add(new XYChart.Data<>(x, y.size()));
-
+			Data<String, Number> data = new Data<>(x, (Number) y.size());
+			data.setNode(createDataNode(data.YValueProperty()));
+			series.getData().add(data);
 		}
 		// series.setName("Numer of Grain by Size");
 		graphNbGrainSize.setLegendVisible(false);
-		graphNbGrainSize.setMinSize(426, 324);
-		graphNbGrainSize.setMaxSize(426, 324);
+		graphNbGrainSize.setMinSize(426, 368);
+		// graphNbGrainSize.setMaxSize(426, 324);
 		graphNbGrainSize.getData().clear();
-		// graphNbGrainSize.layout();
 		graphNbGrainSize.getData().add(series);
+	}
+
+	private static Node createDataNode(ObjectExpression<Number> value) {
+		Label label = new Label();
+		label.textProperty().bind(value.asString());
+
+		Pane pane = new Pane(label);
+		pane.setShape(new Circle(6.0));
+		pane.setScaleShape(false);
+
+		label.translateYProperty().bind(label.heightProperty().divide(-1.5));
+
+		return pane;
 	}
 
 	/**
@@ -200,19 +220,19 @@ public class CtrlViewResult implements Initializable {
 	 */
 	@FXML
 	private void InitalizeGraphSurface() {
-		XYChart.Series<String, Integer> series = new XYChart.Series<>();
+		Series<String, Number> series = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClustersSurface().entrySet()) {
 			String x = entry.getKey() - GranuloModel.getEtalonSurface() + "-" + entry.getKey().toString();
 			List<Measure> y = entry.getValue();
-			series.getData().add(new XYChart.Data<>(x, y.size()));
-
+			Data<String, Number> data = new Data<>(x, y.size());
+			data.setNode(createDataNode(data.YValueProperty()));
+			series.getData().add(data);
 		}
 		// series.setName("Numer of Grain by Surface");
 		graphNbGrainSurface.setLegendVisible(false);
 		graphNbGrainSurface.setMinSize(426, 405);
-		graphNbGrainSurface.setMaxSize(426, 405);
+		// graphNbGrainSurface.setMaxSize(426, 405);
 		graphNbGrainSurface.getData().clear();
-		// graphNbGrainArea.layout();
 		graphNbGrainSurface.getData().add(series);
 	}
 
