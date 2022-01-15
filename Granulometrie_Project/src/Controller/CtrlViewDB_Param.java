@@ -73,7 +73,7 @@ public class CtrlViewDB_Param implements Initializable {
 		Parent root = CtrlViewDB_param.load();
 		stage.setScene(new Scene(root));
 	}
-	
+
 	@FXML
 	public void ReprocessImage() throws IOException {
 		Stage stage = GranuloApp.primaryStage;
@@ -128,8 +128,6 @@ public class CtrlViewDB_Param implements Initializable {
 		tableViewParameter.setItems(dataParameter);
 	}
 
-	
-	
 	/**
 	 * display a Alert Frame
 	 * 

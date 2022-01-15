@@ -16,7 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class CtrlInterfaceConnect{
+public class CtrlInterfaceConnect {
 	@FXML
 	private TextField userName;
 
@@ -28,7 +28,7 @@ public class CtrlInterfaceConnect{
 
 	@FXML
 	private static GranuloDAO dao;
-	
+
 	/**
 	 * attribute dao the connect value of the 2 textfield if these informations are
 	 * valid, else it show a alert frame
@@ -84,6 +84,5 @@ public class CtrlInterfaceConnect{
 		stage.setResizable(false);
 		stage.showAndWait();
 	}
-	
 
 }

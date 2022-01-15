@@ -85,7 +85,7 @@ public class CtrlViewResult implements Initializable {
 	 */
 	@FXML
 	private LineChart<String, Number> graphNbGrainSize;
-	
+
 	private Series<String, Number> dataGraphSize;
 
 	@FXML
@@ -204,7 +204,7 @@ public class CtrlViewResult implements Initializable {
 			List<Measure> y = entry.getValue();
 			Data<String, Number> data = new Data<>(x, (Number) y.size());
 			Data<String, Number> dataBarChart = new Data<>(x, y.size());
-			data.setNode(createDataNode(data.YValueProperty(),new Circle(6.0)));
+			data.setNode(createDataNode(data.YValueProperty(), new Circle(6.0)));
 			dataBarChart.setNode(createDataNode(dataBarChart.YValueProperty(), null));
 			series.getData().add(data);
 			seriesForBarChart.getData().add(dataBarChart);
@@ -215,15 +215,14 @@ public class CtrlViewResult implements Initializable {
 		// graphNbGrainSize.setMaxSize(426, 324);
 		graphNbGrainSize.getData().clear();
 		graphNbGrainSize.getData().add(series);
-		this.dataGraphSize=seriesForBarChart;
+		this.dataGraphSize = seriesForBarChart;
 
 	}
-
 
 	/**
 	 * create a LineChart chart with the data of GranuloModel with the method
 	 * getClusterSurface() graph of the number of grains by their Relative surface
-	 *instanciate the data of the Barchat when the chart is clicked
+	 * instanciate the data of the Barchat when the chart is clicked
 	 */
 	@FXML
 	private void InitalizeGraphSurface() {
@@ -234,7 +233,7 @@ public class CtrlViewResult implements Initializable {
 			List<Measure> y = entry.getValue();
 			Data<String, Number> data = new Data<>(x, y.size());
 			Data<String, Number> dataBarChart = new Data<>(x, y.size());
-			data.setNode(createDataNode(data.YValueProperty(),new Circle(6.0)));
+			data.setNode(createDataNode(data.YValueProperty(), new Circle(6.0)));
 			dataBarChart.setNode(createDataNode(dataBarChart.YValueProperty(), null));
 			series.getData().add(data);
 			seriesForBarChart.getData().add(dataBarChart);
@@ -245,23 +244,24 @@ public class CtrlViewResult implements Initializable {
 		// graphNbGrainSurface.setMaxSize(426, 405);
 		graphNbGrainSurface.getData().clear();
 		graphNbGrainSurface.getData().add(series);
-		this.dataGraphSurface=seriesForBarChart;
+		this.dataGraphSurface = seriesForBarChart;
 
 	}
 
-
-	private static Node createDataNode(ObjectExpression<Number> value,Shape shape) {
+	private static Node createDataNode(ObjectExpression<Number> value, Shape shape) {
 		Label label = new Label();
 		label.textProperty().bind(value.asString());
 		Pane pane = new Pane(label);
-		if (shape!=null) {
-		pane.setShape(shape);}
+		if (shape != null) {
+			pane.setShape(shape);
+		}
 		pane.setScaleShape(false);
 
 		label.translateYProperty().bind(label.heightProperty().divide(-1.5));
 
 		return pane;
 	}
+
 	/**
 	 * setScaleMinMax this method allows the user to define the min, max height of
 	 * particles
@@ -522,7 +522,7 @@ public class CtrlViewResult implements Initializable {
 	public void ClickChartSize() {
 		final CategoryAxis XAxis = new CategoryAxis();
 		final NumberAxis YAxis = new NumberAxis();
-		BarChart<String, Number> graphNbGrainSizeWide =  new BarChart<>(XAxis, YAxis);
+		BarChart<String, Number> graphNbGrainSizeWide = new BarChart<>(XAxis, YAxis);
 		graphNbGrainSizeWide.getData().add(this.dataGraphSize);
 		graphNbGrainSizeWide.setLegendVisible(false);
 		Stage stage = new Stage();
@@ -530,7 +530,7 @@ public class CtrlViewResult implements Initializable {
 		stage.setTitle("GrapheSizeWide");
 		stage.setScene(new Scene(graphNbGrainSizeWide));
 		stage.show();
-	//	stage.setOnCloseRequest(e -> InitalizeGraphSize());
+		// stage.setOnCloseRequest(e -> InitalizeGraphSize());
 
 	}
 
@@ -541,7 +541,7 @@ public class CtrlViewResult implements Initializable {
 	public void ClickChartSurface() {
 		final CategoryAxis XAxis = new CategoryAxis();
 		final NumberAxis YAxis = new NumberAxis();
-		BarChart<String, Number> graphNbGrainSurfaceWide =  new BarChart<>(XAxis, YAxis);
+		BarChart<String, Number> graphNbGrainSurfaceWide = new BarChart<>(XAxis, YAxis);
 		graphNbGrainSurfaceWide.getData().add(this.dataGraphSurface);
 		graphNbGrainSurfaceWide.setLegendVisible(false);
 		Stage stage = new Stage();
@@ -549,7 +549,7 @@ public class CtrlViewResult implements Initializable {
 		stage.setTitle("GrapheSurfaceWide");
 		stage.setScene(new Scene(graphNbGrainSurfaceWide));
 		stage.show();
-	//	stage.setOnCloseRequest(e -> InitalizeGraphSurface());
+		// stage.setOnCloseRequest(e -> InitalizeGraphSurface());
 
 	}
 
