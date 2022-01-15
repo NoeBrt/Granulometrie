@@ -20,7 +20,7 @@ public class demo {
 		ImagesToProcessList ipl = new ImagesToProcessList();
 //		ipl.addImagesFromFolder("./images/document/"); // 10 images
 		// ipl.addImageName("./images/document/00000.jpg");
-		ipl.addImageName("./ImageParticule/particule/113_x63_zoom08_1.jpg");
+		ipl.addImageName("./ImageParticule/113_x63_zoom08_1.jpg");
 		// traite chaque image de la liste
 		CCLabeler counter = new CCLabeler();
 		// traite l'image et compte les particules

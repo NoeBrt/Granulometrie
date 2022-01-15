@@ -18,11 +18,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 /**
@@ -72,7 +76,7 @@ public class CtrlViewDB_Image implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if (CtrlInterfaceConnect.getDao() != null) {
-			getDoubleClikedRowImageItem();
+		//	getDoubleClikedRowImageItem();
 			Alert alert1 = new Alert(AlertType.ERROR);
 			alert1.setTitle("SQL DataBaseError");
 			alert1.setHeaderText("Unable to connect to the database");
@@ -113,7 +117,48 @@ public class CtrlViewDB_Image implements Initializable {
 		comment.setCellValueFactory(new PropertyValueFactory<ImageDB, String>("commentaire"));
 		tableViewImage.setItems(dataImage);
 	}
-
+	/*
+	 * if a row who contain data is double clicked, display the TableView of
+	 * parameter Table with CtrlViewDB_Param as controller
+	 */
+	@FXML
+	public void  ClickedRow(MouseEvent event){
+	/*	tableViewImage.getSelectionModel().setCellSelectionEnabled(true);
+		ObservableList<TablePosition> selectedCells = tableViewImage.getSelectionModel().getSelectedCells();
+		if (selectedCells.size()>0) {
+			TablePosition<?, ?> selectedCell = selectedCells.get(0);
+	        TableColumn<?, ?> column = selectedCell.getTableColumn();
+	        int rowIndex = selectedCell.getRow();
+	        Object data = column.getCellObservableValue(rowIndex).getValue();
+	        if (data instanceof ImageView) {
+	        	ImageView dataImage = new ImageView( ((ImageView)data).getImage() );
+	        	dataImage.setFitHeight(200);
+	        	dataImage.setFitWidth(200);
+	        	FlowPane root =new FlowPane();
+	        	root.setMaxHeight(50);
+	        	root.setMinHeight(50);
+	        	root.getChildren().add(dataImage);
+	        	Scene scene =new Scene(root);
+	        	Stage stage = new Stage();
+	        	stage.sizeToScene();
+	        	stage.setScene(scene);
+	        	stage.show();
+	        }
+		}*/
+	    if (event.getClickCount() == 2){
+			CtrlViewDB_Param.setImageDbCLiked(tableViewImage.getSelectionModel().getSelectedItem());
+	    	Stage stage = GranuloApp.primaryStage;
+			FXMLLoader CtrlView = new FXMLLoader(CtrlView.class.getResource("GranuloDB_Param.fxml"));
+			Parent root;
+			try {
+				root = CtrlView.load();
+				stage.setResizable(false);
+				stage.setScene(new Scene(root));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	    }
+	}
 	/**
 	 * display a Alert Frame
 	 * 
@@ -127,10 +172,10 @@ public class CtrlViewDB_Image implements Initializable {
 		alert1.showAndWait();
 	}
 
-	/**
+	/*
 	 * if a row who contain data is double clicked, display the TableView of
 	 * parameter Table with CtrlViewDB_Param as controller
-	 */
+	 *
 	public void getDoubleClikedRowImageItem() {
 		tableViewImage.setRowFactory(tv -> {
 			TableRow<ImageDB> row = new TableRow<>();
@@ -153,6 +198,8 @@ public class CtrlViewDB_Image implements Initializable {
 			});
 			return row;
 		});
-	}
+		
+		
+	//}*/
 
 }

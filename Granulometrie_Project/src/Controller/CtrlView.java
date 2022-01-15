@@ -3,10 +3,17 @@ package Controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
+
 import application.GranuloApp;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -22,7 +29,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 /**
  * @author Noe,Quentin,Alex
  */
-public class CtrlView {
+public class CtrlView implements Initializable {
 	/**
 	 * import button import an image
 	 */
@@ -59,6 +66,28 @@ public class CtrlView {
 	private ImageView imgView;
 
 	private static boolean isImported;
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		if (image != null) {
+			useDBImage();
+		}
+	}
+
+	protected void useDBImage() {
+		File file = new File("PicturesTempsDB.jpg");
+		try {
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		image = new Image(file.getAbsolutePath());
+		imagePath = file.getAbsolutePath();
+		imgView.setImage(image);
+		isImported = true;
+	}
 
 	/**
 	 * launchProcess method runs a new interface GrapheController to display
@@ -177,27 +206,26 @@ public class CtrlView {
 	@FXML
 	public void launchProces() throws IOException {
 		if (isImported == true) {
-			try {
-				FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
-				Parent root = GranuloVue1.load();
-				Stage stage = new Stage();
-				stage.getIcons().add(new Image("/IconApp/icon.jpg"));
-				stage.setTitle("result");
-				stage.setMinHeight(583.0);
-				stage.setMinWidth(826.0);
-				// stage.sizeToScene();
-				stage.setScene(new Scene(root));
-				stage.setResizable(false);
-				stage.show();
+			// try {
+			FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
+			Parent root = GranuloVue1.load();
+			Stage stage = new Stage();
+			stage.getIcons().add(new Image("/IconApp/icon.jpg"));
+			stage.setTitle("result");
+			stage.setMinHeight(583.0);
+			stage.setMinWidth(826.0);
+			stage.setScene(new Scene(root));
+			stage.setResizable(false);
+			root.prefWidth(stage.widthProperty().doubleValue());
+			root.prefHeight(stage.heightProperty().doubleValue());
+			stage.show();
 
-			} catch (Exception e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Error alert");
-				alert.setHeaderText("ERROR");
-				alert.setContentText("CANT'T LOAD IMAGE");
-				alert.showAndWait();
-				System.out.println("Cannot load new window");
-			}
+			/*
+			 * } catch (Exception e) { Alert alert = new Alert(AlertType.ERROR);
+			 * alert.setTitle("Error alert"); alert.setHeaderText("ERROR");
+			 * alert.setContentText("CANT'T LOAD IMAGE"); alert.showAndWait();
+			 * System.out.println("Cannot load new window"); }
+			 */
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error alert");
@@ -207,6 +235,14 @@ public class CtrlView {
 		}
 	}
 //	}
+
+	public ImageView getImgView() {
+		return imgView;
+	}
+
+	protected static void setImage(Image image) {
+		CtrlView.image = image;
+	}
 
 	/**
 	 * @return the image

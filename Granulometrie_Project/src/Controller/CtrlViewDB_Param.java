@@ -73,6 +73,16 @@ public class CtrlViewDB_Param implements Initializable {
 		Parent root = CtrlViewDB_param.load();
 		stage.setScene(new Scene(root));
 	}
+	
+	@FXML
+	public void ReprocessImage() throws IOException {
+		Stage stage = GranuloApp.primaryStage;
+		CtrlView.setImage(ImageDbCLiked.getImage().getImage());
+		FXMLLoader CtrlVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloVue1.fxml"));
+		Parent root = CtrlVue1.load();
+		stage.setScene(new Scene(root));
+
+	}
 
 	/**
 	 * connect to the DataBase & set TableView with viewParameterTable(), if the
@@ -119,6 +129,8 @@ public class CtrlViewDB_Param implements Initializable {
 		tableViewParameter.setItems(dataParameter);
 	}
 
+	
+	
 	/**
 	 * display a Alert Frame
 	 * 

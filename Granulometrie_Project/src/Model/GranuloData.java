@@ -34,6 +34,7 @@ public class GranuloData {
 		this.setImageUrl(url);
 		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasuresList());
 		this.imagePlus = new ImagePlus(url);
+		System.out.println(this.imagePlus);
 		this.comment = "";
 		this.Date = LocalDate.now().toString();
 		this.Time = LocalTime.now().toString().substring(0, 8);
@@ -41,7 +42,7 @@ public class GranuloData {
 		this.Clusters = new LinkedHashMap<>();
 		this.ClustersSurface = new LinkedHashMap<>();
 		setClusters(2.0);
-		setSurfaceClusters(10.0);
+		setSurfaceClusters(1.0);
 	}
 
 	/**
@@ -232,12 +233,14 @@ public class GranuloData {
 			this.etalonSurface = etalon;
 			LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
 			Double keyEtalon = etalon;
+			
 			do {
 				for (Measure grain : MeasuresTemp) {
+					Double relativeSurface=grain.getRelativeSurface(this.imagePlus.getWidth(), this.imagePlus.getHeight());
 					if (!this.ClustersSurface.containsKey(keyEtalon)) {
 						this.ClustersSurface.put(keyEtalon, new ArrayList<>());
 					}
-					if (grain.getAire() > (keyEtalon - etalon) && grain.getAire() <= keyEtalon) {
+					if (relativeSurface> (keyEtalon - etalon) && relativeSurface <= keyEtalon) {
 						this.ClustersSurface.get(keyEtalon).add(grain);
 					}
 				}
