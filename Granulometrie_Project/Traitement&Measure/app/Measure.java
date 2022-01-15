@@ -89,6 +89,10 @@ public class Measure {
 	public double getRoundness() {
 		return (this.aire/(((double) this.height/2)*((double) this.height/2)*Math.PI))*100;
 	}
+	public double getRelativeSurface(double ImageWidht,double ImageHeight){
+		return (this.aire/(ImageWidht*ImageHeight)*100000);
+		
+	}
 	
 	@Override
 	public String toString() {

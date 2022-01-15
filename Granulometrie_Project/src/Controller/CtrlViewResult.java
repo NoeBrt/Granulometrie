@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 
 import CSV.WriteCsv;
 import DAO.GranuloDAO;
+import GranuloTest.granuloDataTest;
 import Model.GranuloData;
 import app.Measure;
 import javafx.application.Platform;
@@ -185,6 +186,10 @@ public class CtrlViewResult implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		sizeMin.setText(String.valueOf(GranuloModel.getSizeGrainMin()));
+		sizeMax.setText(String.valueOf(GranuloModel.getSizeGrainMax()));
+		clusterWidth.setText(String.valueOf(GranuloModel.getEtalon()));
+		surfaceClusterWidth.setText(String.valueOf(GranuloModel.getEtalonSurface()));
 		InitalizeGraphSize();
 		InitalizeGraphSurface();
 	}
@@ -221,7 +226,7 @@ public class CtrlViewResult implements Initializable {
 
 	/**
 	 * create a LineChart chart with the data of GranuloModel with the method
-	 * getClusterSurface() graph of the number of grains by their surface
+	 * getClusterSurface() graph of the number of grains by their Relative surface
 	 *instanciate the data of the Barchat when the chart is clicked
 	 */
 	@FXML
