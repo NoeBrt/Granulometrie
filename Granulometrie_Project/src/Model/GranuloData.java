@@ -13,12 +13,10 @@ import app.MeasuresList;
 import ij.ImagePlus;
 import javafx.scene.image.Image;
 
-/** @author Noe
- * Images and traitement will be done here
+/**
+ * @author Noe Images and traitement will be done here
  */
 public class GranuloData {
-
-
 
 	/**
 	 * Constructor of GranuloData object, it instanciate Measures with
@@ -149,6 +147,7 @@ public class GranuloData {
 		this.SizeGrainMin = min;
 		this.SizeGrainMax = max;
 	}
+
 	/**
 	 * set scale of the Measures inferior to max
 	 * 
@@ -167,8 +166,9 @@ public class GranuloData {
 		}
 		this.SizeGrainMax = max;
 	}
+
 	/**
-	 * set scale of the Measures  superior to min
+	 * set scale of the Measures superior to min
 	 * 
 	 * @param min
 	 * @param max
@@ -188,10 +188,10 @@ public class GranuloData {
 	}
 
 	/**
-	 * Create a LinkedHashMap<Double, Measure> Cluster and set Scale of each
-	 * Cluster (index & List<Measure>) according to Grains's size (if float=2.0,
-	 * then list<Mesuse> with index=2 will contain Grains Measure size beetween 0
-	 * and <=2.0. index=4 Grains Measure size beetween 2.0 & <=4.0 ...ect)
+	 * Create a LinkedHashMap<Double, Measure> Cluster and set Scale of each Cluster
+	 * (index & List<Measure>) according to Grains's size (if float=2.0, then
+	 * list<Mesuse> with index=2 will contain Grains Measure size beetween 0 and
+	 * <=2.0. index=4 Grains Measure size beetween 2.0 & <=4.0 ...ect)
 	 * 
 	 * @param void
 	 * 
@@ -218,10 +218,10 @@ public class GranuloData {
 	}
 
 	/**
-	 * Create a LinkedHashMap<Double, Measure> Cluster and set Scale of each
-	 * Cluster (index & List<Measure>) according to Grains's surface (if float=2.0,
-	 * then list<Mesuse> with index=2 will contain Grains Measure size beetween 0
-	 * and <=2.0. index=4 Grains Measure size beetween 2.0 & <=4.0 ...ect)
+	 * Create a LinkedHashMap<Double, Measure> Cluster and set Scale of each Cluster
+	 * (index & List<Measure>) according to Grains's surface (if float=2.0, then
+	 * list<Mesuse> with index=2 will contain Grains Measure size beetween 0 and
+	 * <=2.0. index=4 Grains Measure size beetween 2.0 & <=4.0 ...ect)
 	 * 
 	 * @param void
 	 * 
@@ -232,14 +232,15 @@ public class GranuloData {
 			this.etalonSurface = etalon;
 			LinkedList<Measure> MeasuresTemp = new LinkedList<>(this.MeasuresAfterScale);
 			Double keyEtalon = etalon;
-			
+
 			do {
 				for (Measure grain : MeasuresTemp) {
-					Double relativeSurface=grain.getRelativeSurface(this.imagePlus.getWidth(), this.imagePlus.getHeight());
+					Double relativeSurface = grain.getRelativeSurface(this.imagePlus.getWidth(),
+							this.imagePlus.getHeight());
 					if (!this.ClustersSurface.containsKey(keyEtalon)) {
 						this.ClustersSurface.put(keyEtalon, new ArrayList<>());
 					}
-					if (relativeSurface> (keyEtalon - etalon) && relativeSurface <= keyEtalon) {
+					if (relativeSurface > (keyEtalon - etalon) && relativeSurface <= keyEtalon) {
 						this.ClustersSurface.get(keyEtalon).add(grain);
 					}
 				}
