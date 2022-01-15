@@ -34,7 +34,6 @@ public class GranuloData {
 		this.setImageUrl(url);
 		this.MeasuresAfterScale = new LinkedList<>(Measures.getMeasuresList());
 		this.imagePlus = new ImagePlus(url);
-		System.out.println(this.imagePlus);
 		this.comment = "";
 		this.Date = LocalDate.now().toString();
 		this.Time = LocalTime.now().toString().substring(0, 8);
