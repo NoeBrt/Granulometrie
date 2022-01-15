@@ -31,7 +31,8 @@ public class CCLabeler {
 	 * @return data
 	 */
 	private ResultsTable findParticles(ImagePlus imBinary) {
-
+		ImagePlus imgpls = new ImagePlus("./ImageParticule/113_x63_zoom08_1.jpg");
+		imBinary.copyAttributes(imgpls);
 		int options = ij.plugin.filter.ParticleAnalyzer.SHOW_NONE;
 		int measurements = ij.measure.Measurements.AREA + ij.measure.Measurements.CENTROID
 				+ ij.measure.Measurements.RECT;

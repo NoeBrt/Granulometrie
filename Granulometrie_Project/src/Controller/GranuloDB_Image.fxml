@@ -23,7 +23,7 @@
    <center>
       <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <TableView fx:id="tableViewImage" prefHeight="559.0" prefWidth="790.0" onMouseClicked="#getDoubleClikedRowImageItem">
+            <TableView fx:id="tableViewImage" prefHeight="559.0" prefWidth="790.0"  onMouseClicked="#ClickedRow">
               <columns>
                 <TableColumn fx:id="idImage" prefWidth="72.0" text="id Image" />
                   <TableColumn fx:id="image" prefWidth="216.00006103515625" text="Image " />

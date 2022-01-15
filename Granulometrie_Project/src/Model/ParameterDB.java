@@ -41,12 +41,12 @@ public class ParameterDB {
 		this.nbCategorySize = nbCategorySize;
 		this.nbCategorySurface = nbCategorySurface;
 		this.chart1 = new ImageView(chart1);
-		this.chart1.setFitHeight(40);
-		this.chart1.setFitWidth(40);
+		this.chart1.setFitHeight(50);
+		this.chart1.setFitWidth(50);
 		;
 		this.chart2 = new ImageView(chart2);
-		this.chart2.setFitHeight(40);
-		this.chart2.setFitWidth(40);
+		this.chart2.setFitHeight(50);
+		this.chart2.setFitWidth(50);
 		;
 		this.dateCalcul = dateCalcul;
 		this.heureCalcul = heureCalcul;
