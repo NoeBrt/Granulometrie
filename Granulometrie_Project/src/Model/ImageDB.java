@@ -28,8 +28,8 @@ public class ImageDB {
 		super();
 		this.idImage = idImage;
 		this.image = new ImageView(image);
-		this.image.setFitHeight(50);
-		this.image.setFitWidth(50);;
+		this.image.setFitHeight(70);
+		this.image.setFitWidth(70);;
 
 		this.longueur = longueur;
 		this.largeur = largeur;

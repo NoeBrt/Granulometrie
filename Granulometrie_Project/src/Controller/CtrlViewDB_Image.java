@@ -123,7 +123,7 @@ public class CtrlViewDB_Image implements Initializable {
 	 */
 	@FXML
 	public void  ClickedRow(MouseEvent event){
-		tableViewImage.getSelectionModel().setCellSelectionEnabled(true);
+	/*	tableViewImage.getSelectionModel().setCellSelectionEnabled(true);
 		ObservableList<TablePosition> selectedCells = tableViewImage.getSelectionModel().getSelectedCells();
 		if (selectedCells.size()>0) {
 			TablePosition<?, ?> selectedCell = selectedCells.get(0);
@@ -132,16 +132,19 @@ public class CtrlViewDB_Image implements Initializable {
 	        Object data = column.getCellObservableValue(rowIndex).getValue();
 	        if (data instanceof ImageView) {
 	        	ImageView dataImage = new ImageView( ((ImageView)data).getImage() );
+	        	dataImage.setFitHeight(200);
+	        	dataImage.setFitWidth(200);
 	        	FlowPane root =new FlowPane();
-	        	root.setMaxSize(40, 40);
+	        	root.setMaxHeight(50);
+	        	root.setMinHeight(50);
 	        	root.getChildren().add(dataImage);
 	        	Scene scene =new Scene(root);
 	        	Stage stage = new Stage();
-	        	stage.setScene(scene);
 	        	stage.sizeToScene();
+	        	stage.setScene(scene);
 	        	stage.show();
 	        }
-		}
+		}*/
 	    if (event.getClickCount() == 2){
 			CtrlViewDB_Param.setImageDbCLiked(tableViewImage.getSelectionModel().getSelectedItem());
 	    	Stage stage = GranuloApp.primaryStage;
