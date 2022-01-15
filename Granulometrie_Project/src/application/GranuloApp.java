@@ -28,7 +28,7 @@ public class GranuloApp extends Application {
 			Scene scene = new Scene(root,800,600);
 			primaryStage.setScene(scene);
 			primaryStage.sizeToScene();
-			primaryStage.setTitle("Granulometrie V1");
+			primaryStage.setTitle("Granulometrie V2.5");
 			primaryStage.getIcons().add(new Image("/IconApp/icon.jpg"));
 			primaryStage.show();
 			primaryStage.setOnCloseRequest(e -> {
