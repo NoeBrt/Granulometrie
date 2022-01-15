@@ -71,11 +71,16 @@ public class CtrlView implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		if (image != null) {
-			useDBImage();
+			try {
+				useDBImage();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
-	protected void useDBImage() {
+	protected void useDBImage() throws IOException {
 		File file = new File("PicturesTempsDB.jpg");
 		try {
 			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", file);
@@ -83,8 +88,8 @@ public class CtrlView implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		image = new Image(file.getAbsolutePath());
-		imagePath = file.getAbsolutePath();
+		image = new Image(file.getCanonicalPath());
+		imagePath = file.getCanonicalPath();
 		imgView.setImage(image);
 		isImported = true;
 	}

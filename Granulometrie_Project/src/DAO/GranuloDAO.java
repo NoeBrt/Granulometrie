@@ -133,7 +133,7 @@ public class GranuloDAO {
 			ps.setBlob(1, FormatImageToBlob(ctrlViewResult.getOriginalImage()));
 			ps.setFloat(2, (float) ctrlViewResult.getOriginalImage().getHeight());
 			ps.setFloat(3, (float) ctrlViewResult.getOriginalImage().getHeight());
-			ps.setInt(4, 1); // TODO Replace the value '1' by the value of `Grossissement`
+			ps.setInt(4, 63); // TODO Replace the value '1' by the value of `Grossissement`
 			ps.setString(5, ctrlViewResult.getImageComment().getText());
 			ps.executeUpdate();
 			ps.close();

@@ -81,7 +81,6 @@ public class CtrlViewDB_Param implements Initializable {
 		FXMLLoader CtrlVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloVue1.fxml"));
 		Parent root = CtrlVue1.load();
 		stage.setScene(new Scene(root));
-
 	}
 
 	/**
