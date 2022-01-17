@@ -37,7 +37,8 @@ public class GranuloApp extends Application {
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}});
+				}
+			});
 			primaryStage.setOnCloseRequest(e -> Platform.exit());
 			GranuloApp.primaryStage = primaryStage;
 		} catch (Exception e) {
