@@ -211,26 +211,29 @@ public class CtrlView implements Initializable {
 	@FXML
 	public void launchProces() throws IOException {
 		if (isImported == true) {
-			// try {
-			FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
-			Parent root = GranuloVue1.load();
-			Stage stage = new Stage();
-			stage.getIcons().add(new Image("/IconApp/icon.jpg"));
-			stage.setTitle("result");
-			stage.setMinHeight(583.0);
-			stage.setMinWidth(826.0);
-			stage.setScene(new Scene(root));
-			stage.setResizable(false);
-			root.prefWidth(stage.widthProperty().doubleValue());
-			root.prefHeight(stage.heightProperty().doubleValue());
-			stage.show();
+			try {
+				FXMLLoader GranuloVue1 = new FXMLLoader(CtrlView.class.getResource("GranuloResultChart.fxml"));
+				Parent root = GranuloVue1.load();
+				Stage stage = new Stage();
+				stage.getIcons().add(new Image("/IconApp/icon.jpg"));
+				stage.setTitle("result");
+				stage.setMinHeight(583.0);
+				stage.setMinWidth(826.0);
+				stage.setScene(new Scene(root));
+				stage.setResizable(false);
+				root.prefWidth(stage.widthProperty().doubleValue());
+				root.prefHeight(stage.heightProperty().doubleValue());
+				stage.show();
 
-			/*
-			 * } catch (Exception e) { Alert alert = new Alert(AlertType.ERROR);
-			 * alert.setTitle("Error alert"); alert.setHeaderText("ERROR");
-			 * alert.setContentText("CANT'T LOAD IMAGE"); alert.showAndWait();
-			 * System.out.println("Cannot load new window"); }
-			 */
+			} catch (Exception e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error alert");
+				alert.setHeaderText("ERROR");
+				alert.setContentText("CANT'T LOAD IMAGE");
+				alert.showAndWait();
+				System.out.println("Cannot load new window");
+			}
+
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error alert");
