@@ -182,6 +182,10 @@ public class CtrlViewResult implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		graphNbGrainSurface.setMinSize(426, 415);
+		graphNbGrainSurface.setMaxSize(426, 415);
+		graphNbGrainSize.setMinSize(453, 415);
+		graphNbGrainSize.setMaxSize(453, 415);
 		sizeMin.setText(String.valueOf(GranuloModel.getSizeGrainMin()));
 		sizeMax.setText(String.valueOf(GranuloModel.getSizeGrainMax()));
 		clusterWidth.setText(String.valueOf(GranuloModel.getEtalon()));
@@ -200,7 +204,7 @@ public class CtrlViewResult implements Initializable {
 		Series<String, Number> series = new XYChart.Series<>();
 		Series<String, Number> seriesForBarChart = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClusters().entrySet()) {
-			String x = entry.getKey() - GranuloModel.getEtalon() + "-" + entry.getKey().toString();
+			String x =String.format("%.2f",entry.getKey() - GranuloModel.getEtalon()) + "-" + String.format("%.2f",entry.getKey());
 			List<Measure> y = entry.getValue();
 			Data<String, Number> data = new Data<>(x, (Number) y.size());
 			Data<String, Number> dataBarChart = new Data<>(x, y.size());
@@ -211,7 +215,6 @@ public class CtrlViewResult implements Initializable {
 		}
 		// series.setName("Numer of Grain by Size");
 		graphNbGrainSize.setLegendVisible(false);
-		graphNbGrainSize.setMinSize(426, 388);
 		// graphNbGrainSize.setMaxSize(426, 324);
 		graphNbGrainSize.getData().clear();
 		graphNbGrainSize.getData().add(series);
@@ -229,7 +232,7 @@ public class CtrlViewResult implements Initializable {
 		Series<String, Number> series = new XYChart.Series<>();
 		Series<String, Number> seriesForBarChart = new XYChart.Series<>();
 		for (Map.Entry<Double, List<Measure>> entry : GranuloModel.getClustersSurface().entrySet()) {
-			String x = entry.getKey() - GranuloModel.getEtalonSurface() + "-" + entry.getKey().toString();
+			String x = String.format("%.2f",entry.getKey() - GranuloModel.getEtalonSurface()) + "-" + String.format("%.2f",entry.getKey());
 			List<Measure> y = entry.getValue();
 			Data<String, Number> data = new Data<>(x, y.size());
 			Data<String, Number> dataBarChart = new Data<>(x, y.size());
@@ -240,7 +243,6 @@ public class CtrlViewResult implements Initializable {
 		}
 		// series.setName("Numer of Grain by Surface");
 		graphNbGrainSurface.setLegendVisible(false);
-		graphNbGrainSurface.setMinSize(426, 425);
 		// graphNbGrainSurface.setMaxSize(426, 405);
 		graphNbGrainSurface.getData().clear();
 		graphNbGrainSurface.getData().add(series);
