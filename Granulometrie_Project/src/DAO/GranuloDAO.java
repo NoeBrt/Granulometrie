@@ -8,6 +8,7 @@ import javax.imageio.*;
 import java.awt.Graphics2D;
 import java.awt.image.*;
 
+import Controller.CtrlViewDB_Param;
 import Controller.CtrlViewResult;
 import Model.ImageDB;
 import Model.ParameterDB;
@@ -85,7 +86,7 @@ public class GranuloDAO {
 	 * @return Image in byte
 	 */
 	private ByteArrayInputStream FormatImageToBlob(java.awt.Image image) {
-		BufferedImage bi = (BufferedImage)image;
+		BufferedImage bi = (BufferedImage) image;
 		Graphics2D g2d = bi.createGraphics();
 		g2d.drawImage(image, 0, 0, null);
 		g2d.dispose();
@@ -141,7 +142,6 @@ public class GranuloDAO {
 			Statement smt = this.connection.createStatement();
 			smt.executeUpdate("UPDATE Image SET commentaire='" + ctrlViewResult.getImageComment().getText()
 					+ "' WHERE idImage=" + FindIdImageByImage(ctrlViewResult.getOriginalImage()) + ";");
-
 		}
 
 	}
@@ -200,15 +200,19 @@ public class GranuloDAO {
 	}
 
 	private int FindIdImageByImage(java.awt.Image image) throws SQLException, IOException, ClassNotFoundException {
-		PreparedStatement ps = this.connection.prepareStatement("SELECT idImage FROM Image WHERE image=?");
-		this.connection.setAutoCommit(true);
-		ps.setBlob(1, FormatImageToBlob(image));
-		ResultSet r = ps.executeQuery();
-		try {
-			r.next();
-			return r.getInt("idImage");
-		} catch (java.sql.SQLException e) {
-			return -1;
+		if (CtrlViewDB_Param.getImageDbCLiked() != null) {
+			return CtrlViewDB_Param.getImageDbCLiked().getIdImage();
+		} else {
+			PreparedStatement ps = this.connection.prepareStatement("SELECT idImage FROM Image WHERE image=?");
+			this.connection.setAutoCommit(true);
+			ps.setBlob(1, FormatImageToBlob(image));
+			ResultSet r = ps.executeQuery();
+			try {
+				r.next();
+				return r.getInt("idImage");
+			} catch (java.sql.SQLException e) {
+				return -1;
+			}
 		}
 	}
 
